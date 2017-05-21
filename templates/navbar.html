@@ -1,0 +1,47 @@
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navbar-collapsible" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'home' %}">GeekText</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="navbar-collapse collapse" id="navbar-collapsible">
+            <div class="navbar-form navbar-right btn-group">
+                <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-shopping-cart"><span
+                        class="badge">0</span></span>
+                </button>
+                <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-heart-empty"><span
+                        class="badge">0</span></span>
+                </button>
+                {% if user.is_authenticated %}
+                    <button type="button" class="btn btn-link">
+                        <a href="{% url 'accounts:logout' %}"><span class="glyphicon glyphicon-user"></span></a>
+                    </button>
+                {% else %}
+                    <button type="button" class="btn btn-link">
+                        <a href="{% url 'accounts:login' %}">Login</a>
+                    </button>
+                {% endif %}
+            </div>
+
+            <form class="navbar-form">
+                <div class="form-group" style="display:inline;">
+                    <div class="input-group" style="display: table;">
+                        <input type="text" class="form-control" role="search" placeholder="Search" autocomplete="off">
+                        <span class="input-group-addon" style="width: 1%;"><span
+                                class="glyphicon glyphicon-search"></span></span>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</nav>

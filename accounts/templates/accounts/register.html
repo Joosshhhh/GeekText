@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block title %}Register | {{ block.super }}{% endblock %}
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+
+                <h2 class="text-center">Register</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.first_name }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.last_name }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.email }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.username }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.password }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.password_confirm }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+                <p class="text-center">
+                    Already have an account? <a href="{% url 'accounts:login' %}">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
