@@ -19,7 +19,7 @@ class ManageAddressView(LoginRequiredMixin, generic.TemplateView):
 
 
 class AccountSettingsUpdateView(LoginRequiredMixin, generic.UpdateView):
-    form_class = forms.AccountUpdate
+    form_class = forms.AccountUpdateProfile
     success_url = reverse_lazy("accounts:manage")
     template_name = 'accounts/manage_account.html'
 
