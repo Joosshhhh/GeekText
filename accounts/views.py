@@ -14,12 +14,17 @@ class ManagePaymentView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'accounts/manage_payment.html'
 
 
-class ManageAccountSettingsView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'accounts/manage_account.html'
-
-
 class ManageAddressView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'accounts/manage_address.html'
+
+
+class AccountSettingsUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.AccountUpdate
+    success_url = reverse_lazy("accounts:manage")
+    template_name = 'accounts/manage_account.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 class LoginView(generic.FormView):

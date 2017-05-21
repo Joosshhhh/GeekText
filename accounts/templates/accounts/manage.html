@@ -9,7 +9,7 @@
             <div class="col-sm-4">
                 <h4>Account Settings</h4>
                 <ul>
-                    <li><a href="{% url 'accounts:manage_settings' %}">Manage Account Settings</a></li>
+                    <li><a href="{% url 'accounts:manage_settings' user.id %}">Manage Account Settings</a></li>
                     <li><a href="">Shopping Cart</a></li>
                     <li><a href="">Wishlist</a></li>
                 </ul>

@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
+    #   avatar = models.ImageField();
+    #   if we do this remember to migrate
     def get_full_name(self):
         """
         Returns the firstname plus the lastname, with a space in between.

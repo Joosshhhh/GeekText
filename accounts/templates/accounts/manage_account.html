@@ -3,21 +3,37 @@
 {% block content %}
     <div class="container">
         <h2>Account Settings</h2>
-        <div class="row">
-            <h3>Change Your Name</h3>
-            <p>Will be a form here</p>
-        </div>
-        <div class="row">
-            <h3>Change Your Email Address</h3>
-            <p>Will be a form here</p>
-        </div>
-        <div class="row">
-            <h3>Change Your Password</h3>
-            <p>Will be a form here</p>
-        </div>
-        <div class="row">
-            <h3>Change Your Avatar? Maybe?!</h3>
-            <p>Will be a form here</p>
-        </div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <h3>Change Your Name</h3>
+                <div class="form-group">
+                    {{ form.first_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.last_name }}
+                </div>
+            </div>
+            <div class="row">
+                <h3>Change Your Email Address</h3>
+                <div class="form-group">
+                    {{ form.email }}
+                </div>
+            </div>
+            <div class="row">
+                <h3>Change Your Password</h3>
+                <div class="form-group">
+                    {{ form.password }}
+                </div>
+                <div class="form-group">
+                    {{ form.password_confirm }}
+                </div>
+            </div>
+            <div class="row">
+                <h3>Change Your Avatar? Maybe?!</h3>
+                <p>Will be a form here</p>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
     </div>
 {% endblock %}

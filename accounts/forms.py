@@ -48,3 +48,40 @@ class Register(forms.ModelForm):
 class Login(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
+
+
+# Handle the update logic here
+#   I just copied it from Register
+#   Somehow have to only update the fields the user filled out
+class AccountUpdate(forms.ModelForm):
+    first_name = forms.CharField(max_length=35, required=False,
+                                 widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First name'}))
+    last_name = forms.CharField(max_length=35, required=False,
+                                widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last name'}))
+    username = forms.CharField(max_length=40, required=False,
+                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
+
+    password = forms.CharField(required=False,
+                               widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
+    password_confirm = forms.CharField(required=False,
+                                       widget=forms.PasswordInput(
+                                           attrs={'class': 'form-control', 'placeholder': 'Confirm Password'}))
+
+    class Meta:
+        fields = ("email", "first_name", "last_name", "username", "password")
+        model = User
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        password_confirm = self.cleaned_data.get('password_confirm')
+        if password and password_confirm and password != password_confirm:
+            raise forms.ValidationError("Passwords do not match")
+        return password
+
+    def save(self, commit=True):
+        user = super(AccountUpdate, self).save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
