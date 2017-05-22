@@ -1,6 +1,5 @@
 from django import forms
-from django.contrib.auth import get_user_model
-from django.contrib.auth import password_validation
+from django.contrib.auth import get_user_model, password_validation
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 from .models import UserAddress
@@ -61,18 +60,18 @@ class AccountUpdateProfile(forms.ModelForm):
     email_confirm = forms.EmailField(required=False,
                                      widget=forms.EmailInput(
                                          attrs={'class': 'form-control', 'placeholder': 'Confirm Email'}))
-    old_password = forms.CharField(required=False,
+    old_password = forms.CharField(required=False, strip=False,
                                    widget=forms.PasswordInput(
                                        attrs={'class': 'form-control', 'placeholder': 'Old Password'}))
-    new_password1 = forms.CharField(required=False,
-                                    widget=forms.PasswordInput(
-                                        attrs={'class': 'form-control', 'placeholder': 'New Password'}))
-    new_password2 = forms.CharField(required=False,
-                                    widget=forms.PasswordInput(
-                                        attrs={'class': 'form-control', 'placeholder': 'Confirm New Password'}))
+    password = forms.CharField(required=False, strip=False,
+                               widget=forms.PasswordInput(
+                                   attrs={'class': 'form-control', 'placeholder': 'New Password'}))
+    password2 = forms.CharField(required=False, strip=False,
+                                widget=forms.PasswordInput(
+                                    attrs={'class': 'form-control', 'placeholder': 'Confirm New Password'}))
 
     class Meta:
-        fields = ("first_name", "last_name", "username", "email", "new_password1")
+        fields = ("first_name", "last_name", "username", "email", "password")
         model = User
 
     def clean_email(self):
@@ -88,27 +87,33 @@ class AccountUpdateProfile(forms.ModelForm):
         Validate that the old_password field is correct.
         """
         old_password = self.cleaned_data["old_password"]
-        if old_password and not User.check_password(old_password):
+        if old_password and not self.instance.check_password(old_password):
             raise forms.ValidationError(
                 "Old password is incorrect."
             )
         return old_password
 
-    def clean_new_password1(self):
-        password1 = self.cleaned_data.get('new_password1')
-        password2 = self.cleaned_data.get('new_password2')
-        if password1 and password2:
-            if password1 != password2:
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        password2 = self.cleaned_data.get('password2')
+        old_password = self.cleaned_data.get('old_password')
+
+        if password and password2:
+            if not old_password:
+                raise forms.ValidationError(
+                    "Must enter your current password."
+                )
+            if password != password2:
                 raise forms.ValidationError(
                     "The new password fields must match."
                 )
-            password_validation.validate_password(password2, User)
-        return password1
+            password_validation.validate_password(password, self.instance)
+        return password
 
     def save(self, commit=True):
         user = super(AccountUpdateProfile, self).save(commit=False)
-        if self.cleaned_data.get('new_password1'):
-            user.password = self.cleaned_data.get('new_password1')
+        if self.instance.password != self.cleaned_data.get('password'):
+            user.set_password(self.cleaned_data.get('password'))
         if commit:
             user.save()
         return user
