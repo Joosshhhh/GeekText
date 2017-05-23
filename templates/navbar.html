@@ -1,4 +1,5 @@
-<nav class="navbar navbar-inverse" role="navigation">
+{% load static from staticfiles %}
+<nav class="navbar navbar-static-top" role="navigation">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -14,7 +15,7 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="navbar-collapse collapse" id="navbar-collapsible">
-            <div class="navbar-form navbar-right btn-group">
+            <div class="navbar-form navbar-right">
                 <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-shopping-cart"><span
                         class="badge">0</span></span>
                 </button>
@@ -23,7 +24,8 @@
                 </button>
                 {% if user.is_authenticated %}
                     <button type="button" class="btn btn-link">
-                        <a href="{% url 'accounts:logout' %}"><span class="glyphicon glyphicon-user"></span></a>
+                        <a href="{% url 'accounts:logout' %}"><img src="{% static 'imgs/user.svg' %}"
+                                                                   class="avatar"></a>
                     </button>
                 {% else %}
                     <button type="button" class="btn btn-link">
@@ -32,7 +34,7 @@
                 {% endif %}
             </div>
 
-            <form class="navbar-form">
+            <form class="navbar-form hidden-xs">
                 <div class="form-group" style="display:inline;">
                     <div class="input-group" style="display: table;">
                         <input type="text" class="form-control" role="search" placeholder="Search" autocomplete="off">

@@ -1,33 +1,46 @@
 {% extends "layout.html" %}
+{% load static from staticfiles %}
+{% block static %}
+    <link rel="stylesheet" href="{% static 'accounts/accounts.css' %}">
+{% endblock %}
 {% block title %}Manage Account | {{ block.super }}{% endblock %}
 {% block content %}
     <div class="container">
         <h2>Manage Account</h2>
 
-        <div class="row">
-            <h3>Settings</h3>
-            <div class="col-sm-4">
-                <h4>Account Settings</h4>
-                <ul>
-                    <li><a href="{% url 'accounts:manage_settings' user.id %}">Manage Account Settings</a></li>
-                    <li><a href="">Shopping Cart</a></li>
-                    <li><a href="">Wishlist</a></li>
-                    <li><a href="">Deactivate Account</a></li>
-                </ul>
+        <div class="row text-center">
+            <div class="col-sm-6 manage-account-links">
+                <a href="">
+                    <img src="{% static 'imgs/truck.svg' %}" alt="Circular image of a lock with an orange background">
+                    <h4>Your Orders</h4>
+                    <p class="text-muted">Track, view, or buy again</p>
+                </a>
             </div>
-            <div class="col-sm-4">
-                <h4>Payment Methods</h4>
-                <ul>
-                    <li><a href="{% url 'accounts:manage_payment' %}">Manage Payment Options</a></li>
-                    <li><a href="">Add New Payment Option</a></li>
-                </ul>
+            <div class="col-sm-6 manage-account-links">
+                <a href="{% url 'accounts:manage_profile' %}">
+                    <img src="{% static 'imgs/locked.svg' %}" alt="Circular image of a lock with an orange background">
+                    <h4>Account Settings</h4>
+                    <p class="text-muted">Edit login, name, and email</p>
+                </a>
             </div>
-            <div class="col-sm-4">
-                <h4>Address Book</h4>
-                <ul>
-                    <li><a href="{% url 'accounts:manage_address' %}">Manage Address Book</a></li>
-                    <li><a href="">Add New Address Book</a></li>
-                </ul>
+        </div>
+        <div class="row text-center">
+
+            <div class="col-sm-6 manage-account-links">
+                <a href="{% url 'accounts:manage_payment' %}">
+                    <img src="{% static 'imgs/creditcard.svg' %}"
+                         alt="Circular image of a lock with an orange background">
+                    <h4>Payment Methods</h4>
+                    <p class="text-muted">Edit or add payment options</p>
+                </a>
+            </div>
+            <div class="col-sm-6 manage-account-links">
+                <a href="{% url 'accounts:manage_address' %}">
+                    <img src="{% static 'imgs/location.svg' %}"
+                         alt="Circular image of a lock with an orange background">
+                    <h4>Address Book</h4>
+                    <p class="text-muted">Edit addresses for orders</p>
+                </a>
             </div>
         </div>
     </div>

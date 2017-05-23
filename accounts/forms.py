@@ -1,6 +1,6 @@
 from django import forms
-from django.contrib.auth import get_user_model, password_validation
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 
 from .models import UserAddress
 
@@ -45,78 +45,73 @@ class Login(AuthenticationForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
 
 
-# Handle the update logic here
-#   I just copied it from Register
-#   Somehow have to only update the fields the user filled out
-class AccountUpdateProfile(forms.ModelForm):
+class AccountUpdateFirstName(forms.ModelForm):
     first_name = forms.CharField(max_length=35, required=False,
                                  widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First name'}))
+
+    class Meta:
+        fields = ["first_name"]
+        model = User
+
+
+class AccountUpdateLastName(forms.ModelForm):
     last_name = forms.CharField(max_length=35, required=False,
                                 widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last name'}))
-    username = forms.CharField(max_length=40, required=False,
-                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}))
+
+    class Meta:
+        fields = ["last_name"]
+        model = User
+
+
+class AccountUpdateEmail(forms.ModelForm):
     email = forms.EmailField(required=False,
                              widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
     email_confirm = forms.EmailField(required=False,
                                      widget=forms.EmailInput(
-                                         attrs={'class': 'form-control', 'placeholder': 'Confirm Email'}))
-    old_password = forms.CharField(required=False, strip=False,
-                                   widget=forms.PasswordInput(
-                                       attrs={'class': 'form-control', 'placeholder': 'Old Password'}))
-    password = forms.CharField(required=False, strip=False,
-                               widget=forms.PasswordInput(
-                                   attrs={'class': 'form-control', 'placeholder': 'New Password'}))
-    password2 = forms.CharField(required=False, strip=False,
-                                widget=forms.PasswordInput(
-                                    attrs={'class': 'form-control', 'placeholder': 'Confirm New Password'}))
+                                         attrs={'class': 'form-control', 'placeholder': 'Confirm New Email'}))
 
     class Meta:
-        fields = ("first_name", "last_name", "username", "email", "password")
+        fields = ["email"]
         model = User
 
     def clean_email(self):
-        email = self.cleaned_data.get("email")
-        email_confirm = self.cleaned_data.get("email_confirm")
-        if email and email_confirm and email != email_confirm:
+        new_email = self.cleaned_data.get('email')
+        confirm = self.cleaned_data.get('email_confirm')
+        if confirm and new_email != confirm:
             raise forms.ValidationError(
-                "Email fields don't match.")
-        return email
-
-    def clean_old_password(self):
-        """
-        Validate that the old_password field is correct.
-        """
-        old_password = self.cleaned_data["old_password"]
-        if old_password and not self.instance.check_password(old_password):
-            raise forms.ValidationError(
-                "Old password is incorrect."
+                'Email fields must match'
             )
-        return old_password
+        return new_email
 
-    def clean_password(self):
-        password = self.cleaned_data.get('password')
-        password2 = self.cleaned_data.get('password2')
-        old_password = self.cleaned_data.get('old_password')
 
-        if password and password2:
-            if not old_password:
-                raise forms.ValidationError(
-                    "Must enter your current password."
-                )
-            if password != password2:
-                raise forms.ValidationError(
-                    "The new password fields must match."
-                )
-            password_validation.validate_password(password, self.instance)
-        return password
+class AccountUpdateUsername(forms.ModelForm):
+    username = forms.CharField(max_length=40, required=False,
+                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}))
 
-    def save(self, commit=True):
-        user = super(AccountUpdateProfile, self).save(commit=False)
-        if self.instance.password != self.cleaned_data.get('password'):
-            user.set_password(self.cleaned_data.get('password'))
-        if commit:
-            user.save()
-        return user
+    class Meta:
+        fields = ["username"]
+        model = User
+
+
+class AccountUpdatePassword(PasswordChangeForm):
+    old_password = forms.CharField(required=False, strip=False,
+                                   widget=forms.PasswordInput(
+                                       attrs={'class': 'form-control', 'placeholder': 'Old Password',
+                                              'autofocus': True}))
+    new_password1 = forms.CharField(required=False, strip=False,
+                                    widget=forms.PasswordInput(
+                                        attrs={'class': 'form-control', 'placeholder': 'New Password'}))
+    new_password2 = forms.CharField(required=False, strip=False,
+                                    widget=forms.PasswordInput(
+                                        attrs={'class': 'form-control', 'placeholder': 'Confirm New Password'}))
+
+
+class DeactivateForm(forms.ModelForm):
+    deactivate = forms.BooleanField(widget=forms.CheckboxInput, label='Deactivate Account MUTHAFUCKA')
+
+    class Meta:
+        model = User
+        fields = ['is_active']
 
 
 class UserAddressForm(forms.ModelForm):

@@ -1,0 +1,18 @@
+.manage-account-links {
+    padding: 40px;
+}
+
+@media (min-width: 576px) {
+}
+
+@media (min-width: 768px) {
+    .manage-account-links {
+        padding: 75px;
+    }
+}
+
+@media (min-width: 992px) {
+}
+
+@media (min-width: 1200px) {
+}

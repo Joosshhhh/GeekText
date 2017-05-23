@@ -1,5 +1,6 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import PasswordChangeView
 from django.core.urlresolvers import reverse_lazy
 from django.views import generic
 
@@ -18,13 +19,50 @@ class ManageAddressView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'accounts/manage_address.html'
 
 
-class AccountSettingsUpdateView(LoginRequiredMixin, generic.UpdateView):
-    form_class = forms.AccountUpdateProfile
-    success_url = reverse_lazy("accounts:manage")
-    template_name = 'accounts/manage_account.html'
+class ManageProfileView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'accounts/manage_profile.html'
+
+
+class AccountUpdateFirstNameView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.AccountUpdateFirstName
+    success_url = reverse_lazy("accounts:manage_profile")
+    template_name = 'accounts/profile/manage_first_name.html'
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class AccountUpdateLastNameView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.AccountUpdateLastName
+    success_url = reverse_lazy("accounts:manage_profile")
+    template_name = 'accounts/profile/manage_last_name.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+class AccountUpdateEmailView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.AccountUpdateEmail
+    success_url = reverse_lazy("accounts:manage_profile")
+    template_name = 'accounts/profile/manage_email.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+class AccountUpdateUsernameView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.AccountUpdateUsername
+    success_url = reverse_lazy("accounts:manage_profile")
+    template_name = 'accounts/profile/manage_username.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+class AccountUpdatePasswordView(LoginRequiredMixin, PasswordChangeView):
+    form_class = forms.AccountUpdatePassword
+    success_url = reverse_lazy("accounts:manage_profile")
+    template_name = 'accounts/profile/manage_password.html'
 
 
 class LoginView(generic.FormView):

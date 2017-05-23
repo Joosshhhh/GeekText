@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block title %}Account Settings | {{ block.super }}{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+                <h2>Account Settings</h2>
+                <div class="list-group">
+                    <div class="list-group-item clearfix">
+                        <div class="pull-left">
+                            <label>First Name:</label>
+                            <p>{{ user.first_name }}</p>
+                        </div>
+                        <a href="{% url 'accounts:manage_profile_first_name' %}" class="pull-right">
+                            <button class="btn btn-default">Edit</button>
+                        </a>
+                    </div>
+                    <div class="list-group-item clearfix">
+                        <div class="pull-left">
+                            <label>Last Name:</label>
+                            <p>{{ user.last_name }}</p>
+                        </div>
+                        <a href="{% url 'accounts:manage_profile_last_name' %}" class="pull-right">
+                            <button class="btn btn-default">Edit</button>
+                        </a>
+                    </div>
+                    <div class="list-group-item clearfix">
+                        <div class="pull-left">
+                            <label>Username</label>
+                            <p>{{ user.username }}</p>
+                        </div>
+                        <a href="{% url 'accounts:manage_profile_username' %}" class="pull-right">
+                            <button class="btn btn-default">Edit</button>
+                        </a>
+                    </div>
+                    <div class="list-group-item clearfix">
+                        <div class="pull-left">
+                            <label>Email:</label>
+                            <p>{{ user.email }}</p>
+                        </div>
+                        <a href="{% url 'accounts:manage_profile_email' %}" class="pull-right">
+                            <button class="btn btn-default">Edit</button>
+                        </a>
+                    </div>
+                    <div class="list-group-item clearfix">
+                        <div class="pull-left">
+                            <label>Password:</label>
+                            <p>********</p>
+                        </div>
+                        <a href="{% url 'accounts:manage_profile_password' %}" class="pull-right">
+                            <button class="btn btn-default">Edit</button>
+                        </a>
+                    </div>
+                </div>
+                <a href="{% url 'accounts:manage' %}">
+                    <button class="btn btn-default">Done</button>
+                    <a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
