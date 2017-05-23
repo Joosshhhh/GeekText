@@ -69,6 +69,7 @@ class AccountUpdateProfile(forms.ModelForm):
     password2 = forms.CharField(required=False, strip=False,
                                 widget=forms.PasswordInput(
                                     attrs={'class': 'form-control', 'placeholder': 'Confirm New Password'}))
+    middle_name = forms.CharField(validators=[''])
 
     class Meta:
         fields = ("first_name", "last_name", "username", "email", "password")
@@ -117,6 +118,14 @@ class AccountUpdateProfile(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class DeactivateForm(forms.ModelForm):
+    deactivate = forms.BooleanField(widget=forms.CheckboxInput, label='Deactivate Account MUTHAFUCKA')
+
+    class Meta:
+        model = User
+        fields = ['is_active']
 
 
 class UserAddressForm(forms.ModelForm):
