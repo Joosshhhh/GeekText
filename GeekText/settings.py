@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'django_countries',
-    'smartystreets_python_sdk'
+
 ]
 
 MIDDLEWARE = [

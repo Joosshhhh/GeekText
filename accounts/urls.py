@@ -17,6 +17,7 @@ urlpatterns = [
     url(r"^manage/profile/password/$", views.AccountUpdatePasswordView.as_view(), name='manage_profile_password'),
     url(r"^manage/addresses$", views.ManageAddressView.as_view(), name='manage_addresses'),
     url(r"^manage/address/(?P<pk>\d+)/$", views.AddressUpdateView.as_view(), name='manage_address'),
-    url(r"^manage/new-address$", views.AddAddressView.as_view(), name='manage_new_address'),
+    url(r"^manage/delete-address/(?P<pk>\d+)/$", views.AddressDeleteView.as_view(), name='manage_delete_address'),
+    url(r"^manage/new-address$", views.AddressAddView.as_view(), name='manage_new_address'),
     url(r"^register/$", views.RegisterView.as_view(), name='register'),
 ]

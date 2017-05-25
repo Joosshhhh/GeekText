@@ -135,6 +135,13 @@ hr {
     padding: 10px;
 }
 
+.dropdown-content ul li a {
+    margin: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
 .dropdown-content ul li:hover,
 .dropdown-content ul li:hover a,
 .dropdown-content ul li:focus a {
@@ -154,7 +161,6 @@ hr {
     margin-left: 15px;
     margin-top: 5px;
 }
-
 
 .footer {
     position: absolute;

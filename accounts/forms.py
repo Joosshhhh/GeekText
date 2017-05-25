@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django_countries import countries
 
-from .models import UserAddress
+from .models import UserAddress, UserDefaultAddress
 
 User = get_user_model()
 
@@ -144,6 +144,8 @@ class UserAddressForm(forms.ModelForm):
                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Zipcode'}))
     phone = forms.CharField(max_length=120,
                             widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone number'}))
+    default = forms.BooleanField(label='Set as default',
+                                 widget=forms.CheckboxInput(attrs={'class': 'checkbox checkbox-inline'}))
 
     class Meta:
         model = UserAddress
@@ -156,24 +158,20 @@ class UserAddressForm(forms.ModelForm):
                   "zipcode",
                   "phone"]
 
-        # def clean(self):
-        #     # check address via some self-defined helper function
-        #     auth_id = settings.SMARTY_AUTH_ID  # We recommend storing your keys in environment variables
-        #     auth_token = settings.SMARTY_AUTH_TOKEN
-        #     credentials = StaticCredentials(auth_id, auth_token)
-        #     client = ClientBuilder(credentials).build_international_street_api_client()
-        #     if self.cleaned_data.get('address2'):
-        #         address = self.cleaned_data['address'] + ' ' + self.cleaned_data.get(
-        #             'address2') + ', ' + self.cleaned_data.get(
-        #             'city')
-        #     else:
-        #         address = self.cleaned_data['address'] + ', ' + self.cleaned_data.get(
-        #             'city')
-        #     lookup = Lookup(address, self.cleaned_data.get('country'))
-        #     lookup.geocode = True  # Must be expressly set to get latitude and longitude.
-        #
-        #     candidates = client.send(lookup)  # The candidates are also stored in the lookup's 'result' field.
-        #     if not candidates:
-        #         raise forms.ValidationError("Your address couldn't be found...")
-        #     elif len(candidates) > 1:
-        #         raise forms.ValidationError('Did you mean...')
+        # def save(self, commit=True):
+        #     address = super(UserAddressForm, self).save(commit=False)
+        #     if commit:
+        #         address.save()
+        #         default = self.cleaned_data.get('default')
+        #         if default:
+        #             default_address = UserDefaultAddress()
+        #             default_address.shipping = self.instance.id
+        #             default_address.user_id = self.instance.user_id
+        #             default_address.save()
+        #     return address
+
+
+class UserDefaultAddressForm(forms.ModelForm):
+    class Meta:
+        model = UserDefaultAddress
+        fields = []
