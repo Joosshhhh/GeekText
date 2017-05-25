@@ -4,8 +4,7 @@ from django_countries.fields import CountryField
 
 
 class User(AbstractUser):
-    #   avatar = models.ImageField();
-    #   if we do this remember to migrate
+    # avatar = models.ImageField(upload_to="photos/", null=True, blank=True)
 
     def get_full_name(self):
         """

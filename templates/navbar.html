@@ -24,7 +24,11 @@
                 </button>
                 {% if user.is_authenticated %}
                     <button id="nav-profile-pic" type="button" class="btn btn-link">
-                        <img src="{% static 'imgs/user.svg' %}" class="avatar">
+                        {% if user.avatar == None %}
+                            <img src="{% static 'imgs/user.svg' %}" class="avatar">
+                        {% else %}
+                            <img src="{% static 'imgs/user.svg' %}" class="avatar">
+                        {% endif %}
                         <div class="dropdown-content text-center">
 
                             <ul>
@@ -34,25 +38,33 @@
                                     </a>
                                 </li>
                                 <hr>
-                                <li class="clearfix">
+                                <li class="clearfix"
+                                    onmouseover="this.firstElementChild.firstElementChild.src='{% static 'imgs/deliver-white.svg' %}'"
+                                    onmouseout="this.firstElementChild.firstElementChild.src='{% static 'imgs/deliver.svg' %}'">
                                     <a class="clearfix orange">
                                         <img src="{% static 'imgs/deliver.svg' %}">
                                         <span>My Orders</span>
                                     </a>
                                 </li>
-                                <li class="clearfix">
+                                <li class="clearfix"
+                                    onmouseover="this.firstElementChild.firstElementChild.src='{% static 'imgs/lock-white.svg' %}'"
+                                    onmouseout="this.firstElementChild.firstElementChild.src='{% static 'imgs/lock.svg' %}'">
                                     <a href="{% url 'accounts:manage_profile' %}" class="clearfix orange"><img
                                             src="{% static 'imgs/lock.svg' %}">
                                         <span>Account</span>
                                     </a>
                                 </li>
-                                <li class="clearfix">
+                                <li class="clearfix"
+                                    onmouseover="this.firstElementChild.firstElementChild.src='{% static 'imgs/placeholder-white.svg' %}'"
+                                    onmouseout="this.firstElementChild.firstElementChild.src='{% static 'imgs/point.svg' %}'">
                                     <a href="{% url 'accounts:manage_addresses' %}" class="clearfix orange"><img
                                             src="{% static 'imgs/point.svg' %}">
                                         <span>Addresses</span>
                                     </a>
                                 </li>
-                                <li class="clearfix">
+                                <li class="clearfix"
+                                    onmouseover="this.firstElementChild.firstElementChild.src='{% static 'imgs/credit-card-white.svg' %}'"
+                                    onmouseout="this.firstElementChild.firstElementChild.src='{% static 'imgs/credit-card.svg' %}'">
                                     <a href="{% url 'accounts:manage_payment' %}" class="clearfix orange"><img
                                             src="{% static 'imgs/credit-card.svg' %}">
                                         <span>Payment</span>
