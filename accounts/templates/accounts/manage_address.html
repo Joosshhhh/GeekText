@@ -1,9 +1,29 @@
 {% extends "layout.html" %}
-{% block title %}Manage Address | {{ block.super }}{% endblock %}
+{% block title %}Manage Addresses | {{ block.super }}{% endblock %}
+{% load static from staticfiles %}
 {% block content %}
     <div class="container">
-        <h2>Manage Address</h2>
-        <button type="button" class="btn btn-success">Add New Address</button>
-    </div>
+        <h2 class="text-center">Manage Addresses</h2>
+        <div class="row">
+            <div class="col-sm-6 col-md-4 address-content center-in-div" style="height: 269px;"><a
+                    href="{% url 'accounts:manage_new_address' %}">Add New Addy</a></div>
+            {% for address in object_list %}
+                <div class="col-sm-6 col-md-4 address-content">
+                    <h5>{{ address.full_name }}</h5>
+                    <p>{{ address.address }}</p>
+                    <p>{{ address.city }}, {{ address.state }} {{ address.zipcode }}</p>
+                    <p>{{ address.country.name }}</p>
+                    <p>Phone number: {{ address.phone }}</p>
+                    <div>
+                        <button class="btn btn-link" style="padding-left: 0;"><a
+                                href="{% url 'accounts:manage_address' pk=address.pk %}">Edit</a></button>
+                        <span> | </span>
+                        <button class="btn btn-link">Delete</button>
+                        <span> | </span>
+                        <button class="btn btn-link">Set as Default</button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

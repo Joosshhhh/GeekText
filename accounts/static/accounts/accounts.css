@@ -1,5 +1,31 @@
-.manage-account-links {
+.manage-profile-content {
+    margin-bottom: 25px;
+}
+
+.manage-account-links,
+.address-content {
     padding: 40px;
+}
+
+.manage-payment-btn {
+    float: right;
+}
+
+.btn-orange-small {
+    background-color: #e39309;
+    color: #ffffff;
+    border-color: #cc8408;
+}
+
+.btn-orange-small:hover,
+.btn-orange-small:focus {
+    background-color: #ffffff;
+    color: #cc8408;
+    border-color: #e39309;
+}
+
+.list-inline {
+    margin: 0;
 }
 
 @media (min-width: 576px) {
@@ -8,6 +34,12 @@
 @media (min-width: 768px) {
     .manage-account-links {
         padding: 75px;
+    }
+}
+
+@media (max-width: 767px) {
+    .address-content {
+        text-align: center;
     }
 }
 

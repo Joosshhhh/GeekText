@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/GeekText.css' %}">
+    <link rel="stylesheet" href="{% static 'accounts/accounts.css' %}">
     {% block static %}{% endblock %}
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,20 +22,22 @@
 {% block content %}{% endblock %}
 <footer class="footer">
     <div class="container">
-        <div class="row text-center">
-            <div class="col-md-4 footer-content">
-                <h5>STAY SOCIAL WITH US</h5>
+        <div class="row">
+            <div class="col-md-4 footer-content text-center">
+                <h5 style="color:#ffffff;">STAY SOCIAL WITH US</h5>
                 <ul class="list-inline">
                     <li><a><img src="{% static 'imgs/Facebook.svg' %}" class="social-icons"></a></li>
                     <li><a><img src="{% static 'imgs/Instagram.svg' %}" class="social-icons"></a></li>
-                    <li><a><img src="{% static 'imgs/Twitter.svg' %}" class="social-icons"></a></li>
+                    <li><a href="http://twitter.com/SirMesCudii"><img src="{% static 'imgs/Twitter.svg' %}"
+                                                                      class="social-icons"></a></li>
                 </ul>
             </div>
-            <div class="col-md-4 footer-content">
-                <p>&copy;COPYRIGHT 2017 <a href="{% url 'home' %}">GEEKTEXT, INC.</a> ALL RIGHTS RESERVED</p>
-            </div>
-            <div class="col-md-4 footer-content">
+            <div class="col-md-4 footer-content center-in-div">
                 <h5>Content</h5>
+            </div>
+            <div class="col-md-4 footer-content center-in-div">
+                <p>&copy; COPYRIGHT 2017 <a href="{% url 'home' %}" class="orange footer-brand">GEEKTEXT, INC.</a> ALL
+                    RIGHTS RESERVED</p>
             </div>
         </div>
     </div>

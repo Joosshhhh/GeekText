@@ -5,6 +5,36 @@ from django.core.urlresolvers import reverse_lazy
 from django.views import generic
 
 from . import forms
+from .models import UserAddress
+
+
+class DeactivateAccountView(LoginRequiredMixin, generic.FormView):
+    form_class = forms.DeactivateForm
+    success_url = reverse_lazy("home")
+
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+        return form_class(self.request, **self.get_form_kwargs())
+
+
+class AddAddressView(LoginRequiredMixin, generic.CreateView):
+    form_class = forms.UserAddressForm
+    success_url = reverse_lazy("accounts:manage_addresses")
+    template_name = "accounts/manage_address_form.html"
+
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user.id
+        return super(AddAddressView, self).form_valid(form)
+
+
+class AddressUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = forms.UserAddressForm
+    success_url = reverse_lazy("accounts:manage_addresses")
+    template_name = 'accounts/manage_address_form.html'
+
+    def get_object(self, queryset=None):
+        return UserAddress.objects.get(pk=self.kwargs['pk'])
 
 
 class ManageAccountView(LoginRequiredMixin, generic.TemplateView):
@@ -15,8 +45,12 @@ class ManagePaymentView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'accounts/manage_payment.html'
 
 
-class ManageAddressView(LoginRequiredMixin, generic.TemplateView):
+class ManageAddressView(LoginRequiredMixin, generic.ListView):
     template_name = 'accounts/manage_address.html'
+
+    def get_queryset(self):
+        """Returns Polls that belong to the current user"""
+        return UserAddress.objects.filter(user=self.request.user).all()
 
 
 class ManageProfileView(LoginRequiredMixin, generic.TemplateView):

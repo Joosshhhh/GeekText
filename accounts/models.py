@@ -1,64 +1,12 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
-US_STATES = (
-    ('AL', 'Alabama'),
-    ('AK', 'Alaska'),
-    ('AZ', 'Arizona'),
-    ('AR', 'Arkansas'),
-    ('CA', 'California'),
-    ('CO', 'Colorado'),
-    ('CT', 'Connecticut'),
-    ('DE', 'Delaware'),
-    ('DC', 'District of Columbia'),
-    ('FL', 'Florida'),
-    ('GA', 'Georgia'),
-    ('HI', 'Hawaii'),
-    ('ID', 'Idaho'),
-    ('IL', 'Illinois'),
-    ('IN', 'Indiana'),
-    ('IA', 'Iowa'),
-    ('KS', 'Kansas'),
-    ('KY', 'Kentucky'),
-    ('LA', 'Louisiana'),
-    ('ME', 'Maine'),
-    ('MD', 'Maryland'),
-    ('MA', 'Massachusetts'),
-    ('MI', 'Michigan'),
-    ('MN', 'Minnesota'),
-    ('MS', 'Mississippi'),
-    ('MO', 'Missouri'),
-    ('MT', 'Montana'),
-    ('NE', 'Nebraska'),
-    ('NV', 'Nevada'),
-    ('NH', 'New Hampshire'),
-    ('NJ', 'New Jersey'),
-    ('NM', 'New Mexico'),
-    ('NY', 'New York'),
-    ('NC', 'North Carolina'),
-    ('ND', 'North Dakota'),
-    ('OH', 'Ohio'),
-    ('OK', 'Oklahoma'),
-    ('OR', 'Oregon'),
-    ('PA', 'Pennsylvania'),
-    ('RI', 'Rhode Island'),
-    ('SC', 'South Carolina'),
-    ('SD', 'South Dakota'),
-    ('TN', 'Tennessee'),
-    ('TX', 'Texas'),
-    ('UT', 'Utah'),
-    ('VT', 'Vermont'),
-    ('VA', 'Virginia'),
-    ('WA', 'Washington'),
-    ('WV', 'West Virginia'),
-    ('WI', 'Wisconsin'),
-    ('WY', 'Wyoming'),
-)
+from django_countries.fields import CountryField
 
 
 class User(AbstractUser):
     #   avatar = models.ImageField();
     #   if we do this remember to migrate
+
     def get_full_name(self):
         """
         Returns the firstname plus the lastname, with a space in between.
@@ -89,11 +37,12 @@ class UserAddressManager(models.Manager):
 
 class UserAddress(models.Model):
     user = models.ForeignKey(User)
+    full_name = models.CharField(max_length=70)
     address = models.CharField(max_length=120)
     address2 = models.CharField(max_length=120, null=True, blank=True)
     city = models.CharField(max_length=120)
-    state = models.CharField(max_length=120, choices=US_STATES, null=True, blank=True)
-    country = models.CharField(max_length=120)
+    state = models.CharField(max_length=120, null=True, blank=True)
+    country = CountryField()
     zipcode = models.CharField(max_length=25)
     phone = models.CharField(max_length=120)
     shipping = models.BooleanField(default=True)
@@ -105,7 +54,8 @@ class UserAddress(models.Model):
         return self.get_address()
 
     def get_address(self):
-        return "{}, {}, {}, {}, {}".format(self.address, self.city, self.state, self.country, self.zipcode)
+        return "{}, {}, {}, {}, {}".format(self.full_name, self.address, self.city, self.state, self.country,
+                                           self.zipcode)
 
     objects = UserAddressManager()
 

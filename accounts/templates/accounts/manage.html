@@ -1,12 +1,9 @@
 {% extends "layout.html" %}
-{% load static from staticfiles %}
-{% block static %}
-    <link rel="stylesheet" href="{% static 'accounts/accounts.css' %}">
-{% endblock %}
 {% block title %}Manage Account | {{ block.super }}{% endblock %}
+{% load static from staticfiles %}
 {% block content %}
     <div class="container">
-        <h2>Manage Account</h2>
+        <h2 class="text-center">Manage Account</h2>
 
         <div class="row text-center">
             <div class="col-sm-6 manage-account-links">
@@ -35,7 +32,7 @@
                 </a>
             </div>
             <div class="col-sm-6 manage-account-links">
-                <a href="{% url 'accounts:manage_address' %}">
+                <a href="{% url 'accounts:manage_addresses' %}">
                     <img src="{% static 'imgs/location.svg' %}"
                          alt="Circular image of a lock with an orange background">
                     <h4>Address Book</h4>
