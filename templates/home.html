@@ -5,9 +5,7 @@
     <div class="container">
         {% if user.is_authenticated %}
             <h2>HOME!</h2>
-            <h4>Welcome {{ user.get_full_name }}</h4>
-
-            <a href="{% url 'accounts:manage' %}">Manage shit</a>
+            <h4>Welcome, {{ user.get_full_name }}</h4>
         {% endif %}
     </div>
 {% endblock %}

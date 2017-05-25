@@ -1,6 +1,6 @@
 {% load static from staticfiles %}
 <nav class="navbar navbar-static-top" role="navigation">
-    <div class="container">
+    <div class="container center-in-div">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -10,34 +10,74 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'home' %}">GeekText</a>
+            <a class="navbar-brand" href="{% url 'home' %}"><span class="orange">GEEK</span>Text</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="navbar-collapse collapse" id="navbar-collapsible">
             <div class="navbar-form navbar-right">
                 <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-shopping-cart"><span
-                        class="badge">0</span></span>
+                        class="badge orange">0</span></span>
                 </button>
                 <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-heart-empty"><span
-                        class="badge">0</span></span>
+                        class="badge orange">0</span></span>
                 </button>
                 {% if user.is_authenticated %}
-                    <button type="button" class="btn btn-link">
-                        <a href="{% url 'accounts:logout' %}"><img src="{% static 'imgs/user.svg' %}"
-                                                                   class="avatar"></a>
+                    <button id="nav-profile-pic" type="button" class="btn btn-link">
+                        <img src="{% static 'imgs/user.svg' %}" class="avatar">
+                        <div class="dropdown-content text-center">
+
+                            <ul>
+                                <li class="clearfix">
+                                    <a href="{% url 'accounts:manage' %}" class="orange">
+                                        {{ user.username }}
+                                    </a>
+                                </li>
+                                <hr>
+                                <li class="clearfix">
+                                    <a class="orange">
+                                        <img src="{% static 'imgs/deliver.svg' %}">
+                                        <span>My Orders</span>
+                                    </a>
+                                </li>
+                                <li class="clearfix">
+                                    <a href="{% url 'accounts:manage_profile' %}" class="orange"><img
+                                            src="{% static 'imgs/lock.svg' %}">
+                                        <span>Account</span>
+                                    </a>
+                                </li>
+                                <li class="clearfix">
+                                    <a href="{% url 'accounts:manage_addresses' %}" class="orange"><img
+                                            src="{% static 'imgs/point.svg' %}">
+                                        <span>Addresses</span>
+                                    </a>
+                                </li>
+                                <li class="clearfix">
+                                    <a href="{% url 'accounts:manage_payment' %}" class="orange"><img
+                                            src="{% static 'imgs/credit-card.svg' %}">
+                                        <span>Payment</span>
+                                    </a>
+                                </li>
+                                <hr>
+                                <li>
+                                    <a href="{% url 'accounts:logout' %}" class="orange">Logout</a>
+                                </li>
+                            </ul>
+
+                        </div>
                     </button>
                 {% else %}
                     <button type="button" class="btn btn-link">
-                        <a href="{% url 'accounts:login' %}">Login</a>
+                        <a href="{% url 'accounts:login' %}" class="orange login-btn">Login</a>
                     </button>
                 {% endif %}
             </div>
 
-            <form class="navbar-form hidden-xs">
+            <form class="navbar-form hidden-xs center-in-div" style="height: 50px;">
                 <div class="form-group" style="display:inline;">
                     <div class="input-group" style="display: table;">
-                        <input type="text" class="form-control" role="search" placeholder="Search" autocomplete="off">
+                        <input type="text" class="form-control orange-border-right" role="search" placeholder="Search"
+                               autocomplete="off">
                         <span class="input-group-addon" style="width: 1%;"><span
                                 class="glyphicon glyphicon-search"></span></span>
                     </div>
