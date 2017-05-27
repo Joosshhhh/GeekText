@@ -49,6 +49,9 @@ hr {
     background: #3e474f;
 }
 
+.navbar-brand {
+    font-size: 35px;
+}
 .navbar-brand, .navbar-brand:hover {
     color: #ffffff;
 }
@@ -200,10 +203,6 @@ hr {
         margin-bottom: 105px;
     }
 
-    .footer {
-        height: 105px;
-    }
-
     .manage-account-links {
         padding: 75px;
     }
@@ -214,6 +213,9 @@ hr {
 }
 
 @media (min-width: 992px) {
+    .footer {
+        height: 105px;
+    }
 }
 
 @media (min-width: 1200px) {

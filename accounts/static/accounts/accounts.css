@@ -19,9 +19,9 @@
 
 .btn-orange-small:hover,
 .btn-orange-small:focus {
-    background-color: #ffffff;
-    color: #cc8408;
-    border-color: #e39309;
+    background-color: #cc8408;
+    color: #ffffff;
+    border-color: #a56b06;
 }
 
 .list-inline {

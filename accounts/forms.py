@@ -144,7 +144,7 @@ class UserAddressForm(forms.ModelForm):
                               widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Zipcode'}))
     phone = forms.CharField(max_length=120,
                             widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone number'}))
-    default = forms.BooleanField(label='Set as default',
+    default = forms.BooleanField(label='Set as default', required=False,
                                  widget=forms.CheckboxInput(attrs={'class': 'checkbox checkbox-inline'}))
 
     class Meta:
