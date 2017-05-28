@@ -6,28 +6,26 @@
         <h2 class="text-center">Manage Addresses</h2>
         <div class="row">
             <div class="col-sm-6 col-md-4 address-content center-in-div" style="height: 269px;"><a
-                    href="{% url 'accounts:manage_new_address' %}">Add New Addy</a></div>
+                    href="{% url 'accounts:manage_new_address' %}" class="text-muted new-addy">Add New
+                Address</a></div>
             {% for address in object_list %}
                 <div class="col-sm-6 col-md-4 address-content">
-                    <h5>{{ address.full_name }}</h5>
+                    <h5>{{ address.firstName }} {{ address.lastName }}</h5>
                     <p>{{ address.address }}</p>
-                    <p>{{ address.city }}, {{ address.state }} {{ address.zipcode }}</p>
-                    <p>{{ address.country.name }}</p>
-                    <p>Phone number: {{ address.phone }}</p>
+                    <p>{{ address.city }}, {{ address.state }} {{ address.country }} </p>
+                    <p>{{ address.zip }}</p>
+                    <p>Phone number: {{ address.phoneNumber }}</p>
                     <div>
                         <button class="btn btn-link" style="padding-left: 0;"><a
-                                href="{% url 'accounts:manage_address' pk=address.pk %}">Edit</a></button>
+                                href="{% url 'accounts:manage_address' pk=address.customerAddressId %}">Edit</a>
+                        </button>
                         <span> | </span>
                         <button class="btn btn-link" data-toggle="modal" data-target="#deleteModal">Delete</button>
-                        <span> | </span>
-                        {% if default_address.shipping_id == address.id %}
-                            <button class="btn" style="color: #5cb85c; background: none; cursor: default;">Default <span
-                                    class="glyphicon glyphicon-ok"></span></button>
-                        {% else %}
-                            <form method="POST">
-                                {% csrf_token %}
-                                <button class="btn btn-link" type="submit">Set as Default</button>
-                            </form>
+                        {% if address.customerAddressId in default %}
+                            <span> | </span>
+                            <button class="btn default-btn">Default <span
+                                    class="glyphicon glyphicon-ok"></span>
+                            </button>
                         {% endif %}
                     </div>
                 </div>
@@ -43,11 +41,14 @@
                                 <p>Are you sure you want to delete this address?</p>
                             </div>
                             <div class="modal-footer">
-                                <form method="POST" action="{% url 'accounts:manage_delete_address' pk=address.pk %}">
+                                <form action="{% url 'accounts:manage_delete_address' pk=address.customerAddressId %}">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-orange-small">Yes</button>
+                                    <div class="clearfix">
+                                        <button type="submit" class="btn btn-success pull-left">Yes</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                    </div>
                                 </form>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+
                             </div>
                         </div>
                     </div>

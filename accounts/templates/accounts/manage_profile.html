@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Account Settings | {{ block.super }}{% endblock %}
 {% load static from staticfiles %}
+{% load avatar_tags %}
 {% block content %}
     <div class="container">
         <div class="row">
@@ -9,11 +10,24 @@
                 <div class="list-group">
                     <div class="list-group-item clearfix">
                         <div class="pull-left">
+                            <label>Avatar:</label>
+                            {% if request.user|has_avatar %}
+                                {% avatar user 36 class="img-circle img-responsive" %}
+                            {% else %}
+                                <p><img src="{% static 'imgs/user-dark.svg' %}" class="avatar"></p>
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'avatar_change' %}" style="position: absolute; top: 30%; right: 3%;">
+                            <button class="btn btn-primary">Edit</button>
+                        </a>
+                    </div>
+                    <div class="list-group-item clearfix">
+                        <div class="pull-left">
                             <label>First Name:</label>
                             <p>{{ user.first_name }}</p>
                         </div>
-                        <a href="{% url 'accounts:manage_profile_first_name' %}" class="pull-right">
-                            <button class="btn btn-default">Edit</button>
+                        <a href="{% url 'accounts:manage_profile_first_name' %}" class="edit-acc-btn">
+                            <button class="btn btn-primary">Edit</button>
                         </a>
                     </div>
                     <div class="list-group-item clearfix">
@@ -21,8 +35,8 @@
                             <label>Last Name:</label>
                             <p>{{ user.last_name }}</p>
                         </div>
-                        <a href="{% url 'accounts:manage_profile_last_name' %}" class="pull-right">
-                            <button class="btn btn-default">Edit</button>
+                        <a href="{% url 'accounts:manage_profile_last_name' %}" class="edit-acc-btn">
+                            <button class="btn btn-primary">Edit</button>
                         </a>
                     </div>
                     <div class="list-group-item clearfix">
@@ -30,8 +44,8 @@
                             <label>Username</label>
                             <p>{{ user.username }}</p>
                         </div>
-                        <a href="{% url 'accounts:manage_profile_username' %}" class="pull-right">
-                            <button class="btn btn-default">Edit</button>
+                        <a href="{% url 'accounts:manage_profile_username' %}" class="edit-acc-btn">
+                            <button class="btn btn-primary">Edit</button>
                         </a>
                     </div>
                     <div class="list-group-item clearfix">
@@ -39,8 +53,8 @@
                             <label>Email:</label>
                             <p>{{ user.email }}</p>
                         </div>
-                        <a href="{% url 'accounts:manage_profile_email' %}" class="pull-right">
-                            <button class="btn btn-default">Edit</button>
+                        <a href="{% url 'accounts:manage_profile_email' %}" class="edit-acc-btn">
+                            <button class="btn btn-primary">Edit</button>
                         </a>
                     </div>
                     <div class="list-group-item clearfix">
@@ -48,14 +62,19 @@
                             <label>Password:</label>
                             <p>********</p>
                         </div>
-                        <a href="{% url 'accounts:manage_profile_password' %}" class="pull-right">
-                            <button class="btn btn-default">Edit</button>
+                        <a href="{% url 'accounts:manage_profile_password' %}" class="edit-acc-btn">
+                            <button class="btn btn-primary">Edit</button>
                         </a>
                     </div>
                 </div>
-                <a href="{% url 'accounts:manage' %}">
-                    <button class="btn btn-orange-small">Done</button>
-                    <a>
+                <div class="clearfix">
+                    <a href="{% url 'accounts:manage' %}" class="pull-left">
+                        <button class="btn btn-warning">Done</button>
+                    </a>
+                    <a href="{% url 'accounts:manage_addresses' %}" class="pull-right">
+                        <button type="button" class="btn btn-danger">Deactivate</button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

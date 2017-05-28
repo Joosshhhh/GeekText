@@ -1,4 +1,5 @@
 {% load static from staticfiles %}
+{% load avatar_tags %}
 <nav class="navbar navbar-static-top" role="navigation">
     <div class="container center-in-div">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -17,15 +18,15 @@
         <div class="navbar-collapse collapse" id="navbar-collapsible">
             <div class="navbar-form navbar-right">
                 <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-shopping-cart"><span
-                        class="badge orange">0</span></span>
+                        class="badge orange"></span></span>
                 </button>
                 <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-heart-empty"><span
-                        class="badge orange">0</span></span>
+                        class="badge orange"></span></span>
                 </button>
                 {% if user.is_authenticated %}
                     <button id="nav-profile-pic" type="button" class="btn btn-link">
-                        {% if user.avatar == None %}
-                            <img src="{% static 'imgs/user.svg' %}" class="avatar">
+                        {% if request.user|has_avatar %}
+                            {% avatar user 36 class="img-circle img-responsive" %}
                         {% else %}
                             <img src="{% static 'imgs/user.svg' %}" class="avatar">
                         {% endif %}

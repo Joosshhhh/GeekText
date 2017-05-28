@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'django_countries',
+    'authorizenet',
+    'avatar',
 
 ]
 
@@ -128,3 +130,16 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, "emails")
 
 SMARTY_AUTH_ID = 'e3a7e002-d9a0-ad2f-6c6c-9a580658dc76'
 SMARTY_AUTH_TOKEN = 'ySFwMzjNLQE5Utst3gbE'
+
+AUTHORIZENET_LOGIN_ID = '7v73RTR9fx2'
+AUTHORIZENET_TRANS_KEY = '8uTJ787eN39DEjS3'
+AUTHORIZENET_SECRET_KEY = 'Simon'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+AVATAR_ALLOWED_FILE_EXTS = ('.jpg', '.png', '.jpeg')
+AVATAR_MAX_AVATARS_PER_USER = 1
+AVATAR_AUTO_GENERATE_SITES = (36,)
+AVATAR_ADD_TEMPLATE = 'accounts/profile/manage_avatar.html'
+AVATAR_CHANGE_TEMPLATE = 'accounts/profile/manage_avatar.html'

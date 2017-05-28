@@ -27,7 +27,14 @@
                     <div class="form-group">
                         {{ form.first_name }}
                     </div>
-                    <button type="submit" class="btn btn-orange-small">Save</button>
+                    <div class="clearfix">
+                        <button type="submit" class="btn btn-warning">Save</button>
+                        <a href="{% url 'accounts:manage_profile' %}">
+                            <button type="button" class="btn btn-danger pull-right">
+                                Cancel
+                            </button>
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
