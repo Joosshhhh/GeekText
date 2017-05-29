@@ -49,7 +49,9 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'accounts.middleware.DeactivatedMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'GeekText.urls'
@@ -101,6 +103,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+
+)
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -143,3 +150,4 @@ AVATAR_MAX_AVATARS_PER_USER = 1
 AVATAR_AUTO_GENERATE_SITES = (36,)
 AVATAR_ADD_TEMPLATE = 'accounts/profile/manage_avatar.html'
 AVATAR_CHANGE_TEMPLATE = 'accounts/profile/manage_avatar.html'
+

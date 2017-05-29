@@ -66,6 +66,10 @@ class Login(AuthenticationForm):
                                widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
 
+    def confirm_login_allowed(self, user):
+        if not user.is_active:
+            pass
+
 
 class AccountUpdateFirstName(forms.ModelForm):
     first_name = forms.CharField(max_length=35, required=False,
@@ -91,24 +95,37 @@ class AccountUpdateEmail(forms.ModelForm):
     email_confirm = forms.EmailField(required=False,
                                      widget=forms.EmailInput(
                                          attrs={'class': 'form-control', 'placeholder': 'Confirm New Email'}))
+    password = forms.CharField(required=False, strip=False,
+                               widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
 
     class Meta:
         fields = ["email"]
         model = User
 
-    def clean_email(self):
+    def clean(self):
         new_email = self.cleaned_data.get('email')
         confirm = self.cleaned_data.get('email_confirm')
 
         if confirm and new_email and new_email != confirm:
             raise forms.ValidationError(
-                'Email fields must match'
+                'Email fields must match.'
             )
         if User.objects.filter(email=confirm).exists():
             raise forms.ValidationError(
                 'This email has already been taken. Please try another.'
             )
-        return new_email
+
+        password = self.cleaned_data.get('password')
+
+        if password:
+            if not self.instance.check_password(password):
+                raise forms.ValidationError(
+                    "Your password was incorrect."
+                )
+        else:
+            raise forms.ValidationError(
+                "You must enter your password."
+            )
 
 
 class AccountUpdateUsername(forms.ModelForm):

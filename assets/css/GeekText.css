@@ -19,9 +19,6 @@ a p {
     outline: none !important
 }
 
-hr {
-    margin: 0;
-}
 
 .center-in-div {
     display: flex;
@@ -47,7 +44,7 @@ hr {
     border-radius: 5px;
     border: 2px solid #eee;
     margin-bottom: 40px;
-    padding-bottom: 20px;
+    padding: 20px 15px;
 }
 
 .navbar {
@@ -64,6 +61,39 @@ hr {
 
 .navbar-brand .orange:hover {
     color: #ffffff;
+}
+
+.navbar-form {
+    margin-top: 0;
+    margin-bottom: 0;
+    border: 0;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -o-box-shadow: none;
+}
+
+.navbar-collapse.collapse {
+    transition: height 0.5s;
+}
+
+.navbar-collapse.collapsing {
+    height: 0 !important;
+}
+
+.navbar-collapse.collapse.in {
+    max-height: none;
+    height: 100vh;
+}
+
+.navbar-toggle {
+    margin-top: 10px;
+    margin-left: 15px;
+    border: solid 1px #e39309;
+}
+
+.navbar-toggle .icon-bar {
+    background-color: #e39309;
 }
 
 .orange {
@@ -100,6 +130,10 @@ hr {
     height: 36px;
 }
 
+.mobile-collapse {
+}
+
+
 #nav-profile-pic:hover .dropdown-content,
 #nav-profile-pic:focus .dropdown-content {
     display: block;
@@ -134,17 +168,17 @@ hr {
     left: 78%;
 }
 
-.dropdown-content ul {
+.nav-content ul {
     padding: 5px 0;
     margin-bottom: 0;
 }
 
-.dropdown-content ul li {
+.nav-content ul li {
     list-style: none;
     padding: 10px;
 }
 
-.dropdown-content ul li a {
+.nav-content ul li a {
     margin: 0;
     display: block;
     width: 100%;
@@ -153,19 +187,26 @@ hr {
 
 .dropdown-content ul li:hover,
 .dropdown-content ul li:hover a,
-.dropdown-content ul li:focus a {
+.dropdown-content ul li:focus a,
+.dropdown-content ul li:active a {
     background: #e39309;
+}
+
+.nav-content ul li:hover,
+.nav-content ul li:hover a,
+.nav-content ul li:focus a,
+.nav-content ul li:active a {
     color: #ffffff;
 }
 
-.dropdown-content ul li a img {
+.nav-content ul li a img {
     float: left;
     height: 25px;
     width: 25px;
     margin-left: 30px;
 }
 
-.dropdown-content ul li a span {
+.nav-content ul li a span {
     float: left;
     margin-left: 15px;
     margin-top: 5px;
@@ -201,20 +242,32 @@ hr {
     width: 40px;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 576px) and (max-width: 992px) {
+    .footer .container {
+        width: 576px;
+    }
 }
 
 @media (min-width: 768px) {
-    body {
-        margin-bottom: 105px;
+
+    hr {
+        margin: 0;
     }
 
     .manage-account-links {
         padding: 75px;
     }
 
+    .navbar-collapsible {
+        display: none;
+    }
+
     .navbar-brand {
         align-self: flex-start;
+    }
+
+    .small-brand {
+        display: none;
     }
 }
 

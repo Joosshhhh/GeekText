@@ -1,5 +1,5 @@
 .manage-profile-content {
-    margin-bottom: 25px;
+    margin-bottom: 55px;
 }
 
 .edit-acc-btn {
@@ -137,6 +137,10 @@
 }
 
 @media (min-width: 992px) {
+    .manage-profile-content {
+        margin-bottom: 0;
+    }
+
 }
 
 @media (min-width: 1200px) {

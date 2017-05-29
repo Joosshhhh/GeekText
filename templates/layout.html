@@ -33,11 +33,20 @@
                 </ul>
             </div>
             <div class="col-md-4 footer-content center-in-div">
-                <h5>Content</h5>
-            </div>
-            <div class="col-md-4 footer-content center-in-div">
                 <p>&copy; COPYRIGHT 2017 <a href="{% url 'home' %}" class="orange footer-brand">GEEKTEXT, INC.</a> ALL
                     RIGHTS RESERVED</p>
+            </div>
+            <div class="col-md-4 footer-content text-center">
+                <h4>Newsletter</h4>
+                <form>
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Email Address">
+                        <span class="input-group-btn">
+                            <button class="btn btn-orange orange-border-right" type="button">Subscribe</button>
+                        </span>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

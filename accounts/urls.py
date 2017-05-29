@@ -8,7 +8,9 @@ from . import views, forms
 urlpatterns = [
     url(r"^login/$", auth_views.LoginView.as_view(authentication_form=forms.Login), name='login'),
     url(r"^logout/$", views.LogoutView.as_view(), name='logout'),
-    url(r"^deactivate/$", views.DeactivateAccountView, name='deactivate'),
+    url(r"^reactivate/$", views.ReactivateAccountView.as_view(), name='reactivate'),
+    url(r"^deactivate/$", views.DeactivateAccountView.as_view(), name='deactivate'),
+    url(r"^deactivated/$", views.DeactivatedAccountView.as_view(), name='deactivated'),
     url(r"^manage/$", views.ManageAccountView.as_view(), name='manage'),
     url(r"^manage/profile/$", views.ManageProfileView.as_view(), name='manage_profile'),
     url(r"^manage/profile/avatar/$", views.AccountUpdateAvatarView.as_view(), name='manage_profile_avatar'),

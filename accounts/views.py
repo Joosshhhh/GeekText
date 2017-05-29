@@ -38,14 +38,27 @@ class LogoutView(generic.RedirectView):
         return super().get(request, *args, **kwargs)
 
 
-class DeactivateAccountView(LoginRequiredMixin, generic.FormView):
-    form_class = forms.DeactivateForm
-    success_url = reverse_lazy("home")
+class DeactivateAccountView(LoginRequiredMixin, generic.RedirectView):
+    url = reverse_lazy("home")
 
-    def get_form(self, form_class=None):
-        if form_class is None:
-            form_class = self.get_form_class()
-        return form_class(self.request, **self.get_form_kwargs())
+    def get(self, request, *args, **kwargs):
+        self.request.user.is_active = False
+        self.request.user.save()
+        logout(request)
+        return super().get(request, *args, **kwargs)
+
+
+class ReactivateAccountView(LoginRequiredMixin, generic.RedirectView):
+    url = reverse_lazy("home")
+
+    def get(self, request, *args, **kwargs):
+        self.request.user.is_active = True
+        self.request.user.save()
+        return super().get(request, *args, **kwargs)
+
+
+class DeactivatedAccountView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'accounts/deactivated.html'
 
 
 class ManageAccountView(LoginRequiredMixin, generic.TemplateView):
