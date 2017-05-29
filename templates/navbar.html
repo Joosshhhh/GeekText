@@ -11,7 +11,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand small-brand" href="{% url 'home' %}"><span class="orange">G</span>T</a>
+            <a class="navbar-brand small-brand text-center" href="{% url 'home' %}"><span class="orange">G</span>T</a>
             <a class="navbar-brand hidden-xs text-center" href="{% url 'home' %}"><span
                     class="orange">GEEK</span>Text</a>
             <div id="full-nav-form" class="hidden-xs">
@@ -89,10 +89,6 @@
                             </li>
                         </ul>
                     </div>
-                {% else %}
-                    <button type="button" class="btn btn-link">
-                        <a href="{% url 'accounts:login' %}" class="orange login-btn">Login</a>
-                    </button>
                 {% endif %}
             </div>
         </div>
@@ -109,7 +105,7 @@
             </form>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="navbar-collapse collapse center-in-div" id="navbar-collapsible">
+        <div class="navbar-collapse collapse text-center" id="navbar-collapsible">
             {% if user.is_authenticated %}
                 <button id="nav-profile-pic" type="button" class="btn btn-link">
                     {% if request.user|has_avatar %}
@@ -118,7 +114,6 @@
                         <img src="{% static 'imgs/user.svg' %}" class="avatar">
                     {% endif %}
                     <div class="nav-content text-center">
-
                         <ul>
                             <hr>
                             <li class="clearfix"
@@ -158,7 +153,6 @@
                                 <a href="{% url 'accounts:logout' %}" class="orange">Logout</a>
                             </li>
                         </ul>
-
                     </div>
                 </button>
             {% else %}
@@ -167,6 +161,5 @@
                 </button>
             {% endif %}
         </div>
-    </div>
     </div><!-- /.container-fluid -->
 </nav>
