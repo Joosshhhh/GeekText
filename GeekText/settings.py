@@ -145,9 +145,9 @@ AUTHORIZENET_SECRET_KEY = 'Simon'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-AVATAR_ALLOWED_FILE_EXTS = ('.jpg', '.png', '.jpeg')
+AVATAR_ALLOWED_FILE_EXTS = ('.jpg', '.png', '.jpeg', '.gif')
 AVATAR_MAX_AVATARS_PER_USER = 1
-AVATAR_AUTO_GENERATE_SITES = (36,)
+AVATAR_GENERATE_SIZE = (36,)
 AVATAR_ADD_TEMPLATE = 'accounts/profile/manage_avatar.html'
 AVATAR_CHANGE_TEMPLATE = 'accounts/profile/manage_avatar.html'
 

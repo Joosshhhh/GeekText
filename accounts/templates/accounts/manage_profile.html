@@ -12,12 +12,12 @@
                         <div class="pull-left">
                             <label>Avatar:</label>
                             {% if request.user|has_avatar %}
-                                {% avatar user 36 class="img-circle img-responsive" %}
+                                {% avatar user class="img-circle img-responsive avatar" %}
                             {% else %}
                                 <p><img src="{% static 'imgs/user-dark.svg' %}" class="avatar"></p>
                             {% endif %}
                         </div>
-                        <a href="{% url 'avatar_change' %}" style="position: absolute; top: 30%; right: 3%;">
+                        <a href="{% url 'avatar_add' %}" style="position: absolute; top: 30%; right: 3%;">
                             <button class="btn btn-primary">Edit</button>
                         </a>
                     </div>

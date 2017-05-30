@@ -10,5 +10,5 @@ class DeactivatedMiddleware(MiddlewareMixin):
                 path = request.path_info.lstrip('/')
                 print(path)
 
-                if not any(path != p for p in ["admin", "/accounts"]):
+                if path and not any(path != p for p in ["admin", "/accounts"]):
                     return redirect(reverse_lazy('accounts:deactivated'))

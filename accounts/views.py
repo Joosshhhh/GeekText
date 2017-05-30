@@ -65,15 +65,6 @@ class ManageAccountView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'accounts/manage.html'
 
 
-class AccountUpdateAvatarView(LoginRequiredMixin, generic.UpdateView):
-    form_class = forms.AccountUpdateFirstName
-    success_url = reverse_lazy("accounts:manage_profile")
-    template_name = 'accounts/profile/manage_avatar.html'
-
-    def get_object(self, queryset=None):
-        return self.request.user
-
-
 class AccountUpdateFirstNameView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.AccountUpdateFirstName
     success_url = reverse_lazy("accounts:manage_profile")
@@ -336,13 +327,13 @@ class PaymentAddView(LoginRequiredMixin, generic.FormView):
                                 billTo.country = response.address.country
                                 billTo.phoneNumber = str(response.address.phoneNumber)
                     else:
-                        print("ERROR")
-                        print("Message text : %s " % response.messages.message[0]['text'].text)
+                        form.add_error(None, response.messages.message[0]['text'].text)
+                        return super(PaymentAddView, self).form_invalid(form)
             else:
                 print('No shipping addresses')
         else:
-            print("ERROR")
-            print("Message text : %s " % response.messages.message[0]['text'].text)
+            form.add_error(None, response.messages.message[0]['text'].text)
+            return super(PaymentAddView, self).form_invalid(form)
 
         profile = apicontractsv1.customerPaymentProfileType()
         profile.payment = payment
@@ -364,14 +355,46 @@ class PaymentAddView(LoginRequiredMixin, generic.FormView):
         if response.messages.resultCode == "Ok":
             print("Successfully created a customer payment profile with id: %s" % response.customerPaymentProfileId)
         else:
-            print("ERROR")
-            print("Message text : %s " % response.messages.message[0]['text'].text)
+            form.add_error(None, response.messages.message[0]['text'].text)
+            return super(PaymentAddView, self).form_invalid(form)
 
         return super(PaymentAddView, self).form_valid(form)
 
 
+class PaymentDeleteView(LoginRequiredMixin, generic.RedirectView):
+    url = reverse_lazy('accounts:manage_payment')
+
+    def get(self, request, *args, **kwargs):
+
+        merchantAuth = apicontractsv1.merchantAuthenticationType()
+        merchantAuth.name = settings.AUTHORIZENET_LOGIN_ID
+        merchantAuth.transactionKey = settings.AUTHORIZENET_TRANS_KEY
+
+        deleteCustomerPaymentProfile = apicontractsv1.deleteCustomerPaymentProfileRequest()
+        deleteCustomerPaymentProfile.merchantAuthentication = merchantAuth
+        deleteCustomerPaymentProfile.customerProfileId = self.request.user.authorize_net_profile_id
+        deleteCustomerPaymentProfile.customerPaymentProfileId = self.kwargs.get('pk')
+
+        controller = deleteCustomerPaymentProfileController(deleteCustomerPaymentProfile)
+        controller.execute()
+
+        response = controller.getresponse()
+
+        if response.messages.resultCode == "Ok":
+            print(
+                "Successfully deleted customer payment profile with customer profile id %s" % deleteCustomerPaymentProfile.customerProfileId)
+        else:
+            print(response.messages.message[0]['text'].text)
+            print(
+                "Failed to delete customer payment profile with customer profile id %s" % deleteCustomerPaymentProfile.customerProfileId)
+
+        return super().get(request, *args, **kwargs)
+
+
 class ManagePaymentView(LoginRequiredMixin, generic.ListView):
     template_name = 'accounts/manage_payment.html'
+    default_list = [0]
+    payment_list = {}
 
     def get_queryset(self):
         merchantAuth = apicontractsv1.merchantAuthenticationType()
@@ -389,5 +412,48 @@ class ManagePaymentView(LoginRequiredMixin, generic.ListView):
 
         if response.messages.resultCode == "Ok":
             if hasattr(response.profile, 'paymentProfiles'):
+                for payment in response.profile.paymentProfiles:
+                    getCustomerPaymentProfile = apicontractsv1.getCustomerPaymentProfileRequest()
+                    getCustomerPaymentProfile.merchantAuthentication = merchantAuth
+                    getCustomerPaymentProfile.customerProfileId = self.request.user.authorize_net_profile_id
+                    getCustomerPaymentProfile.customerPaymentProfileId = str(payment.customerPaymentProfileId)
+                    getCustomerPaymentProfile.unmaskExpirationDate = True
+
+                    controller = getCustomerPaymentProfileController(getCustomerPaymentProfile)
+                    controller.execute()
+
+                    response2 = controller.getresponse()
+
+                    if response2.messages.resultCode == "Ok":
+                        print("Successfully retrieved a payment profile with profile id %s and customer id %s" % (
+                            getCustomerPaymentProfile.customerProfileId, getCustomerPaymentProfile.customerProfileId))
+                        if hasattr(response2, 'paymentProfile'):
+                            print(response2.paymentProfile.payment.creditCard.cardNumber)
+                            print(response2.paymentProfile.payment.creditCard.expirationDate)
+
+                            if hasattr(response2.paymentProfile, 'defaultPaymentProfile'):
+                                if response2.defaultPaymentProfile:
+                                    self.default_list[0] = payment.customerPaymentProfileId
+                                    print(len(self.default_list))
+                            else:
+                                if payment.customerPaymentProfileId in self.default_list:
+                                    del self.default_list[0]
+
+                            if hasattr(response2.paymentProfile, 'payment'):
+                                if hasattr(response2.paymentProfile.payment, 'creditCard'):
+                                    self.payment_list[
+                                        payment.customerPaymentProfileId] = response2.paymentProfile.payment.creditCard.expirationDate
+
+                    else:
+                        print("response code: %s" % response.messages.resultCode)
+                        print(
+                            "Failed to get payment profile information with id %s" % getCustomerPaymentProfile.customerPaymentProfileId)
+
                 return response.profile.paymentProfiles
         return None
+
+    def get_context_data(self, **kwargs):
+        context = super(ManagePaymentView, self).get_context_data(**kwargs)
+        context['default'] = self.default_list
+        context['cards'] = self.payment_list
+        return context

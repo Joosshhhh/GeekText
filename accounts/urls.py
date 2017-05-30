@@ -1,7 +1,5 @@
-from django.conf import settings
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
-from django.views.static import serve
 
 from . import views, forms
 
@@ -13,7 +11,6 @@ urlpatterns = [
     url(r"^deactivated/$", views.DeactivatedAccountView.as_view(), name='deactivated'),
     url(r"^manage/$", views.ManageAccountView.as_view(), name='manage'),
     url(r"^manage/profile/$", views.ManageProfileView.as_view(), name='manage_profile'),
-    url(r"^manage/profile/avatar/$", views.AccountUpdateAvatarView.as_view(), name='manage_profile_avatar'),
     url(r"^manage/profile/firstname/$", views.AccountUpdateFirstNameView.as_view(), name='manage_profile_first_name'),
     url(r"^manage/profile/lastname/$", views.AccountUpdateLastNameView.as_view(), name='manage_profile_last_name'),
     url(r"^manage/profile/email/$", views.AccountUpdateEmailView.as_view(), name='manage_profile_email'),
@@ -25,13 +22,8 @@ urlpatterns = [
     url(r"^manage/delete-address/(?P<pk>\d+)/$", views.AddressDeleteView.as_view(), name='manage_delete_address'),
     url(r"^manage/payment/$", views.ManagePaymentView.as_view(), name='manage_payment'),
     url(r"^manage/new-payment$", views.PaymentAddView.as_view(), name='manage_new_payment'),
+    url(r"^manage/delete-payment/(?P<pk>\d+)/$", views.PaymentDeleteView.as_view(), name='manage_delete_payment'),
     url(r"^register/$", views.RegisterView.as_view(), name='register'),
 
 ]
 
-if settings.DEBUG:
-    # static files (images, css, javascript, etc.)
-    urlpatterns += [
-        url(r'^media/(?P<path>.*)$', serve, {
-            'document_root': settings.MEDIA_ROOT})
-    ]
