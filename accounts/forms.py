@@ -2,7 +2,7 @@ from authorizenet.apicontrollers import *
 from django import forms
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm, PasswordResetForm
 from django_countries import countries
 
 User = get_user_model()
@@ -69,6 +69,10 @@ class Login(AuthenticationForm):
     def confirm_login_allowed(self, user):
         if not user.is_active:
             pass
+
+
+class PasswordReset(PasswordResetForm):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email Address'}))
 
 
 class AccountUpdateFirstName(forms.ModelForm):
