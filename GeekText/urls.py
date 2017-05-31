@@ -16,16 +16,25 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.static import serve
 
-from . import views
+from . import views, forms
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.HomeView.as_view(), name='home'),
     url(r"^accounts/", include("accounts.urls", namespace="accounts")),
     url(r"^accounts/avatar/", include('avatar.urls')),
+    url(r"^password-reset/$", auth_views.PasswordResetView.as_view(form_class=forms.PasswordReset),
+        name='forgot_password'),
+    url(r"^password-reset/done/$", auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    url(r"^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
+        auth_views.PasswordResetConfirmView.as_view(form_class=forms.PasswordResetConfirm),
+        name='password_reset_confirm'),
+    url(r"^password-reset/complete/$", auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()

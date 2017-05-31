@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
 from . import views, forms
@@ -7,7 +7,6 @@ urlpatterns = [
     url(r"^register/$", views.RegisterView.as_view(), name='register'),
     url(r"^login/$", auth_views.LoginView.as_view(authentication_form=forms.Login), name='login'),
     url(r"^logout/$", views.LogoutView.as_view(), name='logout'),
-    url(r"^password-reset/$", views.PasswordResetView.as_view(), name='forgot_password'),
     url(r"^reactivate/$", views.ReactivateAccountView.as_view(), name='reactivate'),
     url(r"^deactivate/$", views.DeactivateAccountView.as_view(), name='deactivate'),
     url(r"^deactivated/$", views.DeactivatedAccountView.as_view(), name='deactivated'),
@@ -25,6 +24,5 @@ urlpatterns = [
     url(r"^manage/payment/$", views.ManagePaymentView.as_view(), name='manage_payment'),
     url(r"^manage/new-payment$", views.PaymentAddView.as_view(), name='manage_new_payment'),
     url(r"^manage/delete-payment/(?P<pk>\d+)/$", views.PaymentDeleteView.as_view(), name='manage_delete_payment'),
-    url(r"^avatar/", include('avatar.urls')),
 
 ]
