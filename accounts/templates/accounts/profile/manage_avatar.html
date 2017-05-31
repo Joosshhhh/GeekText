@@ -28,20 +28,12 @@
                     <div class="form-group">
                         <div class="panel panel-default panel-offset">
                             <div class="panel-body">
-                                <!-- Progress Bar -->
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60"
-                                         aria-valuemin="0" aria-valuemax="100" style="width: 60%;"><span
-                                            class="sr-only">60% Complete</span>
-                                    </div>
-                                </div>
-                                <br/>
                                 <br/>
                                 <div class="input-group image-preview">
                                     <input type="text" class="form-control image-preview-filename" disabled="disabled"/>
                                     <!-- don't give a name === doesn't send on POST/GET -->
                                     <span class="input-group-btn">
-						<!-- image-preview-clear button -->
+
 						                <button type="button" class="btn btn-primary image-preview-clear"
                                                 style="display:none;">
                                             <span class="glyphicon glyphicon-remove"></span> Clear
@@ -53,18 +45,26 @@
                                             {{ upload_avatar_form.avatar }}
                                             <!-- rename it -->
                                         </div>
-                                        <button type="submit" class="btn btn-labeled btn-warning">
-                                            <span class="btn-label"><i class="glyphicon glyphicon-upload"></i></span>
-                                            Upload
-                                        </button>
 						            </span>
                                 </div>
-                                <!-- /input-group image-preview [TO HERE]-->
+
                                 <br/>
                             </div>
                         </div>
                     </div>
+                    <div class="clearfix">
+                        <button type="submit" class="btn btn-labeled btn-warning" style="margin-left: 15px;">
+                            <span class="btn-label"><i class="glyphicon glyphicon-upload"></i></span>
+                            Upload
+                        </button>
+                        <a href="{% url 'accounts:manage_profile' %}">
+                            <button type="button" class="btn btn-danger pull-right" style="margin-right:15px;">
+                                Cancel
+                            </button>
+                        </a>
+                    </div>
                 </form>
+
             </div>
         </div>
     </div>

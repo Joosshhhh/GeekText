@@ -1,3 +1,5 @@
+import re
+
 from authorizenet.apicontrollers import *
 from django import forms
 from django.conf import settings
@@ -7,7 +9,31 @@ from django.contrib.auth.views import PasswordChangeView
 from django.core.urlresolvers import reverse_lazy
 from django.views import generic
 
-from . import forms
+from . import forms, models
+
+CARDS = {
+    'Amex': re.compile(r"^3[47][0-9]{13}$"),
+    'Diners Club': re.compile(r"^3(?:0[0-5]|[68][0-9])[0-9]{11}$"),
+    'Discover': re.compile(
+        r"^65[4-9][0-9]{13}|64[4-9][0-9]{13}|6011[0-9]{12}|(622(?:12[6-9]|1[3-9][0-9]|[2-8][0-9][0-9]|9[01][0-9]|92[0-5])[0-9]{10})$"),
+    'JCB': re.compile(r"^(?:2131|1800|35\d{3})\d{11}$"),
+    'Maestro ': re.compile(r"^(5018|5020|5038|6304|6759|6761|6763)[0-9]{8,15}$"),
+    'Mastercard': re.compile(r"^5[1-5][0-9]{14}$"),
+    "Solo": re.compile(r"^(6334|6767)[0-9]{12}|(6334|6767)[0-9]{14}|(6334|6767)[0-9]{15}$"),
+    'Switch': re.compile(
+        r"^(4903|4905|4911|4936|6333|6759)[0-9]{12}|(4903|4905|4911|4936|6333|6759)[0-9]{14}|(4903|4905|4911|4936|6333|6759)[0-9]{15}|564182[0-9]{10}|564182[0-9]{12}|564182[0-9]{13}|633110[0-9]{10}|633110[0-9]{12}|633110[0-9]{13}$"),
+    'Union Pay': re.compile(r"^(62[0-9]{14,17})$"),
+    'Visa': re.compile(r"^4[0-9]{12}(?:[0-9]{3})?$"),
+    'Visa Mastercard': re.compile(r"^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$"),
+}
+
+
+def get_vendor(number):
+    """Return the type if it matches one of the cards."""
+    for card, pattern in CARDS.items():
+        if pattern.match(number):
+            return card
+    return None
 
 
 class RegisterView(generic.CreateView):
@@ -271,7 +297,7 @@ class PaymentAddView(LoginRequiredMixin, generic.FormView):
     template_name = "accounts/manage_payment_form.html"
 
     def form_valid(self, form):
-
+        p, created = models.UserPayments.objects.get_or_create(user=self.request.user)
         merchantAuth = apicontractsv1.merchantAuthenticationType()
         merchantAuth.name = settings.AUTHORIZENET_LOGIN_ID
         merchantAuth.transactionKey = settings.AUTHORIZENET_TRANS_KEY
@@ -312,22 +338,22 @@ class PaymentAddView(LoginRequiredMixin, generic.FormView):
                     # Make the API call
                     getShippingAddressController = getCustomerShippingAddressController(getShippingAddress)
                     getShippingAddressController.execute()
-                    response = getShippingAddressController.getresponse()
+                    response2 = getShippingAddressController.getresponse()
 
-                    if response.messages.resultCode == "Ok":
+                    if response2.messages.resultCode == "Ok":
                         print("SUCCESS")
-                        if hasattr(response, 'defaultShippingAddress'):
-                            if response.defaultShippingAddress:
-                                billTo.firstName = response.address.firstName
-                                billTo.lastName = response.address.lastName
-                                billTo.address = response.address.address
-                                billTo.city = response.address.city
-                                billTo.state = response.address.state
-                                billTo.zip = response.address.zip
-                                billTo.country = response.address.country
-                                billTo.phoneNumber = str(response.address.phoneNumber)
+                        if hasattr(response2, 'defaultShippingAddress'):
+                            if response2.defaultShippingAddress:
+                                billTo.firstName = response2.address.firstName
+                                billTo.lastName = response2.address.lastName
+                                billTo.address = response2.address.address
+                                billTo.city = response2.address.city
+                                billTo.state = response2.address.state
+                                billTo.zip = response2.address.zip
+                                billTo.country = response2.address.country
+                                billTo.phoneNumber = str(response2.address.phoneNumber)
                     else:
-                        form.add_error(None, response.messages.message[0]['text'].text)
+                        form.add_error(None, response2.messages.message[0]['text'].text)
                         return super(PaymentAddView, self).form_invalid(form)
             else:
                 print('No shipping addresses')
@@ -339,7 +365,7 @@ class PaymentAddView(LoginRequiredMixin, generic.FormView):
         profile.payment = payment
         profile.billTo = billTo
         profile.customerType = 'individual'
-        profile.defaultPaymentProfile = form.cleaned_data['default']
+        profile.defaultPaymentProfile = form.cleaned_data.get('default')
 
         createCustomerPaymentProfile = apicontractsv1.createCustomerPaymentProfileRequest()
         createCustomerPaymentProfile.merchantAuthentication = merchantAuth
@@ -350,12 +376,24 @@ class PaymentAddView(LoginRequiredMixin, generic.FormView):
         controller = createCustomerPaymentProfileController(createCustomerPaymentProfile)
         controller.execute()
 
-        response = controller.getresponse()
+        response3 = controller.getresponse()
 
-        if response.messages.resultCode == "Ok":
-            print("Successfully created a customer payment profile with id: %s" % response.customerPaymentProfileId)
+        if response3.messages.resultCode == "Ok":
+            print("Successfully created a customer payment profile with id: %s" % response3.customerPaymentProfileId)
+
+            vendor = get_vendor(card_number)
+            if vendor:
+                p.card_company = vendor
+                print(vendor)
+            else:
+                form.add_error(None, 'naw nigga')
+                return super(PaymentAddView, self).form_invalid(form)
+
+            p.authorize_net_payment_profile_id = response3.customerPaymentProfileId
+            p.full_name = form.cleaned_data.get('full_name')
+            p.save()
         else:
-            form.add_error(None, response.messages.message[0]['text'].text)
+            form.add_error(None, response3.messages.message[0]['text'].text)
             return super(PaymentAddView, self).form_invalid(form)
 
         return super(PaymentAddView, self).form_valid(form)
@@ -383,6 +421,7 @@ class PaymentDeleteView(LoginRequiredMixin, generic.RedirectView):
         if response.messages.resultCode == "Ok":
             print(
                 "Successfully deleted customer payment profile with customer profile id %s" % deleteCustomerPaymentProfile.customerProfileId)
+            models.UserPayments.objects.filter(authorize_net_payment_profile_id=self.kwargs.get('pk')).delete()
         else:
             print(response.messages.message[0]['text'].text)
             print(
@@ -404,7 +443,6 @@ class ManagePaymentView(LoginRequiredMixin, generic.ListView):
         getCustomerProfile = apicontractsv1.getCustomerProfileRequest()
         getCustomerProfile.merchantAuthentication = merchantAuth
         getCustomerProfile.customerProfileId = self.request.user.authorize_net_profile_id
-        getCustomerProfile.unmaskExpirationDate = True
         controller = getCustomerProfileController(getCustomerProfile)
         controller.execute()
 
@@ -426,13 +464,14 @@ class ManagePaymentView(LoginRequiredMixin, generic.ListView):
 
                     if response2.messages.resultCode == "Ok":
                         print("Successfully retrieved a payment profile with profile id %s and customer id %s" % (
-                            getCustomerPaymentProfile.customerProfileId, getCustomerPaymentProfile.customerProfileId))
+                            getCustomerPaymentProfile.customerPaymentProfileId,
+                            getCustomerPaymentProfile.customerProfileId))
                         if hasattr(response2, 'paymentProfile'):
                             print(response2.paymentProfile.payment.creditCard.cardNumber)
                             print(response2.paymentProfile.payment.creditCard.expirationDate)
 
                             if hasattr(response2.paymentProfile, 'defaultPaymentProfile'):
-                                if response2.defaultPaymentProfile:
+                                if response2.paymentProfile.defaultPaymentProfile:
                                     self.default_list[0] = payment.customerPaymentProfileId
                                     print(len(self.default_list))
                             else:
@@ -456,4 +495,5 @@ class ManagePaymentView(LoginRequiredMixin, generic.ListView):
         context = super(ManagePaymentView, self).get_context_data(**kwargs)
         context['default'] = self.default_list
         context['cards'] = self.payment_list
+        context['user_payments'] = models.UserPayments.objects.filter(user=self.request.user)
         return context

@@ -50,7 +50,7 @@ class Register(UserCreationForm):
         response = controller.getresponse()
         if response.messages.resultCode != "Ok":
             raise forms.ValidationError(
-                "Sorry couldn't create customer profile"
+                "Sorry couldn't create registration."
             )
         else:
             user.authorize_net_profile_id = response.customerProfileId

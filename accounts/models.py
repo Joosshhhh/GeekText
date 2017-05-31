@@ -18,3 +18,10 @@ class User(AbstractUser):
 
     def is_active_user(self):
         return self.is_active
+
+
+class UserPayments(models.Model):
+    user = models.ForeignKey(User, blank=True, on_delete=models.CASCADE)
+    card_company = models.CharField(max_length=35, default='Credit')
+    authorize_net_payment_profile_id = models.CharField(max_length=35, null=True)
+    full_name = models.CharField(max_length=100, null=True)

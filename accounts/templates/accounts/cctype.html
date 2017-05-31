@@ -1,0 +1,56 @@
+{% load static from staticfiles %}
+{% for user_p in user_payments %}
+    {% if payment.customerPaymentProfileId|stringformat:"i" == user_p.authorize_net_payment_profile_id %}
+        {% if user_p.card_company == 'Amex' %}
+            <img style="width: 40px; margin-right: 25px;"
+                 src="{% static 'imgs/american-express.svg' %}">
+
+        {% elif user_p.card_company == 'Diners Club' %}
+            <img style="width: 40px; margin-right: 25px;"
+                 src="{% static 'imgs/dinners-club.svg' %}">
+
+        {% elif user_p.card_company == 'Discover' %}
+            <img style="width: 40px; margin-right: 25px;"
+                 src="{% static 'imgs/discover.svg' %}">
+
+        {% elif user_p.card_company == 'JCB' %}
+            <img style="width: 40px; margin-right: 25px;"
+                 src="{% static 'imgs/jcb.svg' %}">
+
+        {% elif user_p.card_company == 'Maestro' %}
+            <img style="width: 40px; margin-right: 25px;"
+                 src="{% static 'imgs/maestro.svg' %}">
+
+        {% elif user_p.card_company == 'Mastercard' %}
+            <img style="width: 40px; margin-right: 25px;"
+                 src="{% static 'imgs/mastercard.svg' %}">
+
+        {% elif user_p.card_company == 'Solo' %}
+            <img style="width: 40px; margin-right: 25px;"
+                 src="{% static 'imgs/solo.svg' %}">
+
+        {% elif user_p.card_company == 'Switch' %}
+            <img style="width: 40px; margin-right: 25px;"
+                 src="{% static 'imgs/switch.svg' %}">
+
+        {% elif user_p.card_company == 'Union Pay' %}
+            <img style="width: 40px; margin-right: 25px;"
+                 src="{% static 'imgs/union-pay.svg' %}">
+
+        {% elif user_p.card_company == 'Visa' %}
+            <img style="width: 40px; margin-right: 25px;"
+                 src="{% static 'imgs/visa.svg' %}">
+
+        {% elif user_p.card_company == 'Visa Mastercard' %}
+            <img style="width: 40px;"
+                 src="{% static 'imgs/visa.svg' %}">
+            <img style="width: 40px; margin-right: 25px;"
+                 src="{% static 'imgs/mastercard.svg' %}">
+        {% else %}
+            <img style="width: 40px; margin-right: 25px;"
+                 src="{% static 'imgs/mastercard.svg' %}">
+        {% endif %}
+
+    {% endif %}
+{% endfor %}
+
