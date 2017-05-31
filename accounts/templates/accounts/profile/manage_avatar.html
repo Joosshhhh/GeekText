@@ -21,7 +21,7 @@
                         </div>
                     {% endfor %}
                 {% endif %}
-                <h2 class="text-center">Change avatar</h2>
+                <h2 class="text-center">Change Avatar</h2>
                 <form id='avatar-form' enctype="multipart/form-data" method="POST" action="{% url 'avatar_add' %}">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="/accounts/manage/profile/"/>

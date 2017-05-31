@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Change Email| {{ block.super }}{% endblock %}
+{% block title %}Change Email | {{ block.super }}{% endblock %}
 {% block content %}
 
     <div class="container">
@@ -20,7 +20,7 @@
                         </div>
                     {% endfor %}
                 {% endif %}
-                <h2 class="text-center">Change email</h2>
+                <h2 class="text-center">Change Email</h2>
                 <form method="POST">
                     {% csrf_token %}
                     <div class="form-group">

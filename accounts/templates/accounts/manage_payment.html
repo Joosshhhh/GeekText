@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Manage Payment | {{ block.super }}{% endblock %}
+{% block title %}Manage Payments | {{ block.super }}{% endblock %}
 {% load static from staticfiles %}
 {% load account_tags %}
 {% block content %}
@@ -35,13 +35,6 @@
                                                 </button>
                                             </a>
                                         </li>
-                                        {% if payment.customerPaymentProfileId in default %}
-                                            <li>
-                                                <button class="btn default-btn">Default <span
-                                                        class="glyphicon glyphicon-ok"></span>
-                                                </button>
-                                            </li>
-                                        {% endif %}
                                         {% comment %}<li class="manage-payment-btn">
                                             <button class="btn btn-success">Edit</button>
                                         </li>{% endcomment %}
@@ -57,6 +50,11 @@
                                             <p>{{ user_p.full_name }}</p>
                                         {% endif %}
                                     {% endfor %}
+                                    {% if payment.customerPaymentProfileId in default %}
+                                        <button class="btn default-btn" style="padding-left: 0;">Default <span
+                                                class="glyphicon glyphicon-ok"></span>
+                                        </button>
+                                    {% endif %}
                                 </div>
                                 <div class="col-xs-6">
                                     <h4>Billing Address</h4>

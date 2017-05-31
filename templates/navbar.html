@@ -92,9 +92,9 @@
                     </ul>
                 </div>
             {% else %}
-                <button type="button" class="btn btn-link hidden-xs">
-                    <a href="{% url 'accounts:login' %}" class="orange login-btn">Login</a>
-                </button>
+                <a href="{% url 'accounts:login' %}">
+                    <button type="button" class="btn btn-link orange login-btn hidden-xs">Login</button>
+                </a>
             {% endif %}
 
 
@@ -164,9 +164,9 @@
                         </div>
                     </div>
                 {% else %}
-                    <button type="button" class="btn btn-link">
-                        <a href="{% url 'accounts:login' %}" class="orange login-btn">Login</a>
-                    </button>
+                    <a href="{% url 'accounts:login' %}">
+                        <button type="button" class="btn btn-link orange login-btn">Login</button>
+                    </a>
                 {% endif %}
             </div>
         </div>

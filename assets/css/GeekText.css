@@ -52,6 +52,9 @@ a p {
     background: #3e474f;
 }
 
+.navbar-header {
+    width: 100%;
+}
 .navbar-brand {
     font-size: 35px;
 }
