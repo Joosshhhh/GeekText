@@ -1,3 +1,4 @@
+import pyxb
 import re
 
 from authorizenet.apicontrollers import *
@@ -269,11 +270,12 @@ class ManageAddressView(LoginRequiredMixin, generic.ListView):
                     if response2.messages.resultCode == "Ok":
                         if hasattr(response2, 'defaultShippingAddress'):
                             if response2.defaultShippingAddress:
-                                self.default_list[0] = address.customerAddressId
+                                print(len(self.default_list))
+                                self.default_list.append(address.customerAddressId)
                                 print(len(self.default_list))
                         else:
                             if address.customerAddressId in self.default_list:
-                                del self.default_list[0]
+                                self.default_list.remove(address.customerAddressId)
                     else:
                         print("ERROR")
                         print("Message text : %s " % response.messages.message[0]['text'].text)
@@ -297,26 +299,29 @@ class PaymentAddView(LoginRequiredMixin, generic.FormView):
     template_name = "accounts/manage_payment_form.html"
 
     def form_valid(self, form):
-        p, created = models.UserPayments.objects.get_or_create(user=self.request.user)
+        p = models.UserPayments.objects.create(user=self.request.user)
         merchantAuth = apicontractsv1.merchantAuthenticationType()
         merchantAuth.name = settings.AUTHORIZENET_LOGIN_ID
         merchantAuth.transactionKey = settings.AUTHORIZENET_TRANS_KEY
-        card_number = form.cleaned_data.get('card_first') + form.cleaned_data.get(
-            'card_second') + form.cleaned_data.get(
-            'card_third') + form.cleaned_data.get('card_fourth')
+        try:
+            card_number = form.cleaned_data.get('card_first') + form.cleaned_data.get(
+                'card_second') + form.cleaned_data.get(
+                'card_third') + form.cleaned_data.get('card_fourth')
 
-        creditCard = apicontractsv1.creditCardType()
-        creditCard.cardNumber = card_number
-        creditCard.expirationDate = form.cleaned_data.get('exp_year') + "-" + form.cleaned_data.get('exp_month')
-        creditCard.cardCode = form.cleaned_data.get('ccv')
+            creditCard = apicontractsv1.creditCardType()
+            creditCard.cardNumber = card_number
+            creditCard.expirationDate = form.cleaned_data.get('exp_year') + "-" + form.cleaned_data.get('exp_month')
+            creditCard.cardCode = form.cleaned_data.get('ccv')
 
-        payment = apicontractsv1.paymentType()
-        payment.creditCard = creditCard
+            payment = apicontractsv1.paymentType()
+            payment.creditCard = creditCard
 
-        billTo = apicontractsv1.customerAddressType()
-        billTo.firstName = self.request.user.first_name
-        billTo.lastName = self.request.user.last_name
-
+            billTo = apicontractsv1.customerAddressType()
+            billTo.firstName = self.request.user.first_name
+            billTo.lastName = self.request.user.last_name
+        except pyxb.SimpleFacetValueError:
+            form.add_error(None, 'Invalid input.')
+            return super(PaymentAddView, self).form_invalid(form)
         getCustomerProfile = apicontractsv1.getCustomerProfileRequest()
         getCustomerProfile.merchantAuthentication = merchantAuth
         getCustomerProfile.customerProfileId = self.request.user.authorize_net_profile_id
@@ -385,9 +390,6 @@ class PaymentAddView(LoginRequiredMixin, generic.FormView):
             if vendor:
                 p.card_company = vendor
                 print(vendor)
-            else:
-                form.add_error(None, 'naw nigga')
-                return super(PaymentAddView, self).form_invalid(form)
 
             p.authorize_net_payment_profile_id = response3.customerPaymentProfileId
             p.full_name = form.cleaned_data.get('full_name')
@@ -397,6 +399,79 @@ class PaymentAddView(LoginRequiredMixin, generic.FormView):
             return super(PaymentAddView, self).form_invalid(form)
 
         return super(PaymentAddView, self).form_valid(form)
+
+
+class PaymentUpdateView(LoginRequiredMixin, generic.FormView):
+    form_class = forms.UserPaymentForm
+    success_url = reverse_lazy("accounts:manage_payment")
+    template_name = 'accounts/manage_payment_form.html'
+
+    def get_initial(self):
+        """
+        Returns the initial data to use for forms on this view.
+        """
+        initial = super(PaymentUpdateView, self).get_initial()
+
+        merchantAuth = apicontractsv1.merchantAuthenticationType()
+        merchantAuth.name = settings.AUTHORIZENET_LOGIN_ID
+        merchantAuth.transactionKey = settings.AUTHORIZENET_TRANS_KEY
+
+        getCustomerPaymentProfile = apicontractsv1.getCustomerPaymentProfileRequest()
+        getCustomerPaymentProfile.merchantAuthentication = merchantAuth
+        getCustomerPaymentProfile.customerProfileId = self.request.user.authorize_net_profile_id
+        getCustomerPaymentProfile.customerPaymentProfileId = self.kwargs.get('pk')
+        getCustomerPaymentProfile.unmaskExpirationDate = True
+        controller = getCustomerPaymentProfileController(getCustomerPaymentProfile)
+        controller.execute()
+
+        response = controller.getresponse()
+
+        if response.messages.resultCode == "Ok":
+            print("Successfully retrieved a payment profile with profile id %s and customer id %s" % (
+                getCustomerPaymentProfile.customerProfileId, getCustomerPaymentProfile.customerProfileId))
+            if hasattr(response, 'paymentProfile'):
+                if hasattr(response.paymentProfile, 'payment'):
+                    payment = models.UserPayments.objects.filter(
+                        authorize_net_payment_profile_id=self.kwargs.get('pk')).first()
+                    initial['full_name'] = payment.full_name
+                    initial['card_first'] = 'XXXX'
+                    initial['card_second'] = 'XXXX'
+                    initial['card_third'] = 'XXXX'
+                    initial['card_fourth'] = \
+                        str(response.paymentProfile.payment.creditCard.cardNumber).split("XXXX", 1)[1]
+                    initial['exp_month'] = str(response.paymentProfile.payment.creditCard.expirationDate).split("-", 1)[
+                        1]
+                    initial['exp_year'] = str(response.paymentProfile.payment.creditCard.expirationDate).split("-", 1)[
+                        0]
+
+                if hasattr(response.paymentProfile, 'defaultPaymentProfile'):
+                    if response.paymentProfile.defaultPaymentProfile:
+                        initial['default'] = response.paymentProfile.defaultPaymentProfile
+
+
+        else:
+            print("response code: %s" % response.messages.resultCode)
+            print(
+                "Failed to get payment profile information with id %s" % getCustomerPaymentProfile.customerPaymentProfileId)
+
+        return initial
+
+    def form_valid(self, form):
+        card_number = form.cleaned_data.get('card_first') + form.cleaned_data.get(
+            'card_second') + form.cleaned_data.get(
+            'card_third') + form.cleaned_data.get('card_fourth')
+        valid_input = card_number + form.cleaned_data.get('ccv') + form.cleaned_data.get(
+            'exp_month') + form.cleaned_data.get('exp_year')
+        if not valid_input.isdigit():
+            form.add_error(None, 'Invalid input. Remember to replace XXXX with your valid card numbers')
+            return super(PaymentUpdateView, self).form_invalid(form)
+        form.update_payment(self.request.user.authorize_net_profile_id, self.kwargs.get('pk'), card_number)
+        if form.cleaned_data.get('full_name'):
+            payment = models.UserPayments.objects.filter(
+                authorize_net_payment_profile_id=self.kwargs.get('pk')).first()
+            payment.full_name = form.cleaned_data.get('full_name')
+            payment.save()
+        return super(PaymentUpdateView, self).form_valid(form)
 
 
 class PaymentDeleteView(LoginRequiredMixin, generic.RedirectView):
@@ -428,6 +503,21 @@ class PaymentDeleteView(LoginRequiredMixin, generic.RedirectView):
                 "Failed to delete customer payment profile with customer profile id %s" % deleteCustomerPaymentProfile.customerProfileId)
 
         return super().get(request, *args, **kwargs)
+
+
+class AddPaymentBillingView(LoginRequiredMixin, generic.FormView):
+    form_class = forms.PaymentBillingForm
+    success_url = reverse_lazy("accounts:manage_payment")
+    template_name = 'accounts/manage_address_form.html'
+
+    def get_initial(self):
+        initial = super(AddPaymentBillingView, self).get_initial()
+        initial['country'] = "US"
+        return initial
+
+    def form_valid(self, form):
+        form.add_billing(self.request.user.authorize_net_profile_id, self.kwargs.get('pk'))
+        return super(AddPaymentBillingView, self).form_valid(form)
 
 
 class ManagePaymentView(LoginRequiredMixin, generic.ListView):
@@ -472,11 +562,11 @@ class ManagePaymentView(LoginRequiredMixin, generic.ListView):
 
                             if hasattr(response2.paymentProfile, 'defaultPaymentProfile'):
                                 if response2.paymentProfile.defaultPaymentProfile:
-                                    self.default_list[0] = payment.customerPaymentProfileId
+                                    self.default_list.append(payment.customerPaymentProfileId)
                                     print(len(self.default_list))
                             else:
                                 if payment.customerPaymentProfileId in self.default_list:
-                                    del self.default_list[0]
+                                    self.default_list.remove(payment.customerPaymentProfileId)
 
                             if hasattr(response2.paymentProfile, 'payment'):
                                 if hasattr(response2.paymentProfile.payment, 'creditCard'):
@@ -495,5 +585,5 @@ class ManagePaymentView(LoginRequiredMixin, generic.ListView):
         context = super(ManagePaymentView, self).get_context_data(**kwargs)
         context['default'] = self.default_list
         context['cards'] = self.payment_list
-        context['user_payments'] = models.UserPayments.objects.filter(user=self.request.user)
+        context['user_payments'] = models.UserPayments.objects.filter(user=self.request.user).all()
         return context

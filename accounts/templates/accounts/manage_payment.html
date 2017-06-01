@@ -14,7 +14,7 @@
 
         <div class="row">
             {% for payment in object_list %}
-                <div class="col-sm-6" style="margin-top: 25px;">
+                <div class="col-md-6" style="margin-top: 25px;">
                     <div class="panel-group">
                         <div class="panel panel-info">
                             <div class="panel-heading clearfix">
@@ -35,14 +35,16 @@
                                                 </button>
                                             </a>
                                         </li>
-                                        {% comment %}<li class="manage-payment-btn">
-                                            <button class="btn btn-success">Edit</button>
-                                        </li>{% endcomment %}
+                                        <li class="manage-payment-btn pull-right">
+                                            <a href="{% url 'accounts:manage_single_payment' pk=payment.customerPaymentProfileId %}">
+                                                <button class="btn btn-success">Edit</button>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </h4>
                             </div>
 
-                            <div class="panel-body" style="height: 219px;">
+                            <div class="panel-body" style="height: 250px;">
                                 <div class="col-xs-6">
                                     <h4>Name on card</h4>
                                     {% for user_p in user_payments %}
@@ -67,8 +69,13 @@
                                         <p>{{ payment.billTo.phoneNumber }}</p>
                                     {% else %}
                                         <div class="alert alert-warning">
-                                            You have no <strong>billing address</strong> set.
+                                            You have no billing address set.
+                                            You can <a
+                                                href="{% url 'accounts:manage_payment_billing' pk=payment.customerPaymentProfileId %}"
+                                                style="color: #8a6d3b;"><strong>click here</strong></a>
+                                            to add one or make a default shipping address.
                                         </div>
+
                                     {% endif %}
                                 </div>
                             </div>

@@ -117,9 +117,13 @@
                 {% if user.is_authenticated %}
                     <div id="nav-collapse-menu">
                         {% if request.user|has_avatar %}
-                            {% avatar user class="img-circle img-responsive avatar" style="display: inline;" %}
+                            <a href="{% url 'accounts:manage_profile' %}">
+                                {% avatar user class="img-circle img-responsive avatar" style="display: inline;" %}
+                            </a>
                         {% else %}
-                            <img src="{% static 'imgs/user.svg' %}" class="avatar">
+                            <a href="{% url 'accounts:manage' %}">
+                                <img src="{% static 'imgs/user.svg' %}" class="avatar">
+                            </a>
                         {% endif %}
                         <div class="nav-content">
                             <ul>

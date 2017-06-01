@@ -22,6 +22,8 @@ urlpatterns = [
     url(r"^manage/address/(?P<pk>\d+)/$", views.AddressUpdateView.as_view(), name='manage_address'),
     url(r"^manage/delete-address/(?P<pk>\d+)/$", views.AddressDeleteView.as_view(), name='manage_delete_address'),
     url(r"^manage/payment/$", views.ManagePaymentView.as_view(), name='manage_payment'),
+    url(r"^manage/payment/(?P<pk>\d+)/$", views.PaymentUpdateView.as_view(), name='manage_single_payment'),
+    url(r"^manage/payment/billing/(?P<pk>\d+)/$", views.AddPaymentBillingView.as_view(), name='manage_payment_billing'),
     url(r"^manage/new-payment$", views.PaymentAddView.as_view(), name='manage_new_payment'),
     url(r"^manage/delete-payment/(?P<pk>\d+)/$", views.PaymentDeleteView.as_view(), name='manage_delete_payment'),
 

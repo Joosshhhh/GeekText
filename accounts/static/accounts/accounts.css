@@ -9,17 +9,22 @@
 
 }
 
+.address-content {
+    height: 305px;
+}
+
 .manage-account-links,
 .address-content {
     padding: 40px;
 }
 
-.new-addy {
+.new-addy span {
+    text-align: center;
     font-size: 16px;
 }
 
-.new-addy:hover,
-.new-addy:focus {
+.new-addy span:hover,
+.new-addy span:focus {
     color: dimgrey;
 }
 
@@ -40,7 +45,6 @@
 .modal-sm {
     margin-top: 100px;
 }
-
 
 .list-inline {
     margin: 0;

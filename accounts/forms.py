@@ -49,9 +49,7 @@ class Register(UserCreationForm):
 
         response = controller.getresponse()
         if response.messages.resultCode != "Ok":
-            raise forms.ValidationError(
-                "Sorry couldn't create registration."
-            )
+            print("Error")
         else:
             user.authorize_net_profile_id = response.customerProfileId
 
@@ -142,6 +140,7 @@ class AccountUpdateUsername(forms.ModelForm):
             raise forms.ValidationError(
                 'This username has already been taken. Please try another.'
             )
+        return new_username
 
 
 class AccountUpdatePassword(PasswordChangeForm):
@@ -242,6 +241,7 @@ class UserAddressForm(forms.Form):
 
         # Give updated address details
         officeAddress = apicontractsv1.customerAddressExType()
+
         officeAddress.firstName = self.cleaned_data['first_name']
         officeAddress.lastName = self.cleaned_data['last_name']
         officeAddress.address = self.cleaned_data['address']
@@ -286,7 +286,8 @@ class UserPaymentForm(forms.Form):
     card_fourth = forms.CharField(max_length=4,
                                   widget=forms.TextInput(
                                       attrs={'class': 'form-control', 'placeholder': '0000'}))
-    ccv = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'CCV'}))
+    ccv = forms.CharField(max_length=4,
+                          widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'CCV'}))
     exp_month = forms.CharField(max_length=2,
                                 widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'MM'}))
     exp_year = forms.CharField(max_length=4,
@@ -295,3 +296,125 @@ class UserPaymentForm(forms.Form):
                                 widget=forms.TextInput(
                                     attrs={'class': 'form-control', 'placeholder': 'Name On The Card'}))
     default = forms.BooleanField(label='Set as default', required=False)
+
+    def update_payment(self, authorizenet_id, authorizenet_payment_id, card_number):
+
+        merchantAuth = apicontractsv1.merchantAuthenticationType()
+        merchantAuth.name = settings.AUTHORIZENET_LOGIN_ID
+        merchantAuth.transactionKey = settings.AUTHORIZENET_TRANS_KEY
+
+        creditCard = apicontractsv1.creditCardType()
+        creditCard.cardNumber = card_number
+        creditCard.expirationDate = self.cleaned_data.get('exp_year') + '-' + self.cleaned_data.get('exp_month')
+
+        payment = apicontractsv1.paymentType()
+        payment.creditCard = creditCard
+
+        paymentProfile = apicontractsv1.customerPaymentProfileExType()
+        paymentProfile.payment = payment
+        paymentProfile.defaultPaymentProfile = self.cleaned_data.get('default')
+        paymentProfile.customerPaymentProfileId = authorizenet_payment_id
+        updateCustomerPaymentProfile = apicontractsv1.updateCustomerPaymentProfileRequest()
+        updateCustomerPaymentProfile.merchantAuthentication = merchantAuth
+        updateCustomerPaymentProfile.paymentProfile = paymentProfile
+        updateCustomerPaymentProfile.customerProfileId = authorizenet_id
+        updateCustomerPaymentProfile.validationMode = apicontractsv1.validationModeEnum.liveMode
+
+        controller = updateCustomerPaymentProfileController(updateCustomerPaymentProfile)
+        controller.execute()
+
+        response = controller.getresponse()
+
+        if response.messages.resultCode == "Ok":
+            print(
+                "Successfully updated customer payment profile with id %s" % updateCustomerPaymentProfile.paymentProfile.customerPaymentProfileId)
+        else:
+            print('Error updating payment')
+
+
+class PaymentBillingForm(forms.Form):
+    first_name = forms.CharField(max_length=50,
+                                 widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First name'}))
+    last_name = forms.CharField(max_length=50,
+                                widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last name'}))
+    address = forms.CharField(max_length=60,
+                              widget=forms.TextInput(
+                                  attrs={'class': 'form-control', 'placeholder': 'Street and number, P.O. box'}))
+    address2 = forms.CharField(max_length=60, required=False,
+                               widget=forms.TextInput(attrs={'class': 'form-control',
+                                                             'placeholder': 'Apartment, suite, unit, '
+                                                                            'building, floor, etc.'}))
+    city = forms.CharField(max_length=40,
+                           widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'City'}))
+    state = forms.CharField(max_length=40,
+                            widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'State'}))
+    country = forms.TypedChoiceField(choices=countries,
+                                     widget=forms.Select(attrs={'class': 'form-control'}))
+    zipcode = forms.CharField(max_length=20,
+                              widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Zipcode'}))
+    phone = forms.CharField(max_length=25,
+                            widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone number'}))
+
+    def add_billing(self, authorizenet_id, authorizenet_payment_id):
+
+        merchantAuth = apicontractsv1.merchantAuthenticationType()
+        merchantAuth.name = settings.AUTHORIZENET_LOGIN_ID
+        merchantAuth.transactionKey = settings.AUTHORIZENET_TRANS_KEY
+
+        paymentProfile = apicontractsv1.customerPaymentProfileExType()
+        payment = apicontractsv1.paymentType()
+        creditCard = apicontractsv1.creditCardType()
+
+        getCustomerPaymentProfile = apicontractsv1.getCustomerPaymentProfileRequest()
+        getCustomerPaymentProfile.merchantAuthentication = merchantAuth
+        getCustomerPaymentProfile.customerProfileId = authorizenet_id
+        getCustomerPaymentProfile.customerPaymentProfileId = authorizenet_payment_id
+        getCustomerPaymentProfile.unMaskExpirationDate = True
+
+        controller = getCustomerPaymentProfileController(getCustomerPaymentProfile)
+        controller.execute()
+
+        response = controller.getresponse()
+
+        if response.messages.resultCode == "Ok":
+            print("Successfully retrieved a payment profile with profile id %s and customer id %s" % (
+                getCustomerPaymentProfile.customerProfileId, getCustomerPaymentProfile.customerProfileId))
+            if hasattr(response, 'paymentProfile'):
+                creditCard.cardNumber = response.paymentProfile.payment.creditCard.cardNumber
+                creditCard.expirationDate = response.paymentProfile.payment.creditCard.expirationDate
+
+        paymentProfile.billTo = apicontractsv1.customerAddressType()
+        paymentProfile.billTo.firstName = self.cleaned_data.get('first_name')
+        paymentProfile.billTo.lastName = self.cleaned_data.get('last_name')
+        if self.cleaned_data.get('address2'):
+            paymentProfile.billTo.address = self.cleaned_data.get('address') + self.cleaned_data.get('address2')
+        else:
+            paymentProfile.billTo.address = self.cleaned_data.get('address')
+
+        payment.creditCard = creditCard
+        paymentProfile.billTo.city = self.cleaned_data.get('city')
+        paymentProfile.billTo.state = self.cleaned_data.get('state')
+        paymentProfile.billTo.zip = self.cleaned_data.get('zipcode')
+        paymentProfile.billTo.country = self.cleaned_data.get('country')
+        paymentProfile.billTo.phoneNumber = self.cleaned_data.get('phone')
+        paymentProfile.payment = payment
+        paymentProfile.customerPaymentProfileId = authorizenet_payment_id
+        updateCustomerPaymentProfile = apicontractsv1.updateCustomerPaymentProfileRequest()
+        updateCustomerPaymentProfile.merchantAuthentication = merchantAuth
+        updateCustomerPaymentProfile.paymentProfile = paymentProfile
+        updateCustomerPaymentProfile.customerProfileId = authorizenet_id
+
+        controller = updateCustomerPaymentProfileController(updateCustomerPaymentProfile)
+        controller.execute()
+
+        response2 = controller.getresponse()
+
+        if response2.messages.resultCode == "Ok":
+            print(
+                "Successfully updated customer payment profile with id %s" % updateCustomerPaymentProfile.paymentProfile.customerPaymentProfileId)
+        else:
+            print('Error adding billing')
+            print(response2.messages.message[0]['text'].text)
+            raise forms.ValidationError(
+                'Error adding billing'
+            )
