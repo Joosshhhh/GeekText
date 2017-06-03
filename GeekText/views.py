@@ -1,5 +1,5 @@
-from django.shortcuts import redirect
+from django.views import generic
 
 
-def loginRedirect(request):
-    return redirect('/account/login')
+class HomeView(generic.TemplateView):
+    template_name = 'home.html'

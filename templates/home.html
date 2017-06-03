@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block title %}Strengthen Your Inner Geek | {{ block.super }}{% endblock %}
+{% block content %}
+    <div class="container">
+        {% if user.is_authenticated %}
+            <h2>HOME!</h2>
+            <h4>Welcome, {{ user.get_full_name }}</h4>
+        {% endif %}
+    </div>
+{% endblock %}

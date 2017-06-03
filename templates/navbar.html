@@ -1,0 +1,181 @@
+{% load static from staticfiles %}
+{% load avatar_tags %}
+<nav class="navbar navbar-static-top" role="navigation">
+    <div class="container clear-fix">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header clear-fix">
+            <button type="button" class="pull-left navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navbar-collapsible" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand small-brand text-center" href="{% url 'home' %}"><span class="orange">G</span>T</a>
+            <a class="navbar-brand hidden-xs text-center" href="{% url 'home' %}"><span
+                    class="orange">GEEK</span>TEXT</a>
+
+            <form class="navbar-form hidden-xs">
+                <div class="form-group clearfix">
+                    <div class="input-group">
+                        <input type="text" class="form-control orange-border-right" role="search"
+                               placeholder="Search"
+                               autocomplete="off">
+                        <span class="input-group-addon" style="width: 1%;"><span
+                                class="glyphicon glyphicon-search"></span></span>
+                    </div>
+                </div>
+            </form>
+
+
+            <button type="button" class="btn btn-link pull-right"><span class="glyphicon glyphicon-shopping-cart"><span
+                    class="badge orange"></span></span>
+            </button>
+
+            <button type="button" class="btn btn-link pull-right"><span class="glyphicon glyphicon-heart-empty"><span
+                    class="badge orange"></span></span>
+            </button>
+
+            {% if user.is_authenticated %}
+
+                {% if request.user|has_avatar %}
+                    {% avatar user class="img-circle img-responsive hidden-xs avatar avatar-nav" %}
+                {% else %}
+                    <img src="{% static 'imgs/user.svg' %}" class="avatar avatar-nav pull-right hidden-xs">
+                {% endif %}
+
+                <div id="user-nav" class="dropdown-content nav-content hidden-xs">
+
+                    <ul>
+                        <li class="clearfix">
+                            <a href="{% url 'accounts:manage' %}" class="clearfix orange">
+                                {{ user.username }}
+                            </a>
+                        </li>
+                        <hr>
+                        <li class="clearfix"
+                            onmouseover="this.firstElementChild.firstElementChild.src='{% static 'imgs/deliver-white.svg' %}'"
+                            onmouseout="this.firstElementChild.firstElementChild.src='{% static 'imgs/deliver.svg' %}'">
+                            <a class="clearfix orange">
+                                <img src="{% static 'imgs/deliver.svg' %}">
+                                <span>My Orders</span>
+                            </a>
+                        </li>
+                        <li class="clearfix"
+                            onmouseover="this.firstElementChild.firstElementChild.src='{% static 'imgs/lock-white.svg' %}'"
+                            onmouseout="this.firstElementChild.firstElementChild.src='{% static 'imgs/lock.svg' %}'">
+                            <a href="{% url 'accounts:manage_profile' %}" class="clearfix orange"><img
+                                    src="{% static 'imgs/lock.svg' %}">
+                                <span>Account</span>
+                            </a>
+                        </li>
+                        <li class="clearfix"
+                            onmouseover="this.firstElementChild.firstElementChild.src='{% static 'imgs/placeholder-white.svg' %}'"
+                            onmouseout="this.firstElementChild.firstElementChild.src='{% static 'imgs/point.svg' %}'">
+                            <a href="{% url 'accounts:manage_addresses' %}" class="clearfix orange"><img
+                                    src="{% static 'imgs/point.svg' %}">
+                                <span>Addresses</span>
+                            </a>
+                        </li>
+                        <li class="clearfix"
+                            onmouseover="this.firstElementChild.firstElementChild.src='{% static 'imgs/credit-card-white.svg' %}'"
+                            onmouseout="this.firstElementChild.firstElementChild.src='{% static 'imgs/credit-card.svg' %}'">
+                            <a href="{% url 'accounts:manage_payment' %}" class="clearfix orange"><img
+                                    src="{% static 'imgs/credit-card.svg' %}">
+                                <span>Payment</span>
+                            </a>
+                        </li>
+                        <hr>
+                        <li>
+                            <a href="{% url 'accounts:logout' %}" class="orange">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            {% else %}
+                <a href="{% url 'accounts:login' %}">
+                    <button type="button" class="btn btn-link orange login-btn hidden-xs">Login</button>
+                </a>
+            {% endif %}
+
+
+        </div>
+        <div id="mobile-nav-form">
+            <form class="navbar-form">
+                <div class="form-group" style="display:inline;">
+                    <div class="input-group" style="display: table;">
+                        <input type="text" class="form-control orange-border-right" role="search" placeholder="Search"
+                               autocomplete="off">
+                        <span class="input-group-addon" style="width: 1%;"><span
+                                class="glyphicon glyphicon-search"></span></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="wtf">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="navbar-collapse collapse text-center" id="navbar-collapsible">
+                {% if user.is_authenticated %}
+                    <div id="nav-collapse-menu">
+                        {% if request.user|has_avatar %}
+                            <a href="{% url 'accounts:manage_profile' %}">
+                                {% avatar user class="img-circle img-responsive avatar" style="display: inline;" %}
+                            </a>
+                        {% else %}
+                            <a href="{% url 'accounts:manage' %}">
+                                <img src="{% static 'imgs/user.svg' %}" class="avatar">
+                            </a>
+                        {% endif %}
+                        <div class="nav-content">
+                            <ul>
+                                <hr>
+                                <li
+                                        onmouseover="this.firstElementChild.firstElementChild.src='{% static 'imgs/deliver-white.svg' %}'"
+                                        onmouseout="this.firstElementChild.firstElementChild.src='{% static 'imgs/deliver.svg' %}'">
+                                    <a class="clearfix orange">
+                                        <img src="{% static 'imgs/deliver.svg' %}">
+                                        <span>My Orders</span>
+                                    </a>
+                                </li>
+                                <li
+                                        onmouseover="this.firstElementChild.firstElementChild.src='{% static 'imgs/lock-white.svg' %}'"
+                                        onmouseout="this.firstElementChild.firstElementChild.src='{% static 'imgs/lock.svg' %}'">
+                                    <a href="{% url 'accounts:manage_profile' %}" class="clearfix orange"><img
+                                            src="{% static 'imgs/lock.svg' %}">
+                                        <span>Account</span>
+                                    </a>
+                                </li>
+                                <li
+                                        onmouseover="this.firstElementChild.firstElementChild.src='{% static 'imgs/placeholder-white.svg' %}'"
+                                        onmouseout="this.firstElementChild.firstElementChild.src='{% static 'imgs/point.svg' %}'">
+                                    <a href="{% url 'accounts:manage_addresses' %}" class="clearfix orange"><img
+                                            src="{% static 'imgs/point.svg' %}">
+                                        <span>Addresses</span>
+                                    </a>
+                                </li>
+                                <li
+                                        onmouseover="this.firstElementChild.firstElementChild.src='{% static 'imgs/credit-card-white.svg' %}'"
+                                        onmouseout="this.firstElementChild.firstElementChild.src='{% static 'imgs/credit-card.svg' %}'">
+                                    <a href="{% url 'accounts:manage_payment' %}" class="clearfix orange"><img
+                                            src="{% static 'imgs/credit-card.svg' %}">
+                                        <span>Payment</span>
+                                    </a>
+                                </li>
+                                <hr>
+                                <li>
+                                    <a href="{% url 'accounts:logout' %}" class="orange">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}">
+                        <button type="button" class="btn btn-link orange login-btn">Login</button>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</nav>
+
+
+

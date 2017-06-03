@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% block title %}Manage Payments | {{ block.super }}{% endblock %}
+{% load static from staticfiles %}
+{% load account_tags %}
+{% block content %}
+    <div class="container" style="padding-bottom: 35px;">
+        <h2 class="text-center">Manage Payment
+            {% if not object_list %}
+                <a href="{% url 'accounts:manage_new_payment' %}" style="display:block; margin-top: 40%;">
+                    <button class="btn btn-warning">Add New</button>
+                </a>
+            {% endif %}
+        </h2>
+
+        <div class="row">
+            {% for payment in object_list %}
+                <div class="col-md-6" style="margin-top: 25px;">
+                    <div class="panel-group">
+                        <div class="panel panel-info">
+                            <div class="panel-heading clearfix">
+                                <h4 class="panel-title">
+                                    <ul class="list-inline clearfix">
+                                        <li>
+                                            {% include 'accounts/cctype.html' %}
+                                            {% if payment.customerPaymentProfileId in cards %}Exp:
+                                                <span style="">
+                                                    {{ cards|get_item:payment.customerPaymentProfileId|replace }}
+                                                </span>
+                                            {% endif %}
+
+                                        </li>
+                                        <li class="pull-right">
+                                            <a href="{% url 'accounts:manage_delete_payment' pk=payment.customerPaymentProfileId %}">
+                                                <button class="btn btn-danger">Delete
+                                                </button>
+                                            </a>
+                                        </li>
+                                        <li class="manage-payment-btn pull-right">
+                                            <a href="{% url 'accounts:manage_single_payment' pk=payment.customerPaymentProfileId %}">
+                                                <button class="btn btn-success">Edit</button>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </h4>
+                            </div>
+
+                            <div class="panel-body" style="height: 250px;">
+                                <div class="col-xs-6">
+                                    <h4>Name on card</h4>
+                                    {% for user_p in user_payments %}
+                                        {% if payment.customerPaymentProfileId|stringformat:"i" == user_p.authorize_net_payment_profile_id %}
+                                            <p>{{ user_p.full_name }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if payment.customerPaymentProfileId in default %}
+                                        <button class="btn default-btn" style="padding-left: 0;">Default <span
+                                                class="glyphicon glyphicon-ok"></span>
+                                        </button>
+                                    {% endif %}
+                                </div>
+                                <div class="col-xs-6">
+                                    <h4>Billing Address</h4>
+                                    {% if payment.billTo.address %}
+                                        <p><strong>{{ payment.billTo.firstName }} {{ payment.billTo.lastName }}</strong>
+                                        </p>
+                                        <p>{{ payment.billTo.address }}</p>
+                                        <p>{{ payment.billTo.city }}, {{ payment.billTo.state }} {{ payment.billTo.country }}</p>
+                                        <p>{{ payment.billTo.zip }}</p>
+                                        <p>{{ payment.billTo.phoneNumber }}</p>
+                                    {% else %}
+                                        <div class="alert alert-warning">
+                                            You have no billing address set.
+                                            You can <a
+                                                href="{% url 'accounts:manage_payment_billing' pk=payment.customerPaymentProfileId %}"
+                                                style="color: #8a6d3b;"><strong>click here</strong></a>
+                                            to add one or make a default shipping address.
+                                        </div>
+
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+        {% if object_list %}
+            <a href="{% url 'accounts:manage_new_payment' %}">
+                <button class="btn btn-warning">Add New</button>
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}

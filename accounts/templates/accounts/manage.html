@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %}Manage Account | {{ block.super }}{% endblock %}
+{% load static from staticfiles %}
+{% block content %}
+    <div class="container">
+        <h2 class="text-center">Manage Account</h2>
+
+        <div class="row text-center">
+            <div class="col-sm-6 manage-account-links">
+                <a href="">
+                    <img src="{% static 'imgs/truck.svg' %}" alt="Circular image of a lock with an orange background">
+                    <h4>Your Orders</h4>
+                    <p class="text-muted">Track, view, or buy again</p>
+                </a>
+            </div>
+            <div class="col-sm-6 manage-account-links">
+                <a href="{% url 'accounts:manage_profile' %}">
+                    <img src="{% static 'imgs/locked.svg' %}" alt="Circular image of a lock with an orange background">
+                    <h4>Account Settings</h4>
+                    <p class="text-muted">Edit login, name, and email</p>
+                </a>
+            </div>
+        </div>
+        <div class="row text-center">
+
+            <div class="col-sm-6 manage-account-links">
+                <a href="{% url 'accounts:manage_payment' %}">
+                    <img src="{% static 'imgs/creditcard.svg' %}"
+                         alt="Circular image of a lock with an orange background">
+                    <h4>Payment Methods</h4>
+                    <p class="text-muted">Edit or add payment options</p>
+                </a>
+            </div>
+            <div class="col-sm-6 manage-account-links">
+                <a href="{% url 'accounts:manage_addresses' %}">
+                    <img src="{% static 'imgs/location.svg' %}"
+                         alt="Circular image of a lock with an orange background">
+                    <h4>Address Book</h4>
+                    <p class="text-muted">Edit addresses for orders</p>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

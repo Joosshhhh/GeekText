@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{% block title %}Change Avatar | {{ block.super }}{% endblock %}
+{% load static from staticfiles %}
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 form-border">
+                {% if upload_avatar_form.errors %}
+                    {% for field in upload_avatar_form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in upload_avatar_form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <h2 class="text-center">Change Avatar</h2>
+                <form id='avatar-form' enctype="multipart/form-data" method="POST" action="{% url 'avatar_add' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="/accounts/manage/profile/"/>
+                    <div class="form-group">
+                        <div class="panel panel-default panel-offset">
+                            <div class="panel-body">
+                                <br/>
+                                <div class="input-group image-preview">
+                                    <input type="text" class="form-control image-preview-filename" disabled="disabled"/>
+                                    <!-- don't give a name === doesn't send on POST/GET -->
+                                    <span class="input-group-btn">
+
+						                <button type="button" class="btn btn-primary image-preview-clear"
+                                                style="display:none;">
+                                            <span class="glyphicon glyphicon-remove"></span> Clear
+                                        </button>
+                                        <!-- image-preview-input -->
+						                <div class="btn btn-primary image-preview-input">
+                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                            <span class="image-preview-input-title">Browse</span>
+                                            {{ upload_avatar_form.avatar }}
+                                            <!-- rename it -->
+                                        </div>
+						            </span>
+                                </div>
+
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <button type="submit" class="btn btn-labeled btn-warning" style="margin-left: 15px;">
+                            <span class="btn-label"><i class="glyphicon glyphicon-upload"></i></span>
+                            Upload
+                        </button>
+                        <a href="{% url 'accounts:manage_profile' %}">
+                            <button type="button" class="btn btn-danger pull-right" style="margin-right:15px;">
+                                Cancel
+                            </button>
+                        </a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block jquery %}
+    <script type="text/javascript">
+
+        var upload = document.getElementById('id_avatar');
+        var $preview = $('.image-preview-filename');
+        upload.addEventListener('change', function () {
+
+            $preview.prop("disabled", false);
+            $preview.val(upload.files.item(0).name);
+
+        });
+    </script>
+{% endblock %}

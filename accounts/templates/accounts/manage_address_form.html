@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% block title %}Manage Address | {{ block.super }}{% endblock %}
+{% load static from staticfiles %}
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4 form-border">
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <h2 class="text-center">Add Address</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.country }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.first_name }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.last_name }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.address }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.address2 }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.city }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.state }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.zipcode }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.phone }}
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                {{ form.default }}{{ form.default.label }}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <button type="submit" class="btn btn-warning">Save</button>
+                        <a href="{% url 'accounts:manage_addresses' %}">
+                            <button id="cancel-address" type="button" class="btn btn-danger pull-right">Cancel</button>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://d79i1fxsrar4t.cloudfront.net/jquery.liveaddress/3.4/jquery.liveaddress.min.js"></script>
+    <script>
+
+        var liveaddress = $.LiveAddress({
+            key: "11455720422092759",
+            debug: false,
+            target: "US|INTERNATIONAL",
+            autoVerify: true,
+            submitVerify: false,
+            addresses: [{
+                address1: '#id_address',
+                address2: 'id_address2',
+                locality: '#id_city',
+                administrative_area: '#id_state',
+                postal_code: '#id_zipcode',
+                country: '#id_country'
+            }]
+        });
+
+
+    </script>
+
+{% endblock %}
