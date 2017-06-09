@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.urlresolvers import reverse
 # Create your models here.
 
 
@@ -32,6 +32,7 @@ class Author(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=100)
+    image = models.FileField(null=True, blank=True)
     authors = models.ManyToManyField(Author)
     publisher = models.ForeignKey(Publisher)
     publication_date = models.DateField()
@@ -39,5 +40,11 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        # return reverse("search", kwargs={"id":self.id})
+        return "/book/%s/" % self.id
+
     class Meta:
         ordering = ['title']
+
+
