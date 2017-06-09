@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block title %}Account Settings | {{ block.super }}{% endblock %}
+{% load static from staticfiles %}
+{% load avatar_tags %}
+
+{% block content %}
+    <div class="container" xmlns="http://www.w3.org/1999/html">
+        <h2> {{ title }} </h2>
+        <h4>You Searched for all Books</h4>
+
+        {% for res in results %}
+
+            <div class="col-md-6">
+                <div class="thumbnail">
+                    <div class="caption" text-align="center">
+                        <h3><a href="{{ res.get_absolute_url }}">{{ res.title }}</a><br/></h3>
+                        <p>
+                        {% if res.image %}
+                            <div class="col-md-3">
+                            <img src="{{ res.image.url }}" class="img-responsive"/>
+                            </div>
+                        {% endif %}
+                            <strong>Author:</strong> {{ res.authors }}<br/>
+                            <strong>Publisher:</strong> {{ res.publisher }}<br/>
+                            <strong>Publication Date:</strong> {{ res.publication_date }}<br/>
+                        </p>
+                        <p><a href="{{ res.get_absolute_url }}" class="btn btn-orange"
+                              role="button" style="width: 30%;" >View</a></p>
+                    </div>
+                </div><hr/>
+            </div>
+
+
+        {% endfor %}
+
+    </div>
+    <div class="col-md-6 col-offset-12">
+        <div class="pagination">
+            <span class="step-links">
+            {% if results.has_previous %}
+                <a href="?{{ page_req_var }}={{ results.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ results.number }} of {{ results.paginator.num_pages }}.
+            </span>
+
+            {% if results.has_next %}
+                <a href="?{{ page_req_var }}={{ results.next_page_number }}">next</a>
+            {% endif %}
+            </span>
+        </div>
+    </div>
+
+
+{% endblock %}
