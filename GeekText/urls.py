@@ -24,7 +24,7 @@ from . import views, forms
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.HomeView.as_view(), name='home'),
+    url(r'^$', book_view.list_books, name='home'),
     url(r"^accounts/", include("accounts.urls", namespace="accounts")),
     url(r"^accounts/avatar/", include('avatar.urls')),
     url(r"^book/", include("books.urls", namespace="books")),
