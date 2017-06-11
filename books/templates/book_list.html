@@ -20,9 +20,11 @@
                             <img src="{{ res.image.url }}" class="img-responsive"/>
                             </div>
                         {% endif %}
-                            <strong>Author:</strong> {{ res.authors }}<br/>
-                            <strong>Publisher:</strong> {{ res.publisher }}<br/>
-                            <strong>Publication Date:</strong> {{ res.publication_date }}<br/>
+                        <strong>Author:</strong>  {{ res.author }} <br/>
+                        <strong>Publisher:</strong> {{ res.publisher }}<br/>
+                        <strong>Publication Date:</strong> {{ res.publication_date }}<br/>
+                        <strong>Genre:</strong> <a href="" ></a>{{ res.genre }}<br/>
+                        <strong>Description:</strong> {{ res.description }}<br/>
                         </p>
                         <p><a href="{{ res.get_absolute_url }}" class="btn btn-orange"
                               role="button" style="width: 30%;" >View</a></p>
