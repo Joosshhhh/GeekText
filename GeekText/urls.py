@@ -19,13 +19,12 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.static import serve
-from books import views as book_view
 
 from . import views, forms
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', book_view.list_books, name='home'),
+    url(r'^$', views.HomeView.as_view(), name='home'),
     url(r"^accounts/", include("accounts.urls", namespace="accounts")),
     url(r"^accounts/avatar/", include('avatar.urls')),
     url(r"^book/", include("books.urls", namespace="books")),
