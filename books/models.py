@@ -36,15 +36,20 @@ class Book(models.Model):
     authors = models.ManyToManyField(Author)
     publisher = models.ForeignKey(Publisher)
     publication_date = models.DateField()
+    genre = models.CharField(max_length=50, blank=True, null=True)
+    description = models.TextField(max_length=600, null=True, blank=True)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        # return reverse("search", kwargs={"id":self.id})
         return "/book/%s/" % self.id
+
+    def author(self):
+        return ",\n".join([a.first_name + " " + a.last_name for a in self.authors.all()])
 
     class Meta:
         ordering = ['title']
+
 
 
