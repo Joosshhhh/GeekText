@@ -11,8 +11,9 @@ def list_books(request):
     query = request.GET.get("q")
 
     if query:
-        queryset_list = queryset_list.filter(title__icontains=query) | \
-                        queryset_list.filter(authors__full_name__icontains=query)
+        queryset_list = queryset_list.filter(title__icontains=query).distinct() | \
+                        queryset_list.filter(authors__full_name__icontains=query).distinct() | \
+                        queryset_list.filter(genre__icontains=query).distinct()
 
     paginator = Paginator(queryset_list, 25)  # Show 25 contacts per page
 
