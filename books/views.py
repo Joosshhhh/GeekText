@@ -1,23 +1,18 @@
-from django.core.urlresolvers import reverse_lazy
-from django.views import generic
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .models import Book, Author
 
-
-from .models import Book
-
-from . import forms, models
-
-
-# Create your views here.
 
 def list_books(request):
 
     queryset_list = Book.objects.all().order_by("title")
+    queryset_author = Author.objects.all().order_by("last_name")
 
     query = request.GET.get("q")
+
     if query:
-        queryset_list = queryset_list.filter(title__icontains=query)
+        queryset_list = queryset_list.filter(title__icontains=query) | \
+                        queryset_list.filter(authors__full_name__icontains=query)
 
     paginator = Paginator(queryset_list, 25)  # Show 25 contacts per page
 
@@ -34,20 +29,29 @@ def list_books(request):
         queryset = paginator.page(paginator.num_pages)
 
     context = {
+        "author": queryset_author,
         "results": queryset,
-        "title": "Results",
+        "title": "Displaying all Books",
         "page_req_var": page_req_var,
     }
     return render(request, "book_list.html", context)
 
 
 def detail(request, id):
-    target = get_object_or_404(Book, id=id)
+
+    book = get_object_or_404(Book, id=id)
     context = {
-        "result": target,
+        "result": book,
     }
     return render(request, "book_detail.html", context)
 
 
+def author_books(request, id):
 
-
+    author = get_object_or_404(Author, id=id)
+    books = author.get_titles()
+    context = {
+        "author": author,
+        "books": books
+    }
+    return render(request, "book_author.html", context)
