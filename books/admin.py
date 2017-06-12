@@ -5,8 +5,8 @@ from .models import Publisher, Author, Book
 
 
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'email')
-    search_fields = ('first_name', 'last_name')
+    list_display = ('full_name', 'email')
+    search_fields = ('full_name', 'email')
 
 
 class BookAdmin(admin.ModelAdmin):
@@ -16,6 +16,7 @@ class BookAdmin(admin.ModelAdmin):
     ordering = ('-publication_date',)
     filter_horizontal = ('authors',)
     raw_id_fields = ('publisher',)
+
 
 admin.site.register(Publisher)
 admin.site.register(Author, AuthorAdmin)
