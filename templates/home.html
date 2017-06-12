@@ -3,9 +3,15 @@
 {% block title %}Strengthen Your Inner Geek | {{ block.super }}{% endblock %}
 {% block content %}
     <div class="container">
+
+            <h2>Welcome to GeeKText!</h2>
         {% if user.is_authenticated %}
-            <h2>HOME!</h2>
             <h4>Welcome, {{ user.get_full_name }}</h4>
+
         {% endif %}
+            <br/><br/>
+            <div><a href="/book/" class="btn btn-orange" role="button"
+                    style="width: 30%">Browse Books!</a></div>
     </div>
+
 {% endblock %}
