@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.urlresolvers import reverse
+
 # Create your models here.
 
 
@@ -19,15 +19,20 @@ class Publisher(models.Model):
 
 
 class Author(models.Model):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=40)
+    full_name = models.CharField(max_length=30)
     email = models.EmailField()
 
     def __str__(self):
-        return u'%s %s' % (self.first_name, self.last_name)
+        return u'%s' % self.full_name
+
+    def get_absolute_url(self):
+        return "book/author/$s" % self.id
+
+    def get_titles(self):
+        return ",\n".join([book.title for book in self.book_set.all()])
 
     class Meta:
-        ordering = ['first_name', 'last_name']
+        ordering = ['full_name']
 
 
 class Book(models.Model):
@@ -46,10 +51,9 @@ class Book(models.Model):
         return "/book/%s/" % self.id
 
     def author(self):
-        return ",\n".join([a.first_name + " " + a.last_name for a in self.authors.all()])
+        return ",\n".join([a.full_name for a in self.authors.all()])
 
     class Meta:
         ordering = ['title']
-
 
 
