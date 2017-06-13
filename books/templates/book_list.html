@@ -39,23 +39,21 @@
         {% endfor %}
 
     </div>
-    <div class="col-md-6 col-offset-12">
-        <div class="pagination">
-            <span class="step-links">
-            {% if results.has_previous %}
-                <a href="?{{ page_req_var }}={{ results.previous_page_number }}">previous</a>
-            {% endif %}
 
-            <span class="current">
+    <div class="container">
+        <ul class="pagination">
+            <li>{% if results.has_previous %}
+                <a href="?{{ page_req_var }}={{ results.previous_page_number }}">&laquo; Previous</a>
+            {% endif %}</li>
+            <li><span class="current">
                 Page {{ results.number }} of {{ results.paginator.num_pages }}.
-            </span>
-
-            {% if results.has_next %}
-                <a href="?{{ page_req_var }}={{ results.next_page_number }}">next</a>
-            {% endif %}
-            </span>
-        </div>
+            </span></li>
+            <li>{% if results.has_next %}
+                <a href="?{{ page_req_var }}={{ results.next_page_number }}">Next &raquo;</a>
+            {% endif %}</li>
+        </ul>
     </div>
+
 
 
 {% endblock %}
