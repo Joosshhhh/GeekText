@@ -6,7 +6,7 @@ from .models import Book, Author
 def list_books(request):
 
     queryset_list = Book.objects.all().order_by("title")
-    queryset_author = Author.objects.all().order_by("last_name")
+    queryset_author = Author.objects.all()
 
     query = request.GET.get("q")
 
@@ -15,7 +15,7 @@ def list_books(request):
                         queryset_list.filter(authors__full_name__icontains=query).distinct() | \
                         queryset_list.filter(genre__icontains=query).distinct()
 
-    paginator = Paginator(queryset_list, 25)  # Show 25 contacts per page
+    paginator = Paginator(queryset_list, 5)  # Show 25 contacts per page
 
     page_req_var = "page"
 
@@ -50,7 +50,7 @@ def detail(request, id):
 def author_books(request, id):
 
     author = get_object_or_404(Author, id=id)
-    books = author.get_titles()
+    books = Book.objects.all().filter(authors__full_name__icontains=author)
     context = {
         "author": author,
         "books": books
