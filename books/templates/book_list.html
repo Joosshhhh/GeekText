@@ -1,16 +1,15 @@
 {% extends "layout.html" %}
-{% block title %}Account Settings | {{ block.super }}{% endblock %}
+{% block title %}Book Results | {{ block.super }}{% endblock %}
 {% load static from staticfiles %}
 {% load avatar_tags %}
 
 {% block content %}
-    <div class="container" xmlns="http://www.w3.org/1999/html">
+    <div class="container" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
         <h2> {{ title }} </h2>
-        <h4>You Searched for all Books</h4>
 
         {% for res in results %}
 
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="thumbnail">
                     <div class="caption" text-align="center">
                         <h3><a href="{{ res.get_absolute_url }}">{{ res.title }}</a><br/></h3>
@@ -20,16 +19,20 @@
                             <img src="{{ res.image.url }}" class="img-responsive"/>
                             </div>
                         {% endif %}
-                        <strong>Author:</strong>  {{ res.author }} <br/>
+
+                        <strong>Author:</strong><a href="/book/author/1">  {{ res.author }} </a><br/>
                         <strong>Publisher:</strong> {{ res.publisher }}<br/>
                         <strong>Publication Date:</strong> {{ res.publication_date }}<br/>
                         <strong>Genre:</strong> <a href="" ></a>{{ res.genre }}<br/>
                         <strong>Description:</strong> {{ res.description }}<br/>
                         </p>
-                        <p><a href="{{ res.get_absolute_url }}" class="btn btn-orange"
-                              role="button" style="width: 30%;" >View</a></p>
+
                     </div>
-                </div><hr/>
+                    <div><p><a href="{{ res.get_absolute_url }}" class="btn btn-orange"
+                              role="button" style="width: 30%;" >View</a></p>
+                    </div><hr/>
+                </div>
+
             </div>
 
 
