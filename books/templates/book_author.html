@@ -5,15 +5,39 @@
 
 {% block content %}
     <div class="col-sm-6 col-sm-offset-3">
-        <h2> {{ author }} Details</h2></br>
+        <h2> {{ author }} Books</h2>
+        <h4><strong>Email Address:</strong> {{ author.email}}</h4>
+        <br/><br/>
 
-        <h4></br>
+        {% for book in books %}
+         <div class="col-md-8">
+                    <div class="thumbnail">
+                        <div class="caption" text-align="center">
+                            <h3><a href="{{ book.get_absolute_url }}">{{ book.title }}</a><br/></h3>
+                            <p>
+                            {% if book.image %}
+                                <div class="col-md-3">
+                                <img src="{{ book.image.url }}" class="img-responsive"/>
+                                </div>
+                            {% endif %}
 
-         <strong>Author Name:</strong> {{ author.full_name }}<br/>
-         <strong>Email Address:</strong> {{ author.email}}<br/>
-         <strong>Books:</strong> {{ books }}<br/>
+                            <strong>Author:</strong><a href="/book/author/1">  {{ book.author }} </a><br/>
+                            <strong>Publisher:</strong> {{ book.publisher }}<br/>
+                            <strong>Publication Date:</strong> {{ book.publication_date }}<br/>
+                            <strong>Genre:</strong> <a href="" ></a>{{ book.genre }}<br/>
+                            <strong>Description:</strong> {{ book.description }}<br/>
+                            </p>
 
-         </h4>
+                        </div>
+                        <div><p><a href="{{ book.get_absolute_url }}" class="btn btn-orange"
+                                  role="button" style="width: 30%;" >View</a></p>
+                        </div><hr/>
+                    </div>
+
+         </div>
+
+
+        {% endfor %}
 
 
     </div>
