@@ -17053,3 +17053,10 @@ django.core.exceptions.ValidationError: ["Sorry couldn't create registration."]
 2017-05-31 20:40:43,335 Multiple accepting paths for {AnetApi/xml/v1/schema/AnetApiSchema.xsd}creditCardMaskedType
 2017-05-31 20:40:43,336 Multiple accepting paths for {AnetApi/xml/v1/schema/AnetApiSchema.xsd}customerPaymentProfileMaskedType
 2017-05-31 20:40:43,340 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerProfileMaskedType object at 0x10dd35940>,)
+2017-06-14 09:32:02,895 performing custom validation..
+2017-06-14 09:32:02,896 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-06-14 09:32:02,898 building request..
+2017-06-14 09:32:02,958 Starting new HTTPS connection (1): apitest.authorize.net
+2017-06-14 09:32:06,413 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-06-14 09:32:06,647 Response error
+2017-06-14 09:32:06,649 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'

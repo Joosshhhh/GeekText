@@ -28,10 +28,9 @@
                 </div>
             </form>
 
-
-            <button type="button" class="btn btn-link pull-right"><span class="glyphicon glyphicon-shopping-cart"><span
-                    class="badge orange"></span></span>
-            </button>
+            <!-- code for the shopping cart button -->
+            <a href="/cart/" role="button"><span class="glyphicon glyphicon-shopping-cart" href="/cart/"><span
+                    class="badge orange"></span></span></a>
 
             <button type="button" class="btn btn-link pull-right"><span class="glyphicon glyphicon-heart-empty"><span
                     class="badge orange"></span></span>
@@ -176,37 +175,74 @@
             </div>
         </div>
 
-        <!begins the code for the nav pills>
-    <div>
-        <ul class="nav nav-pills">
-            <li><a data-toggle="pill" href="#books">Browse Books</a></li>
-            <li><a data-toggle="pill" href="#authors">Browse Authors</a></li>
-            <li><a data-toggle="pill" href="#genre">Browse Genre</a></li>
-        </ul>
-        <div class="tab-content">
-            <div id="books" class="tab-pane fade in active">
-                <div class="list-group">
-                    <a href="/book/" class="list-group-item active">Click Here for a list of all our (5) Books!</a>
-                </div>
-            </div>
-            <div id="authors" class="tab-pane fade">
-                <div class="list-group">
-                    <a href="/book/author/1/" class="list-group-item">J.K. Rowling</a>
-                    <a href="/book/author/2/" class="list-group-item">Sherlock Holmes</a>
-                    <a href="/book/author/3/" class="list-group-item">John Smith</a>
-                    <a href="/book/author/4/" class="list-group-item">SteamBoat Willie</a>
-                </div>
-            </div>
-            <div id="genre" class="tab-pane fade">
-                <div class="list-group ">
-                    <a href="/book/?q=universal+learning" class="list-group-item">Universal Learning</a>
-                    <a href="/book/?q=random+knowledge" class="list-group-item">Random Knowledge</a>
-                    <a href="/book/?q=technology" class="list-group-item">Technology</a>
-                    <a href="/book/?q=space" class="list-group-item">Space</a>
-                </div>
-            </div>
-        </div>
+        <!----------begins the code for the nav pills------------>
+
+    <div class="btn-group">
+          <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+            Books <span class="caret"></span>
+          </button>
+              <ul class="dropdown-menu">
+                <li><a href="/book/">Click Here for a list of all our (5) Books!</a></li>
+              </ul>
     </div>
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Authors <span class="caret"></span>
+        </button>
+              <ul class="dropdown-menu">
+                <li><a href="/book/author/1/">J.K. Rowling</a></li>
+                <li><a href="/book/author/2/">Sherlock Holmes</a></li>
+                <li><a href="/book/author/3/">John Smith</a></li>
+                <li><a href="/book/author/4/">SteamBoat Willie</a></li>
+              </ul>
+    </div>
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Genre <span class="caret"></span>
+        </button>
+              <ul class="dropdown-menu">
+                <li><a href="/book/?q=Universal+Learning">Universal Learning</a></li>
+                <li><a href="/book/?q=Random+Knowledge">Random Knowledge</a></li>
+                <li><a href="/book/?q=Technology">Technology</a></li>
+                <li><a href="/book/?q=Space">Space</a></li>
+                <!li role="separator" class="divider"><!/li>
+              </ul>
+    </div>
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Rating <span class="caret"></span>
+        </button>
+              <ul class="dropdown-menu">
+                  <li><a href="#"><span class="glyphicon glyphicon-star"></span>
+                      <span class="glyphicon glyphicon-star"></span>
+                      <span class="glyphicon glyphicon-star"></span>
+                      <span class="glyphicon glyphicon-star"></span>
+                      <span class="glyphicon glyphicon-star"></span></a></li>
+                  <li><a href="#"><span class="glyphicon glyphicon-star"></span>
+                      <span class="glyphicon glyphicon-star"></span>
+                      <span class="glyphicon glyphicon-star"></span>
+                      <span class="glyphicon glyphicon-star"></span>
+                      </a></li>
+                  <li><a href="#"><span class="glyphicon glyphicon-star"></span>
+                      <span class="glyphicon glyphicon-star"></span>
+                      <span class="glyphicon glyphicon-star"></span>
+                      </a></li>
+                  <li><a href="#"><span class="glyphicon glyphicon-star"></span>
+                      <span class="glyphicon glyphicon-star"></span>
+                      </a></li>
+                  <li><a href="#"><span class="glyphicon glyphicon-star"></span>
+                      </a></li>
+                <!li role="separator" class="divider"><!/li>
+              </ul>
+    </div>
+
     </div><!-- /.container-fluid -->
 </nav>
 

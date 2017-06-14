@@ -28,11 +28,13 @@ def list_books(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         queryset = paginator.page(paginator.num_pages)
 
-
+    if query is None:
+        query = "Books"
 
     context = {
+        "search": query,
         "results": queryset,
-        "title": "Displaying all Books",
+        "title": "Displaying all Results for: ",
         "page_req_var": page_req_var,
     }
     return render(request, "book_list.html", context)
