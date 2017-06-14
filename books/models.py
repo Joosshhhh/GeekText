@@ -26,7 +26,7 @@ class Author(models.Model):
         return u'%s' % self.full_name
 
     def get_absolute_url(self):
-        return "book/author/$s" % self.id
+        return "/book/author/%s/" % self.id
 
     def get_titles(self):
         return ",\n".join([book.title for book in self.book_set.all()])

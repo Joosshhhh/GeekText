@@ -6,7 +6,6 @@ from .models import Book, Author
 def list_books(request):
 
     queryset_list = Book.objects.all().order_by("title")
-    queryset_author = Author.objects.all()
 
     query = request.GET.get("q")
 
@@ -29,8 +28,9 @@ def list_books(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         queryset = paginator.page(paginator.num_pages)
 
+
+
     context = {
-        "author": queryset_author,
         "results": queryset,
         "title": "Displaying all Books",
         "page_req_var": page_req_var,

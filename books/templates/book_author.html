@@ -21,7 +21,7 @@
                                 </div>
                             {% endif %}
 
-                            <strong>Author:</strong><a href="/book/author/1">  {{ book.author }} </a><br/>
+                            <strong>Author:</strong><a href="{{ author.get_absolute_url }}">  {{ book.author }} </a><br/>
                             <strong>Publisher:</strong> {{ book.publisher }}<br/>
                             <strong>Publication Date:</strong> {{ book.publication_date }}<br/>
                             <strong>Genre:</strong> <a href="" ></a>{{ book.genre }}<br/>
