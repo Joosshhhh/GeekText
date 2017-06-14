@@ -35,6 +35,7 @@ urlpatterns = [
         auth_views.PasswordResetConfirmView.as_view(form_class=forms.PasswordResetConfirm),
         name='password_reset_confirm'),
     url(r"^password-reset/complete/$", auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    url(r"^cart/$", include('cart.urls'))
 
 ]
 

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_countries',
     'authorizenet',
     'avatar',
+    'cart',
 
 ]
 
