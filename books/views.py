@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Book, Author
+from django.contrib import messages
 
 
 def list_books(request):
@@ -28,7 +29,9 @@ def list_books(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         queryset = paginator.page(paginator.num_pages)
 
-    if query is None:
+    if query:
+        query = query
+    else:
         query = "Books"
 
     context = {
@@ -58,5 +61,4 @@ def author_books(request, id):
         "books": books
     }
     return render(request, "book_author.html", context)
-
 

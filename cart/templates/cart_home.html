@@ -4,5 +4,32 @@
 {% load avatar_tags %}
 
 {% block content %}
-    <h3>Displaying Shopping Cart Contents</h3>
+
+    <div class="container-fluid">
+        {% if messages %}
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+            {% for message in messages %}
+            <p{% if message.tags == "success" %} class="alert alert-success" style="text-align: center" {% endif %}>{{ message }}</p>
+            {% endfor %}
+                </div>
+        {% endif %}
+            </div>
+
+        <div class="container">
+            <div class="col-sm-6 col-sm-offset-3">
+                <p>
+                <div class="col-sm-6">
+                    <a href="/book/" role="button" class="btn btn-orange" >Continue Shopping</a>
+                </div>
+                <div class="col-sm-6">
+                    <a href="/cart/checkout/" role="button" class="btn btn-orange" >Procede to Checkout</a>
+                </div>
+
+
+                </p>
+            </div>
+        </div>
+    </div>
+
 {% endblock%}

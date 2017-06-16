@@ -39,6 +39,7 @@ class Book(models.Model):
     title = models.CharField(max_length=100)
     image = models.FileField(null=True, blank=True)
     authors = models.ManyToManyField(Author)
+    price = models.DecimalField(decimal_places=2, max_digits=5, default=0)
     publisher = models.ForeignKey(Publisher)
     publication_date = models.DateField()
     genre = models.CharField(max_length=50, blank=True, null=True)

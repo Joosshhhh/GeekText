@@ -8,5 +8,7 @@ from django.views.static import serve
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.cart_home)
+    url(r'^$', views.cart_home),
+    url(r'^add/$', views.add_cart),
+    url(r'^checkout/$', views.check_out),
 ]
