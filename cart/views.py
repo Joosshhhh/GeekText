@@ -5,12 +5,6 @@ from books.models import Book
 # Create your views here.
 
 
-def cart_home(request):
-
-    return render(request, "cart_home.html")
-# -----------------------------------------------------------------------------------------
-
-
 def add_cart(request, id):
 
     book = get_object_or_404(Book, id=id)
@@ -19,10 +13,13 @@ def add_cart(request, id):
     cart[id] = book.title
     request.session['cart'] = cart
 
+    number = cart_count(request)
+
     messages.success(request, "'" + book.title + "' has been added to your cart!")
 
     context = {
         "book": book,
+        "number": number,
     }
 
     return render(request, "cart_home.html", context)
@@ -31,22 +28,11 @@ def add_cart(request, id):
 
 def view_cart(request):
 
-    book_list = []  # holds the list of the books in the cart
-    total = 0
+    cart_items = request.session.get('cart', {}).values()  # fetches the values stored in the session
 
-    all_books = Book.objects.all()
+    number = cart_count(request)
 
-    cart = request.session.get('cart', {})
-    cart_items = cart.values()  # fetches the values stored in the session
-
-    number = len(cart_items)  # this is used to display the number of items in the cart
-
-    #  this for loop creates a list of Book objects that were gathered from the session
-    # (creates the shopping cart)
-    for book in cart_items:
-        bk = all_books.get(title=book)
-        book_list.append(bk)
-        total = total + bk.price
+    total, book_list = create_list(cart_items)
 
     context = {
         "cart": book_list,
@@ -60,22 +46,16 @@ def view_cart(request):
 
 def remove_item(request, id):
 
-    book_list = []  # holds the list of the books in the cart
-    all_books = Book.objects.all()
-    total = 0
-
     cart = request.session.get('cart', {})
 
     del cart[id]
     request.session.modified = True  # this lets the session save correctly
 
     cart_items = cart.values()
+
     number = len(cart_items)
 
-    for book in cart_items:
-        bk = all_books.get(title=book)
-        book_list.append(bk)
-        total = total + bk.price
+    total, book_list = create_list(cart_items)
 
     context = {
         "cart": book_list,
@@ -84,3 +64,31 @@ def remove_item(request, id):
     }
     return render(request, "cart_checkout.html", context)
 # -----------------------------------------------------------------------------------------
+
+#  ---helper function---
+#  takes in a dictionary and creates a list of Book objects into a list
+
+
+def create_list(cart_items):
+
+    total = 0
+    book_list = []  # holds the list of the books in the cart
+    all_books = Book.objects.all()
+
+    for book in cart_items:
+        bk = all_books.get(title=book)
+        book_list.append(bk)
+        total = total + bk.price
+
+    return total, book_list
+# -----------------------------------------------------------------------------------------
+
+
+def cart_count(request):
+
+    cart = request.session.get('cart', {})
+    cart_items = cart.values()  # fetches the values stored in the session
+
+    number = len(cart_items)  # this is used to display the number of items in the cart
+
+    return number

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Book, Author
+from cart.views import cart_count
 from django.contrib import messages
 
 
@@ -34,11 +35,14 @@ def list_books(request):
     else:
         query = "Books"
 
+    number = cart_count(request)
+
     context = {
         "search": query,
         "results": queryset,
         "title": "Displaying all Results for: ",
         "page_req_var": page_req_var,
+        "number": number,
     }
     return render(request, "book_list.html", context)
 
@@ -46,8 +50,11 @@ def list_books(request):
 def detail(request, id):
 
     book = get_object_or_404(Book, id=id)
+    number = cart_count(request)
+
     context = {
         "result": book,
+        "number": number,
     }
     return render(request, "book_detail.html", context)
 
@@ -56,9 +63,12 @@ def author_books(request, id):
 
     author = get_object_or_404(Author, id=id)
     books = Book.objects.all().filter(authors__full_name__icontains=author)
+    number = cart_count(request)
+
     context = {
         "author": author,
-        "books": books
+        "books": books,
+        "number": number
     }
     return render(request, "book_author.html", context)
 

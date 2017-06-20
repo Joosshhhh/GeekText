@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Book Results | {{ block.super }}{% endblock %}
+{% block title %}Checkout | {{ block.super }}{% endblock %}
 {% load static from staticfiles %}
 {% load avatar_tags %}
 
@@ -8,8 +8,9 @@
     <div class="container-fluid">
 
         <div class="panel panel-warning">
-            <div class="panel-heading">
-                Shopping Cart Items
+
+            <div class="panel-heading" style="text-align: center">
+                <strong>{{ user }}'s Shopping Cart Items</strong>
             </div>
 
             <!--div class="panel-body">
@@ -20,7 +21,8 @@
                 <thead>
                     <tr>
                         <th>Book Title</th>
-                        <th>Author</th>
+                        <th>Author(s)</th>
+                        <th>Quantity</th>
                         <th>Price</th>
                         <th>Remove Book</th>
                     </tr>
@@ -31,6 +33,15 @@
                         <tr>
                             <td><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></td>
                             <td>{{ book.author }}</td>
+                            <td>
+                                <select class="form-control" id="sel1">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </td>
                             <td>${{ book.price}}</td>
                             <td><a href="/cart/remove/{{ book.id }}/"
                                    class="btn btn-warning" action="button">Remove</a></td>
@@ -44,6 +55,13 @@
 
         <div class="col-md-12" style="text-align: right">
             <h4><strong>Total: ${{ total }}</strong></h4>
+        </div>
+
+        <div class="col-md-6 col-xs-6 col-md-offset-4 col-xs-offset-2">
+            <a href="/book/" class="btn btn-warning" action="button"
+                       style="width: 5cm;">Continue Shopping</a>
+            <a href="/book/" action="button" class="btn btn-success"
+                       style="width: 5cm;">Continue Checkout</a>
         </div>
 
     </div>

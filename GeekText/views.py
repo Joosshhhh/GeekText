@@ -1,6 +1,7 @@
 from django.views import generic
 from books.models import Book
 from django.shortcuts import render
+from cart.views import cart_count
 
 
 class HomeView(generic.TemplateView):
@@ -9,8 +10,9 @@ class HomeView(generic.TemplateView):
 
 def home_view(request):
     books = Book.objects.all().order_by("title")
-    cart = request.session.get('cart', {})
-    number = len(cart.values())
+
+    number = cart_count(request)
+
     context = {
         "books": books,
         "number": number,
