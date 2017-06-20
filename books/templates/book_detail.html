@@ -5,37 +5,41 @@
 
 {% block content %}
 
-        <div class="container">
+    <div class="container">
 
-    <div class="container" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
-        <h3>Displaying Shopping Cart Contents</h3>
-    </div>
+        <div class="container" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 
-    <div class="col-sm-6 col-sm-offset-3">
-        <h2> {{ result }} Detail </h2></br>
+            <div class="col-sm-6 col-sm-offset-3">
+                <h2> {{ result }} Detail </h2></br>
 
-        {% if result.image %}
-        <div class="col-sm-3 ">
-            <img src="{{ result.image.url }}" class="img-responsive"/>
+                <div class="thumbnail">
+
+                    {% if result.image %}
+                        <div class="col-sm-3 ">
+                            <img src="{{ result.image.url }}" class="img-responsive"/>
+                        </div>
+                    {% endif %}
+
+                    <h4></br>
+                        <strong>Price:</strong> ${{ result.price }}<br/>
+                        <strong>Title:</strong> {{ result.title }}<br/>
+                        <strong>Author:</strong> {{ result.author }}<br/>
+                        <strong>Genre:</strong> {{ result.genre }}<br/>
+                        <strong>Publication Date:</strong> {{ result.publication_date }}<br/>
+                        <strong>Publisher:</strong> {{ result.publisher }}<br/><br/>
+                        <strong>Description:</strong> {{ result.description }}
+                     </h4>
+
+                </div>
+
+                <div>
+                    <a href="/cart/add/{{ result.id }}" class="btn btn-orange" action="button"
+                       style="width: 30%;">Add To Cart</a>
+                    <a href="/book/" action="button" class="btn btn-orange"
+                       style="width: 30%;">Continue Shopping</a>
+                </div>
+
+            </div>
         </div>
-        {% endif %}
-
-        <h4></br>
-            <strong>Price:</strong> ${{ result.price }}<br/>
-         <strong>Title:</strong> {{ result.title }}<br/>
-         <strong>Author:</strong> {{ result.author }}<br/>
-         <strong>Genre:</strong> {{ result.genre }}<br/>
-         <strong>Publication Date:</strong> {{ result.publication_date }}<br/>
-         <strong>Publisher:</strong> {{ result.publisher }}<br/><br/>
-         <strong>Description:</strong> {{ result.description }}
-         </h4>
-        <div>
-            <a href="/cart/add/" class="btn btn-orange" action="button"
-               style="width: 30%;">Add To Cart</a>
-            <a href="/book/" action="button" class="btn btn-orange"
-               style="width: 30%;">Continue Shopping</a>
-        </div>
-
-    </div>
     </div>
 {% endblock %}

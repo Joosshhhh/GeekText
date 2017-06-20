@@ -16,10 +16,33 @@
         {% endif %}
             </div>
 
-        <div class="container">
+
+        <div class="container"><br>
             <div class="col-sm-6 col-sm-offset-3">
-                <p>
+                <div class="thumbnail">
+
+                    {% if book.image %}
+                        <div class="col-sm-3 ">
+                            <img src="{{ book.image.url }}" class="img-responsive"/>
+                        </div>
+                    {% endif %}
+
+                    <h4>
+                        <strong>Price:</strong> ${{ book.price }}<br/>
+                        <strong>Title:</strong> {{ book.title }}<br/>
+                        <strong>Author:</strong> {{ book.author }}<br/>
+                        <strong>Genre:</strong> {{ book.genre }}<br/>
+                        <strong>Publication Date:</strong> {{ book.publication_date }}<br/>
+                        <strong>Publisher:</strong> {{ book.publisher }}<br/><br/>
+                        <strong>Description:</strong> {{ book.description }}
+                    </h4>
+                    <p>
+
+                </div>
+                <br/>
+
                 <div class="col-sm-6">
+
                     <a href="/book/" role="button" class="btn btn-orange" >Continue Shopping</a>
                 </div>
                 <div class="col-sm-6">
@@ -28,6 +51,7 @@
 
 
                 </p>
+
             </div>
         </div>
     </div>
