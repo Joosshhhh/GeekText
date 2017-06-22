@@ -50,17 +50,30 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="col-md-12" style="text-align: center">
         <ul class="pagination">
-            <li>{% if results.has_previous %}
-                <a href="?{{ page_req_var }}={{ results.previous_page_number }}">&laquo; Previous</a>
-            {% endif %}</li>
-            <li><span class="current">
-                Page {{ results.number }} of {{ results.paginator.num_pages }}.
-            </span></li>
-            <li>{% if results.has_next %}
-                <a href="?{{ page_req_var }}={{ results.next_page_number }}">Next &raquo;</a>
-            {% endif %}</li>
+            {% if results.has_previous %}
+                <li><a href="?{{ page_req_var }}={{ results.previous_page_number }}">
+                    &laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+
+            {% for i in results.paginator.page_range %}
+                {% if results.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li><a href="?{{ page_req_var }}={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if results.has_next %}
+                <li><a href="?{{ page_req_var }}={{ results.next_page_number }}">
+                    &raquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+
         </ul>
     </div>
 

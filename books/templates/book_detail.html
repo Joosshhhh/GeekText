@@ -37,18 +37,19 @@
                        style="width: 30%;">Add To Cart</a>
                     <a href="/book/" action="button" class="btn btn-orange"
                        style="width: 30%;">Continue Shopping</a>
-                    <a href="/book/{{ result.id }}/w_review" class="btn btn-orange" action="button"
+                    <a href="/book/{{ result.id }}/review" class="btn btn-orange" action="button"
                        style="width: 30%;">Drop a Comment!</a>
                 </div><br><br>
+
                 <div class="panel panel-success">
                     <div class="panel-heading">Comments and Reviews for {{ result.title }}</div>
                     <div class="panel-body">
 
-                        {% for comment in comments %}
+                        {% for comment in pages %}
                             {# remove the comment tags below for the 'if' block #}
                             {# if you want the admin to approve of comments #}
 
-                            {#% if comment.approved %#}
+                            {#% if comment.approved or user.is_authenticated %#}
                                 <div class="panel panel-warning">
 
                                     <div class="panel-heading">
@@ -56,11 +57,19 @@
                                     </div>
 
                                     <div class="panel body">
+
                                         <h5> {{ comment.text }}</h5><br/>
                                         <div class="date">
                                             <h6><strong>Posted on:</strong> {{ comment.date }}</h6>
                                         </div>
-
+                                        <!--div> {# remove the HTML comment to activate comment approval by user #}
+                                            {#% if not comment.approved %#}
+                                                <a class="btn btn-default" href="/book/remove_comment/{{ comment.pk }}/">
+                                                    <span class="glyphicon glyphicon-remove"></span></a>
+                                                <a class="btn btn-default" href="/book/approve_comment/{{ comment.pk }}/">
+                                                    <span class="glyphicon glyphicon-ok"></span></a>
+                                            {#% endif %#}
+                                        </div-->
                                     </div>
 
                                 </div>
@@ -72,6 +81,52 @@
                                 <p>No comments on this book yet :(</p>
                         {% endfor %}
 
+                        <div class="col-md-12" style="text-align: center">{# block for pagination #}
+
+                            <div class="col-md-12">
+
+                                <ul class="pagination">
+
+                                    {% if pages.has_previous %}
+                                        <li><a href="?{{ page_req_var }}={{ pages.previous_page_number }}">
+                                            &laquo;</a></li>
+                                    {% else %}
+                                        <li class="disabled"><span>&laquo;</span></li>
+                                    {% endif %}
+
+                                {% for i in pages.paginator.page_range %}
+                                      {% if pages.number == i %}
+                                        <li class="active"><span>{{ i }}<span class="sr-only">(current)</span></span></li>
+                                      {% else %}
+                                        <li><a href="?{{ page_req_var }}={{ i }}">{{ i }}</a></li>
+                                      {% endif %}
+                                {% endfor %}
+
+                                    {% if pages.has_next %}
+                                        <li><a href="?{{ page_req_var }}={{ pages.next_page_number }}">
+                                        &raquo;</a></li>
+                                    {% else %}
+                                        <li class="disabled"><span>&raquo;</span></li>
+                                    {% endif %}
+
+                                </ul>
+                            </div>
+
+                                 <div class="col-md-12" style="text-align: center">
+                                    <form action="/book/{{ result.id }}/" method="post">
+                                        {% csrf_token %}
+                                          <select class="btn btn-default" name="drop">
+                                            <option  selected="selected" disabled>Comments on page:</option>
+                                            <option value="2">2</option>
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                          </select>
+                                          <input type="submit" value="Show" class="btn btn-warning">
+                                    </form>
+
+                                </div>
+
+                        </div>
                     </div>
                 </div>
             </div>

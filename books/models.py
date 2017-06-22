@@ -65,6 +65,10 @@ class Comment(models.Model):
     date = models.DateField()
     approved = models.BooleanField(default=False)
 
+    def approve(self):
+        self.approved = True
+        self.save()
+
     def __str__(self):
 
         return self.book.title
