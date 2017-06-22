@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}Checkout | {{ block.super }}{% endblock %}
+{% load static from staticfiles %}
+{% load avatar_tags %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="col-md-6 col-xs-4 col-md-offset-4">
+            <h3>Leave a comment for {{ book.title }}!</h3><br>
+        </div>
+
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <div class="col-md-4 col-xs-4 col-md-offset-4">
+            <div class="form-group">
+
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h4>Comment</h4>
+                    </div>
+
+                    <div class="panel-body">
+                        {{ form.text }}
+                    </div>
+
+                </div>
+                <div class="col-md-6 col-xm-3 col-md-offset-2">
+                    <button type="submit" class="btn btn-orange">Save</button>
+                </div>
+            </div>{# end of form-group #}
+        </div>
+
+
+    </form>
+    
+    </div>
+
+
+{% endblock %}
