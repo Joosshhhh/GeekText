@@ -58,3 +58,13 @@ class Book(models.Model):
         ordering = ['title']
 
 
+class Comment(models.Model):
+    book = models.ForeignKey(Book)
+    author = models.CharField(max_length=200)
+    text = models.TextField()
+    date = models.DateField()
+    approved = models.BooleanField(default=False)
+
+    def __str__(self):
+
+        return self.book.title

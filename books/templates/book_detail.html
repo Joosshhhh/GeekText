@@ -37,8 +37,43 @@
                        style="width: 30%;">Add To Cart</a>
                     <a href="/book/" action="button" class="btn btn-orange"
                        style="width: 30%;">Continue Shopping</a>
-                </div>
+                    <a href="/book/{{ result.id }}/w_review" class="btn btn-orange" action="button"
+                       style="width: 30%;">Drop a Comment!</a>
+                </div><br><br>
+                <div class="panel panel-success">
+                    <div class="panel-heading">Comments and Reviews for {{ result.title }}</div>
+                    <div class="panel-body">
 
+                        {% for comment in comments %}
+                            {# remove the comment tags below for the 'if' block #}
+                            {# if you want the admin to approve of comments #}
+
+                            {#% if comment.approved %#}
+                                <div class="panel panel-warning">
+
+                                    <div class="panel-heading">
+                                        <h4>{{ comment.author }}'s Comment</h4>
+                                    </div>
+
+                                    <div class="panel body">
+                                        <h5> {{ comment.text }}</h5><br/>
+                                        <div class="date">
+                                            <h6><strong>Posted on:</strong> {{ comment.date }}</h6>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <br>
+
+                            {#% endif %#}
+
+                            {% empty %}
+                                <p>No comments on this book yet :(</p>
+                        {% endfor %}
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

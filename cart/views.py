@@ -39,7 +39,7 @@ def view_cart(request):
         "total": total,
         "number": number,
     }
-    return render(request, "cart_checkout.html", context)
+    return render(request, "cart_view.html", context)
 
 # -----------------------------------------------------------------------------------------
 
@@ -62,7 +62,19 @@ def remove_item(request, id):
         "total": total,
         "number": number,
     }
+    return render(request, "cart_view.html", context)
+
+
+def checkout(request):
+
+    number = cart_count(request)
+
+    context = {
+        "number": number,
+    }
+
     return render(request, "cart_checkout.html", context)
+
 # -----------------------------------------------------------------------------------------
 
 #  ---helper function---

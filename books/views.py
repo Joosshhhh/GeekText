@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Book, Author
+from django.utils import timezone
+from .models import Book, Author, Comment
 from cart.views import cart_count
-from django.contrib import messages
+from .forms import CommentForm
 
 
 def list_books(request):
@@ -45,18 +46,23 @@ def list_books(request):
         "number": number,
     }
     return render(request, "book_list.html", context)
+# -----------------------------------------------------------------------------------------
 
 
 def detail(request, id):
 
     book = get_object_or_404(Book, id=id)
+    comments = Comment.objects.filter(book__title=book.title)
+
     number = cart_count(request)
 
     context = {
+        "comments": comments,
         "result": book,
         "number": number,
     }
     return render(request, "book_detail.html", context)
+# -----------------------------------------------------------------------------------------
 
 
 def author_books(request, id):
@@ -71,4 +77,34 @@ def author_books(request, id):
         "number": number
     }
     return render(request, "book_author.html", context)
+# -----------------------------------------------------------------------------------------
 
+
+def write_review(request, id):
+
+    number = cart_count(request)
+    book = get_object_or_404(Book, id=id)
+
+    if request.method == "POST":
+
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.book = book
+            comment.author = request.user
+            comment.date = timezone.now()
+            comment.save()
+
+            return redirect('/book/' + id + '/')
+    else:
+        form = CommentForm()
+
+    context = {
+        "number": number,
+        "book": book,
+        "form": form
+    }
+
+    return render(request, "book_review.html", context)
+# -----------------------------------------------------------------------------------------

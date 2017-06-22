@@ -17067,3 +17067,38 @@ django.core.exceptions.ValidationError: ["Sorry couldn't create registration."]
 2017-06-20 15:54:57,433 "POST /xml/v1/request.api HTTP/1.1" 200 441
 2017-06-20 15:54:57,649 Response error
 2017-06-20 15:54:57,650 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-06-20 21:20:29,702 performing custom validation..
+2017-06-20 21:20:29,703 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-06-20 21:20:29,705 building request..
+2017-06-20 21:20:29,727 Starting new HTTPS connection (1): apitest.authorize.net
+2017-06-20 21:20:31,518 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-06-20 21:20:31,572 Response error
+2017-06-20 21:20:31,574 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-06-20 21:20:58,639 performing custom validation..
+2017-06-20 21:20:58,640 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-06-20 21:20:58,641 building request..
+2017-06-20 21:20:58,652 Starting new HTTPS connection (1): apitest.authorize.net
+2017-06-20 21:20:59,152 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-06-20 21:20:59,162 Response error
+2017-06-20 21:20:59,163 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-06-20 21:21:09,839 performing custom validation..
+2017-06-20 21:21:09,839 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-06-20 21:21:09,840 building request..
+2017-06-20 21:21:09,847 Starting new HTTPS connection (1): apitest.authorize.net
+2017-06-20 21:21:10,358 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-06-20 21:21:10,369 Response error
+2017-06-20 21:21:10,370 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-06-20 21:21:17,868 performing custom validation..
+2017-06-20 21:21:17,868 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-06-20 21:21:17,869 building request..
+2017-06-20 21:21:17,879 Starting new HTTPS connection (1): apitest.authorize.net
+2017-06-20 21:21:18,459 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-06-20 21:21:18,475 Response error
+2017-06-20 21:21:18,476 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-06-20 21:21:32,211 performing custom validation..
+2017-06-20 21:21:32,211 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-06-20 21:21:32,212 building request..
+2017-06-20 21:21:32,232 Starting new HTTPS connection (1): apitest.authorize.net
+2017-06-20 21:21:32,707 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-06-20 21:21:32,726 Response error
+2017-06-20 21:21:32,727 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'

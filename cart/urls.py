@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^add/(?P<id>\d)/$', views.add_cart),
     url(r'^remove/(?P<id>\d)/$', views.remove_item),
     url(r'^view_cart/$', views.view_cart),
+    url(r'^checkout/$', views.checkout),
 
 ]
