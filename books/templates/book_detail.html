@@ -94,13 +94,13 @@
                                         <li class="disabled"><span>&laquo;</span></li>
                                     {% endif %}
 
-                                {% for i in pages.paginator.page_range %}
-                                      {% if pages.number == i %}
-                                        <li class="active"><span>{{ i }}<span class="sr-only">(current)</span></span></li>
-                                      {% else %}
-                                        <li><a href="?{{ page_req_var }}={{ i }}">{{ i }}</a></li>
-                                      {% endif %}
-                                {% endfor %}
+                                    {% for i in pages.paginator.page_range %}
+                                          {% if pages.number == i %}
+                                            <li class="active"><span>{{ i }}<span class="sr-only">(current)</span></span></li>
+                                          {% else %}
+                                            <li><a href="?{{ page_req_var }}={{ i }}">{{ i }}</a></li>
+                                          {% endif %}
+                                    {% endfor %}
 
                                     {% if pages.has_next %}
                                         <li><a href="?{{ page_req_var }}={{ pages.next_page_number }}">
