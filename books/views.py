@@ -59,11 +59,12 @@ def detail(request, id):
 
     page_req_var = "comment"
 
+    # -- This part deals with how many items on a page based on the dropdown
     if number_comments:
         paginator = Paginator(comments, int(number_comments))
     else:
         paginator = Paginator(comments, 2)
-
+    # ----------------------------------------------------------------------
     page = request.GET.get(page_req_var)
 
     try:

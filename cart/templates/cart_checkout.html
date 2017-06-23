@@ -5,11 +5,76 @@
 
 {% block content %}
 
-    <div class="container-fluid">
+    <div class="container" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+         <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h4>Order Summary</h4>
+                        </div>
 
-    <h3>This is there the payment confirmation and the final billing stuff will go</h3>
-    
+                        <div class="panel-body">
+                                <div class="col-md-6">
+
+                                    <h5>Items:</h5>
+                                    <h5>Shipping & handling:</h5>
+                                    <h5>Subtotal:</h5>
+                                    <h5>Taxes:</h5>
+                                    <h5>________________</h5>
+                                    <h5><strong>Order Total:</strong></h5>
+
+                                </div>
+
+                                <div class="col-md-6" style="text-align: right">
+                                    <h5>${{ total }}</h5>
+                                    <h5>${{ shipping }}</h5>
+                                    <h5>${{ subtotal }}</h5>
+                                    <h5>${{ tax }}</h5>
+                                    <h5>__________</h5>
+                                    <h5>${{ grandTotal }}</h5>
+                                </div><br>
+
+                            <div class="btn-group btn-group-justified">
+                                <div class="btn-group">
+                                    <a href="/cart/view_cart/" class="btn btn-warning">Change Order</a>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h4>Shipping Address</h4>
+                    </div>
+
+                    <div class="panel-body">
+                        <h4>{{ shipng }}</h4>
+                    </div>
+                </div>
+
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h4>Payment Information</h4>
+                    </div>
+
+                    <div class="panel-body">
+                        <h4>Stuff goes here</h4>
+                    </div>
+                </div>
+
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h4>Shipping Details</h4>
+                    </div>
+
+                    <div class="panel-body">
+                        <h4>Stuff goes here</h4>
+                    </div>
+                </div>
+
+        </div>
     </div>
+
+
 
 
 {% endblock %}

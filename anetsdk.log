@@ -17138,3 +17138,209 @@ Traceback (most recent call last):
   File "C:\Users\mitola\Documents\GitHub\GeekText\accounts\views.py", line 541, in get_queryset
     if response.messages.resultCode == "Ok":
 AttributeError: 'NoneType' object has no attribute 'messages'
+2017-06-23 09:25:35,269 performing custom validation..
+2017-06-23 09:25:35,270 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-06-23 09:25:35,271 building request..
+2017-06-23 09:25:35,305 Starting new HTTPS connection (1): apitest.authorize.net
+2017-06-23 09:25:45,063 performing custom validation..
+2017-06-23 09:25:45,063 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-06-23 09:25:45,065 building request..
+2017-06-23 09:25:45,073 Starting new HTTPS connection (1): apitest.authorize.net
+2017-06-23 09:25:45,803 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-06-23 09:25:45,852 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-06-23 09:25:46,077 Response error
+2017-06-23 09:25:46,078 Response error
+2017-06-23 09:25:46,081 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-06-23 09:25:46,087 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-06-23 09:26:30,604 performing custom validation..
+2017-06-23 09:26:30,605 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-06-23 09:26:30,609 building request..
+2017-06-23 09:26:30,610 building request..
+2017-06-23 09:26:30,635 Internal Server Error: /accounts/manage/new-address
+Traceback (most recent call last):
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 129, in execute
+    xmlRequest = self.buildrequest()
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 100, in buildrequest
+    xmlRequest = self._request.toxml(encoding=constants.xml_encoding, element_name=self.getrequesttype())
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 555, in toxml
+    dom = self.toDOM(bds, element_name=element_name)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 527, in toDOM
+    self._toDOM_csc(bds, element)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2661, in _toDOM_csc
+    order = self._validatedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2188, in _validatedChildren
+    return self.__automatonConfiguration.sequencedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 638, in sequencedChildren
+    cfg = self._diagnoseIncompleteContent(symbols, symbol_set)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 493, in _diagnoseIncompleteContent
+    raise pyxb.IncompleteElementContentError(self.__instance, cfg, symbols, symbol_set)
+pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CTD_ANON_41 object at 0x052EA4B0>, <pyxb.utils.fac.Configuration object at 0x052EAD50>, [<pyxb.binding.basis.ElementContent object at 0x052EAD70>, <pyxb.binding.basis.ElementContent object at 0x052EAD10>], {<pyxb.binding.content.ElementDeclaration object at 0x03DE1930>: [<authorizenet.apicontractsv1.customerAddressType object at 0x052EABD0>], <pyxb.binding.content.ElementDeclaration object at 0x03DE1970>: [1]})
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\mitola\Python\lib\site-packages\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "C:\Users\mitola\Python\lib\site-packages\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "C:\Users\mitola\Python\lib\site-packages\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\views\generic\base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\contrib\auth\mixins.py", line 56, in dispatch
+    return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\views\generic\base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\views\generic\edit.py", line 183, in post
+    return self.form_valid(form)
+  File "C:\Users\mitola\Documents\GitHub\GeekText\accounts\views.py", line 147, in form_valid
+    form.add_shipping_address(self.request.user.authorize_net_profile_id)
+  File "C:\Users\mitola\Documents\GitHub\GeekText\accounts\forms.py", line 225, in add_shipping_address
+    controller.execute()
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 132, in execute
+    logging.error( 'Error retrieving http response from: %s for request: %s', self.endpoint, self.getprettyxmlrequest())
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 108, in getprettyxmlrequest
+    xmlRequest = self.buildrequest()
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 100, in buildrequest
+    xmlRequest = self._request.toxml(encoding=constants.xml_encoding, element_name=self.getrequesttype())
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 555, in toxml
+    dom = self.toDOM(bds, element_name=element_name)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 527, in toDOM
+    self._toDOM_csc(bds, element)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2661, in _toDOM_csc
+    order = self._validatedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2188, in _validatedChildren
+    return self.__automatonConfiguration.sequencedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 638, in sequencedChildren
+    cfg = self._diagnoseIncompleteContent(symbols, symbol_set)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 493, in _diagnoseIncompleteContent
+    raise pyxb.IncompleteElementContentError(self.__instance, cfg, symbols, symbol_set)
+pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CTD_ANON_41 object at 0x052EA4B0>, <pyxb.utils.fac.Configuration object at 0x052EABF0>, [<pyxb.binding.basis.ElementContent object at 0x052EADD0>, <pyxb.binding.basis.ElementContent object at 0x052EA0D0>], {<pyxb.binding.content.ElementDeclaration object at 0x03DE1930>: [<authorizenet.apicontractsv1.customerAddressType object at 0x052EABD0>], <pyxb.binding.content.ElementDeclaration object at 0x03DE1970>: [1]})
+2017-06-23 09:27:20,613 performing custom validation..
+2017-06-23 09:27:20,613 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-06-23 09:27:20,614 building request..
+2017-06-23 09:27:20,618 building request..
+2017-06-23 09:27:20,620 Internal Server Error: /accounts/manage/new-address
+Traceback (most recent call last):
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 129, in execute
+    xmlRequest = self.buildrequest()
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 100, in buildrequest
+    xmlRequest = self._request.toxml(encoding=constants.xml_encoding, element_name=self.getrequesttype())
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 555, in toxml
+    dom = self.toDOM(bds, element_name=element_name)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 527, in toDOM
+    self._toDOM_csc(bds, element)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2661, in _toDOM_csc
+    order = self._validatedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2188, in _validatedChildren
+    return self.__automatonConfiguration.sequencedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 638, in sequencedChildren
+    cfg = self._diagnoseIncompleteContent(symbols, symbol_set)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 493, in _diagnoseIncompleteContent
+    raise pyxb.IncompleteElementContentError(self.__instance, cfg, symbols, symbol_set)
+pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CTD_ANON_41 object at 0x0521B310>, <pyxb.utils.fac.Configuration object at 0x0521B550>, [<pyxb.binding.basis.ElementContent object at 0x052E4FD0>, <pyxb.binding.basis.ElementContent object at 0x052E4C10>], {<pyxb.binding.content.ElementDeclaration object at 0x03DE1930>: [<authorizenet.apicontractsv1.customerAddressType object at 0x0521B6F0>], <pyxb.binding.content.ElementDeclaration object at 0x03DE1970>: [1]})
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\mitola\Python\lib\site-packages\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "C:\Users\mitola\Python\lib\site-packages\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "C:\Users\mitola\Python\lib\site-packages\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\views\generic\base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\contrib\auth\mixins.py", line 56, in dispatch
+    return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\views\generic\base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\views\generic\edit.py", line 183, in post
+    return self.form_valid(form)
+  File "C:\Users\mitola\Documents\GitHub\GeekText\accounts\views.py", line 147, in form_valid
+    form.add_shipping_address(self.request.user.authorize_net_profile_id)
+  File "C:\Users\mitola\Documents\GitHub\GeekText\accounts\forms.py", line 225, in add_shipping_address
+    controller.execute()
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 132, in execute
+    logging.error( 'Error retrieving http response from: %s for request: %s', self.endpoint, self.getprettyxmlrequest())
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 108, in getprettyxmlrequest
+    xmlRequest = self.buildrequest()
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 100, in buildrequest
+    xmlRequest = self._request.toxml(encoding=constants.xml_encoding, element_name=self.getrequesttype())
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 555, in toxml
+    dom = self.toDOM(bds, element_name=element_name)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 527, in toDOM
+    self._toDOM_csc(bds, element)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2661, in _toDOM_csc
+    order = self._validatedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2188, in _validatedChildren
+    return self.__automatonConfiguration.sequencedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 638, in sequencedChildren
+    cfg = self._diagnoseIncompleteContent(symbols, symbol_set)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 493, in _diagnoseIncompleteContent
+    raise pyxb.IncompleteElementContentError(self.__instance, cfg, symbols, symbol_set)
+pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CTD_ANON_41 object at 0x0521B310>, <pyxb.utils.fac.Configuration object at 0x052E4E70>, [<pyxb.binding.basis.ElementContent object at 0x052E4EB0>, <pyxb.binding.basis.ElementContent object at 0x052E4E90>], {<pyxb.binding.content.ElementDeclaration object at 0x03DE1930>: [<authorizenet.apicontractsv1.customerAddressType object at 0x0521B6F0>], <pyxb.binding.content.ElementDeclaration object at 0x03DE1970>: [1]})
+2017-06-23 09:28:04,354 performing custom validation..
+2017-06-23 09:28:04,354 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-06-23 09:28:04,355 building request..
+2017-06-23 09:28:04,356 building request..
+2017-06-23 09:28:04,358 Internal Server Error: /accounts/manage/new-address
+Traceback (most recent call last):
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 129, in execute
+    xmlRequest = self.buildrequest()
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 100, in buildrequest
+    xmlRequest = self._request.toxml(encoding=constants.xml_encoding, element_name=self.getrequesttype())
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 555, in toxml
+    dom = self.toDOM(bds, element_name=element_name)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 527, in toDOM
+    self._toDOM_csc(bds, element)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2661, in _toDOM_csc
+    order = self._validatedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2188, in _validatedChildren
+    return self.__automatonConfiguration.sequencedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 638, in sequencedChildren
+    cfg = self._diagnoseIncompleteContent(symbols, symbol_set)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 493, in _diagnoseIncompleteContent
+    raise pyxb.IncompleteElementContentError(self.__instance, cfg, symbols, symbol_set)
+pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CTD_ANON_41 object at 0x04C03FB0>, <pyxb.utils.fac.Configuration object at 0x04C030F0>, [<pyxb.binding.basis.ElementContent object at 0x04C03FD0>, <pyxb.binding.basis.ElementContent object at 0x04C03B10>], {<pyxb.binding.content.ElementDeclaration object at 0x03DE1930>: [<authorizenet.apicontractsv1.customerAddressType object at 0x0520B030>], <pyxb.binding.content.ElementDeclaration object at 0x03DE1970>: [0]})
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\mitola\Python\lib\site-packages\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "C:\Users\mitola\Python\lib\site-packages\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "C:\Users\mitola\Python\lib\site-packages\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\views\generic\base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\contrib\auth\mixins.py", line 56, in dispatch
+    return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\views\generic\base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\views\generic\edit.py", line 183, in post
+    return self.form_valid(form)
+  File "C:\Users\mitola\Documents\GitHub\GeekText\accounts\views.py", line 147, in form_valid
+    form.add_shipping_address(self.request.user.authorize_net_profile_id)
+  File "C:\Users\mitola\Documents\GitHub\GeekText\accounts\forms.py", line 225, in add_shipping_address
+    controller.execute()
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 132, in execute
+    logging.error( 'Error retrieving http response from: %s for request: %s', self.endpoint, self.getprettyxmlrequest())
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 108, in getprettyxmlrequest
+    xmlRequest = self.buildrequest()
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 100, in buildrequest
+    xmlRequest = self._request.toxml(encoding=constants.xml_encoding, element_name=self.getrequesttype())
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 555, in toxml
+    dom = self.toDOM(bds, element_name=element_name)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 527, in toDOM
+    self._toDOM_csc(bds, element)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2661, in _toDOM_csc
+    order = self._validatedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2188, in _validatedChildren
+    return self.__automatonConfiguration.sequencedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 638, in sequencedChildren
+    cfg = self._diagnoseIncompleteContent(symbols, symbol_set)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 493, in _diagnoseIncompleteContent
+    raise pyxb.IncompleteElementContentError(self.__instance, cfg, symbols, symbol_set)
+pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CTD_ANON_41 object at 0x04C03FB0>, <pyxb.utils.fac.Configuration object at 0x04C037F0>, [<pyxb.binding.basis.ElementContent object at 0x04C03890>, <pyxb.binding.basis.ElementContent object at 0x04C03910>], {<pyxb.binding.content.ElementDeclaration object at 0x03DE1930>: [<authorizenet.apicontractsv1.customerAddressType object at 0x0520B030>], <pyxb.binding.content.ElementDeclaration object at 0x03DE1970>: [0]})

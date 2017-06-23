@@ -72,3 +72,6 @@ class Comment(models.Model):
     def __str__(self):
 
         return self.book.title
+
+    class Meta:
+        ordering = ['-date']

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from books.models import Book
+from decimal import *
 
 # Create your views here.
 
@@ -63,14 +64,36 @@ def remove_item(request, id):
         "number": number,
     }
     return render(request, "cart_view.html", context)
+# -----------------------------------------------------------------------------------------
 
 
 def checkout(request):
 
+    cart_items = request.session.get('cart', {}).values()
+
     number = cart_count(request)
+
+    total, book_list = create_list(cart_items)
+
+    total = round(float(total), 2)
+
+    shipping = round(float(request.POST.get('shipng')), 2)
+
+    subtotal = shipping + total
+
+    tax = round((subtotal * 7)/100, 2)
+
+    grandTotal = subtotal + tax
+
 
     context = {
         "number": number,
+        "total": total,
+        "books": book_list,
+        "tax": tax,
+        "grandTotal": grandTotal,
+        "subtotal": subtotal,
+        "shipping": shipping,
     }
 
     return render(request, "cart_checkout.html", context)
@@ -79,6 +102,7 @@ def checkout(request):
 
 #  ---helper function---
 #  takes in a dictionary and creates a list of Book objects into a list
+#  also add up the total of the books in the list
 
 
 def create_list(cart_items):
