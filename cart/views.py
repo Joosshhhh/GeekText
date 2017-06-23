@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from books.models import Book
-from decimal import *
+from datetime import *
 
 # Create your views here.
 
@@ -35,10 +35,16 @@ def view_cart(request):
 
     total, book_list = create_list(cart_items)
 
+    if (total > 0):
+        comparison = True
+    else:
+        comparison = False
+
     context = {
         "cart": book_list,
         "total": total,
         "number": number,
+        "comparison": comparison
     }
     return render(request, "cart_view.html", context)
 
@@ -58,10 +64,16 @@ def remove_item(request, id):
 
     total, book_list = create_list(cart_items)
 
+    if total > 0:
+        comparison = True
+    else:
+        comparison = False
+
     context = {
         "cart": book_list,
         "total": total,
         "number": number,
+        "comparison": comparison
     }
     return render(request, "cart_view.html", context)
 # -----------------------------------------------------------------------------------------
@@ -70,30 +82,28 @@ def remove_item(request, id):
 def checkout(request):
 
     cart_items = request.session.get('cart', {}).values()
-
+    shipping_tokens = request.POST.get('shipng').split()
     number = cart_count(request)
 
     total, book_list = create_list(cart_items)
 
     total = round(float(total), 2)
-
-    shipping = round(float(request.POST.get('shipng')), 2)
-
-    subtotal = shipping + total
-
+    shipping = round(float(shipping_tokens[0]), 2)
+    subtotal = round(shipping + total, 2)
     tax = round((subtotal * 7)/100, 2)
+    grand_total = round(subtotal + tax, 2)
 
-    grandTotal = subtotal + tax
-
+    code, dates = decode_shipping(shipping_tokens[1])
 
     context = {
         "number": number,
         "total": total,
-        "books": book_list,
+        "dates": dates,
         "tax": tax,
-        "grandTotal": grandTotal,
+        "grandTotal": grand_total,
         "subtotal": subtotal,
         "shipping": shipping,
+        "ship_option": code,
     }
 
     return render(request, "cart_checkout.html", context)
@@ -128,3 +138,26 @@ def cart_count(request):
     number = len(cart_items)  # this is used to display the number of items in the cart
 
     return number
+# -----------------------------------------------------------------------------------------
+# ---Helper function below, reads in input from a radio option where it decodes and calculates the
+# estimated delivery date along with the Shipping option
+
+
+def decode_shipping(code):
+
+    dates = datetime.today()
+
+    output = ''
+
+    if code == '-T-':
+        output = 'Two-Day Shipping (2 Business Days)'
+        dates = dates + timedelta(days=2)
+    elif code == '-R-':
+        output = 'Regular Shipping (3-5 Business Days)'
+        dates = dates + timedelta(days=5)
+    elif code == '-N-':
+        output = 'Next-Day Shipping (1 Business Day)'
+        dates = dates + timedelta(days=1)
+
+    return output, dates
+# -----------------------------------------------------------------------------------------

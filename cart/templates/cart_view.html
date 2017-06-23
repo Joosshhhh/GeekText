@@ -61,32 +61,52 @@
             <h4><strong>SubTotal: ${{ total }}</strong></h4>
         </div>
 
-        <div class="col-md-10 col-md-offset-1" style="text-align: left">
-            <div>
+        <div class="col-md-10 col-md-offset-1">
+
 
                 <form method="post" action="/cart/checkout/">
                     {% csrf_token %}
-                    <div class="form-group">
-                        <div class="radio">
-                            <label><input type="radio" name="shipng" value="12.99">Next Day (1 Business day - $12.99)</label>
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="panel panel-warning" style="text-align: center">
+                            <div class="panel-heading">
+                                <strong>Select shipping option..</strong>
+                            </div>
+                            <div class="panel-body">
+                                 <div class="form-group">
+                                    <div class="radio">
+                                        <label><input type="radio" name="shipng" value="13.99 -N-">
+                                            Next Day (1 Business day - $13.99)</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label><input type="radio" name="shipng" value="10.99 -T-" checked="checked">
+                                            Two Day (2 Business days - $10.99)</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label><input type="radio" name="shipng" value="4.99 -R-">
+                                            Regular (3-5 Business days - $4.99)</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="radio">
-                            <label><input type="radio" name="shipng" value="9.99" checked="checked">Two Day (1-2 Business days - $9.99)</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="shipng" value="4.99">Regular (3-5 Business days - $4.99)</label>
-                        </div>
+
                     </div>
+
 
                      <div class="col-md-6 col-xs-6 col-md-offset-4 col-xs-offset-2">
                         <a href="/book/" class="btn btn-warning" action="button"
-                                   style="width: 5cm;">Continue Shopping</a>
+                                   style="width: 4cm;">Continue Shopping</a>
+                         {% if comparison  %}
                         <input value="Continue Checkout" class="btn btn-success"
-                                   style="width: 5cm;" type="submit">
+                                   style="width: 4cm;" type="submit">
+                         {% else %}
+                         <div class="btn btn-success" style="width: 4cm;">
+                             Add items to cart...
+                         </div>
+                         {% endif %}
                     </div>
 
                 </form>
-            </div>
+
         </div>
 
 
