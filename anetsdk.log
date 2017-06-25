@@ -17344,46 +17344,10 @@ Traceback (most recent call last):
   File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 493, in _diagnoseIncompleteContent
     raise pyxb.IncompleteElementContentError(self.__instance, cfg, symbols, symbol_set)
 pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CTD_ANON_41 object at 0x04C03FB0>, <pyxb.utils.fac.Configuration object at 0x04C037F0>, [<pyxb.binding.basis.ElementContent object at 0x04C03890>, <pyxb.binding.basis.ElementContent object at 0x04C03910>], {<pyxb.binding.content.ElementDeclaration object at 0x03DE1930>: [<authorizenet.apicontractsv1.customerAddressType object at 0x0520B030>], <pyxb.binding.content.ElementDeclaration object at 0x03DE1970>: [0]})
-2017-06-23 15:14:26,427 performing custom validation..
-2017-06-23 15:14:26,427 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
-2017-06-23 15:14:26,429 building request..
-2017-06-23 15:14:26,447 Starting new HTTPS connection (1): apitest.authorize.net
-2017-06-23 15:14:29,857 "POST /xml/v1/request.api HTTP/1.1" 200 441
-2017-06-23 15:14:29,938 Response error
-2017-06-23 15:14:29,940 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
-2017-06-23 15:15:02,565 performing custom validation..
-2017-06-23 15:15:02,566 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
-2017-06-23 15:15:02,567 building request..
-2017-06-23 15:15:02,578 Starting new HTTPS connection (1): apitest.authorize.net
-2017-06-23 15:15:03,309 "POST /xml/v1/request.api HTTP/1.1" 200 441
-2017-06-23 15:15:03,327 Response error
-2017-06-23 15:15:03,328 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
-2017-06-23 15:18:30,063 performing custom validation..
-2017-06-23 15:18:30,063 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
-2017-06-23 15:18:30,064 building request..
-2017-06-23 15:18:30,076 Starting new HTTPS connection (1): apitest.authorize.net
-2017-06-23 15:18:31,399 "POST /xml/v1/request.api HTTP/1.1" 200 441
-2017-06-23 15:18:31,416 Response error
-2017-06-23 15:18:31,417 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
-2017-06-23 15:49:09,580 Not Found: /media/avatars/chida001/resized/80/Char.png
-2017-06-23 15:49:11,275 Not Found: /media/avatars/chida001/resized/80/Char.png
-2017-06-23 15:49:14,522 Not Found: /media/avatars/chida001/resized/80/Char.png
-2017-06-23 15:49:21,252 Not Found: /media/avatars/chida001/resized/80/Char.png
-2017-06-23 15:49:22,946 Not Found: /media/avatars/chida001/resized/80/Char.png
-2017-06-23 15:49:50,050 Not Found: /media/avatars/chida001/resized/80/Char.png
-2017-06-23 15:57:01,206 Not Found: /media/avatars/chida001/resized/80/Char.png
-2017-06-23 15:57:03,636 Not Found: /media/avatars/chida001/resized/80/Char.png
-2017-06-23 15:57:17,537 STREAM b'IHDR' 16 13
-2017-06-23 15:57:17,537 STREAM b'bKGD' 41 6
-2017-06-23 15:57:17,537 b'bKGD' 41 6 (unknown)
-2017-06-23 15:57:17,539 STREAM b'pHYs' 59 9
-2017-06-23 15:57:17,539 STREAM b'tIME' 80 7
-2017-06-23 15:57:17,540 b'tIME' 80 7 (unknown)
-2017-06-23 15:57:17,540 STREAM b'IDAT' 99 8192
-2017-06-23 15:57:17,650 STREAM b'IHDR' 16 13
-2017-06-23 15:57:17,650 STREAM b'bKGD' 41 6
-2017-06-23 15:57:17,650 b'bKGD' 41 6 (unknown)
-2017-06-23 15:57:17,651 STREAM b'pHYs' 59 9
-2017-06-23 15:57:17,651 STREAM b'tIME' 80 7
-2017-06-23 15:57:17,651 b'tIME' 80 7 (unknown)
-2017-06-23 15:57:17,651 STREAM b'IDAT' 99 8192
+2017-06-24 14:35:56,285 performing custom validation..
+2017-06-24 14:35:56,285 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-06-24 14:35:56,286 building request..
+2017-06-24 14:35:56,329 Starting new HTTPS connection (1): apitest.authorize.net
+2017-06-24 14:35:57,899 "POST /xml/v1/request.api HTTP/1.1" 200 507
+2017-06-24 14:35:57,922 Multiple accepting paths for <class 'authorizenet.apicontractsv1.CTD_ANON_38'>
+2017-06-24 14:35:57,928 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<createCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Ok</resultCode>\n\t\t<message>\n\t\t\t<code>I00001</code>\n\t\t\t<text>Successful.</text>\n\t\t</message>\n\t</messages>\n\t<customerProfileId>1501410139</customerProfileId>\n\t<customerPaymentProfileIdList/>\n\t<customerShippingAddressIdList/>\n\t<validationDirectResponseList/>\n</createCustomerProfileResponse>\n'
