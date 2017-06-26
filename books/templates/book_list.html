@@ -2,6 +2,7 @@
 {% block title %}Book Results | {{ block.super }}{% endblock %}
 {% load static from staticfiles %}
 {% load avatar_tags %}
+{% load ratings %}
 
 {% block content %}
     <div class="container" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
@@ -33,6 +34,7 @@
                         <strong>Publisher:</strong> {{ res.publisher }}<br/>
                         <strong>Publication Date:</strong> {{ res.publication_date }}<br/>
                         <strong>Genre:</strong> <a href="" ></a>{{ res.genre }}<br/>
+                        <strong>Rating:</strong> {% ratings res %} <br/>
                         <strong>Description:</strong> {{ res.description }}<br/>
                         </p>
                     </div>

@@ -1,5 +1,7 @@
 from django.db import models
 from django.shortcuts import get_object_or_404
+from django.contrib.contenttypes.fields import GenericRelation
+from star_ratings.models import Rating
 # Create your models here.
 
 
@@ -43,6 +45,7 @@ class Book(models.Model):
     publisher = models.ForeignKey(Publisher)
     publication_date = models.DateField()
     genre = models.CharField(max_length=50, blank=True, null=True)
+    ratings = GenericRelation(Rating, related_query_name='books')
     description = models.TextField(max_length=600, null=True, blank=True)
 
     def __str__(self):
