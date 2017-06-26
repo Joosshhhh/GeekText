@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'authorizenet',
     'avatar',
     'cart',
-
+    'star_ratings'
 ]
 
 MIDDLEWARE = [
@@ -154,3 +154,6 @@ AVATAR_GENERATE_SIZE = (36,)
 AVATAR_ADD_TEMPLATE = 'accounts/profile/manage_avatar.html'
 AVATAR_CHANGE_TEMPLATE = 'accounts/profile/manage_avatar.html'
 
+STAR_RATINGS_STAR_HEIGHT = 15
+STAR_RATINGS_STAR_WIDTH = 15
+STAR_RATINGS_RERATE = False
