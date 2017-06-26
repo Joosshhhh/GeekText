@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block title %}Book Results | {{ block.super }}{% endblock %}
+{% load static from staticfiles %}
+{% load avatar_tags %}
+
+{% block content %}
+    <div class="container" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+
+        <h3> {{ title }} {{ search }} </h3><br><br/>
+        <div class="col-md-2">
+            <h4>this will go here</h4>
+        </div>
+    <div class="col-md-10">
+        {% for res in results %}
+
+            <div class="col-md-4 col-xs-6" >
+                <div class="thumbnail" style="height: 10cm;">
+                    <div class="caption" text-align="center">
+                        <h3><a href="{{ res.get_absolute_url }}">{{ res.title }}</a><br/></h3>
+                        <p>
+                        {% if res.image %}
+                            <div class="col-md-4 col-xs-6">
+                                <img src="{{ res.image.url }}" class="img-responsive"/>
+                            </div>
+                        {% endif %}
+
+                        <strong>Price:</strong> ${{ res.price }}<br/>
+                        <strong>Author:</strong>
+                        {% for auth in res.author %}
+                            <a href="/book/author/{{ auth.id }}">  {{ auth }} </a>
+                        {% endfor %}
+                            <br/>
+                        <strong>Publisher:</strong> {{ res.publisher }}<br/>
+                        <strong>Publication Date:</strong> {{ res.publication_date }}<br/>
+                        <strong>Genre:</strong> <a href="" ></a>{{ res.genre }}<br/>
+                        <strong>Description:</strong> {{ res.description }}<br/>
+                        </p>
+                    </div>
+
+                </div>
+                    <div>
+                        <p>
+                            <a href="{{ res.get_absolute_url }}" class="btn btn-orange"
+                              role="button" style="width: 30%;" >View</a>
+                            <a href="/cart/add/{{ res.id }}" class="btn btn-orange" role="button"
+                              style="width: 50%;" >Add To Cart</a>
+                        </p>
+                    </div>
+                <hr/><br>
+            </div>
+
+
+        {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-md-12" style="text-align: center">
+        <ul class="pagination">
+            {% if results.has_previous %}
+                <li><a href="?{{ page_req_var }}={{ results.previous_page_number }}">
+                    &laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+
+            {% for i in results.paginator.page_range %}
+                {% if results.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li><a href="?{{ page_req_var }}={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if results.has_next %}
+                <li><a href="?{{ page_req_var }}={{ results.next_page_number }}">
+                    &raquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+
+        </ul>
+    </div>
+
+
+
+{% endblock %}

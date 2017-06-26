@@ -24,7 +24,7 @@ from . import views, forms
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.HomeView.as_view(), name='home'),
+    url(r'^$', views.home_view, name='home'),
     url(r"^accounts/", include("accounts.urls", namespace="accounts")),
     url(r"^accounts/avatar/", include('avatar.urls')),
     url(r"^book/", include("books.urls", namespace="books")),
@@ -35,6 +35,7 @@ urlpatterns = [
         auth_views.PasswordResetConfirmView.as_view(form_class=forms.PasswordResetConfirm),
         name='password_reset_confirm'),
     url(r"^password-reset/complete/$", auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    url(r"^cart/", include("cart.urls"))
 
 ]
 

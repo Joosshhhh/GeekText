@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block title %}Book Results | {{ block.super }}{% endblock %}
+{% load static from staticfiles %}
+{% load avatar_tags %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        {% if messages %}
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+            {% for message in messages %}
+            <p{% if message.tags == "success" %} class="alert alert-success" style="text-align: center" {% endif %}>{{ message }}</p>
+            {% endfor %}
+                </div>
+        {% endif %}
+            </div>
+
+
+        <div class="container"><br>
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="thumbnail">
+
+                    {% if book.image %}
+                        <div class="col-sm-3 ">
+                            <img src="{{ book.image.url }}" class="img-responsive"/>
+                        </div>
+                    {% endif %}
+
+                    <h4>
+                        <strong>Price:</strong> ${{ book.price }}<br/>
+                        <strong>Title:</strong> {{ book.title }}<br/>
+                        <strong>Author:</strong> {{ book.author }}<br/>
+                        <strong>Genre:</strong> {{ book.genre }}<br/>
+                        <strong>Publication Date:</strong> {{ book.publication_date }}<br/>
+                        <strong>Publisher:</strong> {{ book.publisher }}<br/><br/>
+                        <strong>Description:</strong> {{ book.description }}
+                    </h4>
+                    <p>
+
+                </div>
+                <br/>
+
+                <div class="col-sm-6">
+
+                    <a href="/book/" role="button" class="btn btn-orange" >Continue Shopping</a>
+                </div>
+                <div class="col-sm-6">
+                    <a href="/cart/view_cart/" role="button" class="btn btn-orange" >Procede to Checkout</a>
+                </div>
+
+
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock%}
