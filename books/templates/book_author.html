@@ -20,8 +20,11 @@
                                 <img src="{{ book.image.url }}" class="img-responsive"/>
                                 </div>
                             {% endif %}
-
-                            <strong>Author:</strong><a href="{{ author.get_absolute_url }}">  {{ book.author }} </a><br/>
+                            <strong>Author:</strong>
+                            {% for auth in book.author %}
+                                <a href="/book/author/{{ auth.id }}">  {{ auth }} </a>
+                            {% endfor %}
+                            <br/>
                             <strong>Publisher:</strong> {{ book.publisher }}<br/>
                             <strong>Publication Date:</strong> {{ book.publication_date }}<br/>
                             <strong>Genre:</strong> <a href="" ></a>{{ book.genre }}<br/>

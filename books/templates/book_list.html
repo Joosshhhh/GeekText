@@ -25,7 +25,11 @@
                         {% endif %}
 
                         <strong>Price:</strong> ${{ res.price }}<br/>
-                        <strong>Author:</strong><a href="/book/author/2">  {{ res.author }} </a><br/>
+                        <strong>Author:</strong>
+                        {% for auth in res.author %}
+                            <a href="/book/author/{{ auth.id }}">  {{ auth }} </a>
+                        {% endfor %}
+                            <br/>
                         <strong>Publisher:</strong> {{ res.publisher }}<br/>
                         <strong>Publication Date:</strong> {{ res.publication_date }}<br/>
                         <strong>Genre:</strong> <a href="" ></a>{{ res.genre }}<br/>

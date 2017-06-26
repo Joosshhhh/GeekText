@@ -18,7 +18,7 @@ def list_books(request):
                         queryset_list.filter(genre__icontains=query).distinct()
 
     # creates a Paginator object from the query results and shows x amount of items per page
-    paginator = Paginator(queryset_list, 3)  # Show 5 books per page
+    paginator = Paginator(queryset_list, 3)  # Show 3 books per page
 
     page_req_var = "page"
 
@@ -149,3 +149,5 @@ def approve_comment(request, pk):
     id = str(comment.book.id)
     comment.approve()
     return redirect('/book/' + id + '/')
+
+

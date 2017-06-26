@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.shortcuts import get_object_or_404
 # Create your models here.
 
 
@@ -52,7 +52,16 @@ class Book(models.Model):
         return "/book/%s/" % self.id
 
     def author(self):
-        return ",\n".join([a.full_name for a in self.authors.all()])
+        # this function creates a list of all the authors to later convert them into Author objects
+        author_string = ",".join([a.full_name for a in self.authors.all()])
+        author_list = []
+
+        tokens = author_string.split(",")
+
+        for token in tokens:
+            author_list.append(get_object_or_404(Author, full_name=token))
+
+        return author_list
 
     class Meta:
         ordering = ['title']
