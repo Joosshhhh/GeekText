@@ -17351,3 +17351,10 @@ pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CT
 2017-06-24 14:35:57,899 "POST /xml/v1/request.api HTTP/1.1" 200 507
 2017-06-24 14:35:57,922 Multiple accepting paths for <class 'authorizenet.apicontractsv1.CTD_ANON_38'>
 2017-06-24 14:35:57,928 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<createCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Ok</resultCode>\n\t\t<message>\n\t\t\t<code>I00001</code>\n\t\t\t<text>Successful.</text>\n\t\t</message>\n\t</messages>\n\t<customerProfileId>1501410139</customerProfileId>\n\t<customerPaymentProfileIdList/>\n\t<customerShippingAddressIdList/>\n\t<validationDirectResponseList/>\n</createCustomerProfileResponse>\n'
+2017-06-26 12:20:51,282 performing custom validation..
+2017-06-26 12:20:51,282 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-06-26 12:20:51,282 building request..
+2017-06-26 12:20:51,286 Starting new HTTPS connection (1): apitest.authorize.net
+2017-06-26 12:20:54,353 "POST /xml/v1/request.api HTTP/1.1" 200 503
+2017-06-26 12:20:54,429 Response error
+2017-06-26 12:20:54,429 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<createCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00039</code>\n\t\t\t<text>A duplicate record with ID 1501185860 already exists.</text>\n\t\t</message>\n\t</messages>\n\t<customerPaymentProfileIdList/>\n\t<customerShippingAddressIdList/>\n\t<validationDirectResponseList/>\n</createCustomerProfileResponse>\n'
