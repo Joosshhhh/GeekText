@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^$', views.home_view, name='home'),
     url(r"^accounts/", include("accounts.urls", namespace="accounts")),
     url(r"^accounts/avatar/", include('avatar.urls')),
-    url(r"^book/", include("books.urls", namespace="books")),
+    url(r"^books/", include("books.urls", namespace="books")),
     url(r"^password-reset/$", auth_views.PasswordResetView.as_view(form_class=forms.PasswordReset),
         name='forgot_password'),
     url(r"^password-reset/done/$", auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),

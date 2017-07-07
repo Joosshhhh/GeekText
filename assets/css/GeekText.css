@@ -121,9 +121,9 @@ a p {
     color: #e39309;
 }
 
-.input-group-addon {
+.input-group-btn .btn {
     background: #e39309;
-    border: none;
+    color: #3e474f;
 }
 
 .orange-border-right {
@@ -138,12 +138,12 @@ a p {
 }
 
 .btn .badge {
-    background: none;
+    background: #e39309;
     position: absolute;
     text-align: center;
-    top: -76%;
-    left: 13%;
-
+    right: -8px;
+    top: -4px;
+    color: #ffffff;
 }
 
 .avatar {

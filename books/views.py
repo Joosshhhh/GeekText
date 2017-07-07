@@ -1,13 +1,99 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
+from django.views import generic
 from .models import Book, Author, Comment
 from cart.views import cart_count
 from .forms import CommentForm
 
 
-def list_books(request):
+class BookListView(generic.ListView):
+    template_name = 'book_list.html'
+    model = Book
+    paginate_by = 10
 
+    def get_queryset(self):
+        order = self.request.GET.get("sort")
+        if order:
+            queryset_list = Book.objects.all().order_by(order)
+        else:
+            queryset_list = Book.objects.all().order_by("title")
+
+        query = self.request.GET.get("q")  # this gets the contents from the search bar 'q'
+        if query:
+            queryset_list = queryset_list.filter(title__icontains=query).distinct() | \
+                            queryset_list.filter(authors__full_name__icontains=query).distinct() | \
+                            queryset_list.filter(genre__icontains=query).distinct()
+        return queryset_list
+
+    def get_context_data(self, **kwargs):
+        context = super(BookListView, self).get_context_data(**kwargs)
+        queryset_list = self.get_queryset()
+        order = self.request.GET.get("sort")
+        display_sort = self.request.GET.get("display")
+
+        if self.request.GET.get("q"):
+            context['q'] = self.request.GET.get("q")
+
+        if order:
+            context['sort'] = order
+            if order == 'title':
+                context['sorting'] = "Title - A to Z"
+            elif order == '-title':
+                context['sorting'] = "Title - Z to A"
+            elif order == 'ratings':
+                context['sorting'] = "Top Rated"
+            elif order == 'publication_date':
+                context['sorting'] = "Older"
+            elif order == '-publication_date':
+                context['sorting'] = "Newest"
+            elif order == 'authors':
+                context['sorting'] = "Author(s) A - Z"
+            elif order == '-authors':
+                context['sorting'] = "Author(s) Z - A"
+            elif order == 'price':
+                context['sorting'] = "Price - Low to High"
+            elif order == '-price':
+                context['sorting'] = "Price - High to Low"
+        else:
+            context['sort'] = "title"
+            context['sorting'] = "Title - A to Z"
+
+        if display_sort:
+            if queryset_list.count() > int(display_sort):
+                self.paginate_by = display_sort
+                context['display_num'] = display_sort
+                context['display_sort_num'] = display_sort
+            else:
+                self.paginate_by = queryset_list.count()
+                context['display_num'] = queryset_list.count()
+                context['display_sort_num'] = display_sort
+        else:
+            if queryset_list.count() > 10:
+                self.paginate_by = 10
+                context['display_num'] = 10
+                context['display_sort_num'] = 10
+            else:
+                self.paginate_by = queryset_list.count()
+                context['display_num'] = queryset_list.count()
+                context['display_sort_num'] = 10
+
+        return context
+
+
+class BookDetailView(generic.DetailView):
+    template_name = 'book_detail.html'
+    model = Book
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(BookDetailView, self).get_context_data(**kwargs)
+    #     books = Book.objects.get(id=self.request.GET.get("pk"))
+    #     context['author_books'] = books.au
+    #
+    #     return context
+
+
+def list_books(request):
     queryset_list = Book.objects.all().order_by("title")
 
     query = request.GET.get("q")  # this gets the contents from the search bar 'q'
@@ -47,11 +133,12 @@ def list_books(request):
         "number": number,
     }
     return render(request, "book_list.html", context)
+
+
 # -----------------------------------------------------------------------------------------
 
 
 def detail(request, id):
-
     book = get_object_or_404(Book, id=id)
     comments = Comment.objects.filter(book__title=book.title)
 
@@ -86,11 +173,12 @@ def detail(request, id):
         "number": number,
     }
     return render(request, "book_detail.html", context)
+
+
 # -----------------------------------------------------------------------------------------
 
 
 def author_books(request, id):
-
     author = get_object_or_404(Author, id=id)
     books = Book.objects.all().filter(authors__full_name__icontains=author)
     number = cart_count(request)
@@ -101,11 +189,12 @@ def author_books(request, id):
         "number": number
     }
     return render(request, "book_author.html", context)
+
+
 # -----------------------------------------------------------------------------------------
 
 
 def write_review(request, id):
-
     number = cart_count(request)
     book = get_object_or_404(Book, id=id)
 
@@ -131,23 +220,23 @@ def write_review(request, id):
     }
 
     return render(request, "book_review.html", context)
+
+
 # -----------------------------------------------------------------------------------------
 
 
 def remove_comment(request, pk):
-
     comment = get_object_or_404(Comment, pk=pk)
     id = str(comment.book.id)
     comment.delete()
     return redirect('/book/' + id + '/')
+
+
 # -----------------------------------------------------------------------------------------
 
 
 def approve_comment(request, pk):
-
     comment = get_object_or_404(Comment, pk=pk)
     id = str(comment.book.id)
     comment.approve()
     return redirect('/book/' + id + '/')
-
-

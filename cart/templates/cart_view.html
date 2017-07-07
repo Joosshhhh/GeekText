@@ -10,7 +10,7 @@
                 <div class="panel panel-warning">
 
                     <div class="panel-heading" style="text-align: center">
-                        <strong>{{ user }}'s Shopping Cart Items</strong>
+                        <strong>{% if user.is_authenticated %} {{ user }}'s {% else %}Your {% endif %}Shopping Cart</strong>
                     </div>
 
                     <!--div class="panel-body">

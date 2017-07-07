@@ -5,84 +5,115 @@
 {% load ratings %}
 
 {% block content %}
-    <div class="container" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
-
-        <h3> {{ title }} {{ search }} </h3><br><br/>
-        <div class="col-md-2">
-            <h4>this will go here</h4>
-        </div>
-    <div class="col-md-10">
-        {% for res in results %}
-
-            <div class="col-md-4 col-xs-6" >
-                <div class="thumbnail" style="height: 10cm;">
-                    <div class="caption" text-align="center">
-                        <h3><a href="{{ res.get_absolute_url }}">{{ res.title }}</a><br/></h3>
-                        <p>
-                        {% if res.image %}
-                            <div class="col-md-4 col-xs-6">
-                                <img src="{{ res.image.url }}" class="img-responsive"/>
-                            </div>
-                        {% endif %}
-
-                        <strong>Price:</strong> ${{ res.price }}<br/>
-                        <strong>Author:</strong>
-                        {% for auth in res.author %}
-                            <a href="/book/author/{{ auth.id }}">  {{ auth }} </a>
-                        {% endfor %}
-                            <br/>
-                        <strong>Publisher:</strong> {{ res.publisher }}<br/>
-                        <strong>Publication Date:</strong> {{ res.publication_date }}<br/>
-                        <strong>Genre:</strong> <a href="" ></a>{{ res.genre }}<br/>
-                        <strong>Rating:</strong> {% ratings res %} <br/>
-                        <strong>Description:</strong> {{ res.description }}<br/>
-                        </p>
-                    </div>
-
+    <div class="container" style="padding-bottom: 25px;">
+        {% if object_list %}
+            <div class="row" style="padding: 10px 15px;">
+                <span>1 - {{ display_num }} of {{ object_list|length }} result{{ object_list|length|pluralize }} for
+                    {% if q %}
+                        {{ q }}{% else %}All Books{% endif %}
+                </span>
+                <div class="dropdown pull-right">
+                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownDisplay"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span>Display: </span>
+                        <span>{{ display_sort_num }}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownDisplay">
+                        <li><a href="?q={{ q }}&sort={{ sort }}&display=10">10</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="?q={{ q }}&sort={{ sort }}&display=20">20</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="?q={{ q }}&sort={{ sort }}&display=40">40</a></li>
+                    </ul>
                 </div>
-                    <div>
-                        <p>
-                            <a href="{{ res.get_absolute_url }}" class="btn btn-orange"
-                              role="button" style="width: 30%;" >View</a>
-                            <a href="/cart/add/{{ res.id }}" class="btn btn-orange" role="button"
-                              style="width: 50%;" >Add To Cart</a>
-                        </p>
-                    </div>
-                <hr/><br>
+                <div class="dropdown pull-right" style="margin-right: 25px;">
+                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownSort"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span>Sort By: </span>
+                        <span>{{ sorting|capfirst }}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownSort">
+                        <li><a href="?q={{ q }}&sort=title&display={{ display_sort_num }}">Title - A to Z</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="?q={{ q }}&sort=-title&display={{ display_sort_num }}">Title - Z to A</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="?q={{ q }}&sort=ratings&display={{ display_sort_num }}">Top Rated</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="?q={{ q }}&sort=-publication_date&display={{ display_sort_num }}">Newest</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="?q={{ q }}&sort=publication_date&display={{ display_sort_num }}">Oldest</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="?q={{ q }}&sort=authors&display={{ display_sort_num }}">Author(s) - A to Z</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="?q={{ q }}&sort=-authors&display={{ display_sort_num }}">Author(s) - Z to A</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="?q={{ q }}&sort=price&display={{ display_sort_num }}">Price - Low to High</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="?q={{ q }}&sort=-price&display={{ display_sort_num }}">Price - High to Low</a></li>
+                    </ul>
+                </div>
             </div>
-
-
-        {% endfor %}
-        </div>
-    </div>
-
-    <div class="col-md-12" style="text-align: center">
-        <ul class="pagination">
-            {% if results.has_previous %}
-                <li><a href="?{{ page_req_var }}={{ results.previous_page_number }}">
-                    &laquo;</a></li>
-            {% else %}
-                <li class="disabled"><span>&laquo;</span></li>
+            <div class="row" style="margin-top: 50px;">
+                {% for books in object_list %}
+                    <div class="col-sm-4 col-md-3">
+                        <a class="text-muted" href="{% url 'books:book_detail'  pk=books.id  %}?q={{ books.author. }}">
+                            {% if books.image %}
+                                <img src="{{ books.image.url }}" style="height: 250px; width: 200px;">
+                            {% else %}
+                                <img src="/media/coming-soon.jpg" style="height: 250px; width: 200px;">
+                            {% endif %}
+                            <p style="min-height: 40px; margin-top: 20px;">{{ books.title }}</p>
+                        </a>
+                        <p style="min-height: 25px;">by {% for author in books.author %}
+                            {% if forloop.last %}<a href="?q={{ author }}">{{ author }}
+                            </a>{% else %}<a href="?q={{ author }}">{{ author }}</a>,
+                            {% endif %}
+                        {% endfor %}
+                        </p>
+                        <p>{% ratings books %}</p>
+                        <p style="margin-bottom: 35px">${{ books.price }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if is_paginated %}
+                <div class="row text-center">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li>
+                                    <a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="disabled"><span>&laquo;</span></li>
+                            {% endif %}
+                            {% for i in paginator.page_range %}
+                                {% if page_obj.number == i %}
+                                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+                                    </li>
+                                {% else %}
+                                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li>
+                                    <a href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="disabled"><span>&raquo;</span></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
             {% endif %}
-
-            {% for i in results.paginator.page_range %}
-                {% if results.number == i %}
-                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-                {% else %}
-                    <li><a href="?{{ page_req_var }}={{ i }}">{{ i }}</a></li>
-                {% endif %}
-            {% endfor %}
-
-            {% if results.has_next %}
-                <li><a href="?{{ page_req_var }}={{ results.next_page_number }}">
-                    &raquo;</a></li>
-            {% else %}
-                <li class="disabled"><span>&raquo;</span></li>
-            {% endif %}
-
-        </ul>
+        {% else %}
+        {% endif %}
     </div>
-
-
 
 {% endblock %}
