@@ -15,22 +15,23 @@
             <a class="navbar-brand hidden-xs text-center" href="{% url 'home' %}"><span
                     class="orange">GEEK</span>TEXT</a>
 
-            <form class="navbar-form hidden-xs" action="/book/">
+            <form class="navbar-form hidden-xs" action="{% url 'books:book_list' %}">
                 <div class="form-group clearfix">
                     <div class="input-group">
                         <input type="text" class="form-control orange-border-right" role="search"
                                placeholder="Search by Author, Title, or Genre" name="q"
-                               autocomplete="on" value="{{ request.GET.q }}">
-
-                        <span class="input-group-addon" style="width: 1%;"><span
-                                class="glyphicon glyphicon-search"></span></span>
+                               autocomplete="on">
+                        <span class="input-group-btn" style="width: 1%;"><button type="submit" class="btn"><span
+                                class="glyphicon glyphicon-search"></span></button></span>
                     </div>
                 </div>
             </form>
 
             <!-- code for the shopping cart button -->
-            <a href="/cart/view_cart/" role="button"><span class="glyphicon glyphicon-shopping-cart"><span
-                    class="badge">{{ number }}</span></span></a>
+            <button type="button" class="btn btn-link pull-left"><a href="/cart/view_cart/"><span
+                    class="glyphicon glyphicon-shopping-cart"><span
+                    class="badge">{% if number|length == 0 %}0{% else %}{{ number }}{% endif %}</span></span></a>
+            </button>
 
             <button type="button" class="btn btn-link pull-right"><span class="glyphicon glyphicon-heart-empty"><span
                     class="badge orange"></span></span>
@@ -103,10 +104,11 @@
             <form class="navbar-form">
                 <div class="form-group" style="display:inline;">
                     <div class="input-group" style="display: table;">
-                        <input type="text" class="form-control orange-border-right" role="search" placeholder="Search"
-                               autocomplete="off">
-                        <span class="input-group-addon" style="width: 1%;"><span
-                                class="glyphicon glyphicon-search"></span></span>
+                        <input type="text" class="form-control orange-border-right" role="search"
+                               placeholder="Search by Author, Title, or Genre"
+                               autocomplete="on">
+                        <span class="input-group-btn" style="width: 1%;"><button type="submit" class="btn"><span
+                                class="glyphicon glyphicon-search"></span></button></span>
                     </div>
                 </div>
             </form>
@@ -174,75 +176,6 @@
                 {% endif %}
             </div>
         </div>
-
-        <!----------begins the code for the nav pills------------>
-
-    <div class="btn-group">
-          <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-            Books <span class="caret"></span>
-          </button>
-              <ul class="dropdown-menu">
-                <li><a href="/book/">Click Here for a list of all our (5) Books!</a></li>
-              </ul>
-    </div>
-
-    <div class="btn-group">
-        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-            Authors <span class="caret"></span>
-        </button>
-              <ul class="dropdown-menu">
-                <li><a href="/book/author/1/">J.K. Rowling</a></li>
-                <li><a href="/book/author/2/">Sherlock Holmes</a></li>
-                <li><a href="/book/author/3/">John Smith</a></li>
-                <li><a href="/book/author/4/">SteamBoat Willie</a></li>
-              </ul>
-    </div>
-
-    <div class="btn-group">
-        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-            Genre <span class="caret"></span>
-        </button>
-              <ul class="dropdown-menu">
-                <li><a href="/book/?q=Universal+Learning">Universal Learning</a></li>
-                <li><a href="/book/?q=Random+Knowledge">Random Knowledge</a></li>
-                <li><a href="/book/?q=Technology">Technology</a></li>
-                <li><a href="/book/?q=Space">Space</a></li>
-                <!li role="separator" class="divider"><!/li>
-              </ul>
-    </div>
-
-    <div class="btn-group">
-        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-            Rating <span class="caret"></span>
-        </button>
-              <ul class="dropdown-menu">
-                  <li><a href="#"><span class="glyphicon glyphicon-star"></span>
-                      <span class="glyphicon glyphicon-star"></span>
-                      <span class="glyphicon glyphicon-star"></span>
-                      <span class="glyphicon glyphicon-star"></span>
-                      <span class="glyphicon glyphicon-star"></span></a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-star"></span>
-                      <span class="glyphicon glyphicon-star"></span>
-                      <span class="glyphicon glyphicon-star"></span>
-                      <span class="glyphicon glyphicon-star"></span>
-                      </a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-star"></span>
-                      <span class="glyphicon glyphicon-star"></span>
-                      <span class="glyphicon glyphicon-star"></span>
-                      </a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-star"></span>
-                      <span class="glyphicon glyphicon-star"></span>
-                      </a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-star"></span>
-                      </a></li>
-                <!li role="separator" class="divider"><!/li>
-              </ul>
-    </div>
-
     </div><!-- /.container-fluid -->
 </nav>
 
