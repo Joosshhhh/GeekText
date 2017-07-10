@@ -8,7 +8,7 @@
     <div class="container" style="padding-bottom: 25px;">
         {% if object_list %}
             <div class="row" style="padding: 10px 15px;">
-                <span>1 - {{ display_num }} of {{ object_list|length }} result{{ object_list|length|pluralize }} for
+                <span>{{ page_obj.start_index }} - {{ page_obj.end_index }} of {{ total }} result{{ total|pluralize }} for
                     {% if q %}
                         {{ q }}{% else %}All Books{% endif %}
                 </span>
@@ -57,8 +57,8 @@
                 </div>
             </div>
             <div class="row" style="margin-top: 50px;">
-                {% for books in object_list %}
-                    <div class="col-sm-4 col-md-3">
+                {% for books in page_obj %}
+                    <div class="col-sm-4 col-md-3" style="height: 500px;">
                         <a class="text-muted" href="{% url 'books:book_detail'  pk=books.id %}">
                             {% if books.image %}
                                 <img src="{{ books.image.url }}" style="height: 250px; width: 200px;">
@@ -84,7 +84,8 @@
                         <ul class="pagination">
                             {% if page_obj.has_previous %}
                                 <li>
-                                    <a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                    <a href="?page={{ page_obj.previous_page_number }}&sort={{ sort }}"
+                                       aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
@@ -96,12 +97,12 @@
                                     <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
                                     </li>
                                 {% else %}
-                                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                    <li><a href="?page={{ i }}&sort={{ sort }}">{{ i }}</a></li>
                                 {% endif %}
                             {% endfor %}
                             {% if page_obj.has_next %}
                                 <li>
-                                    <a href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                    <a href="?page={{ page_obj.next_page_number }}&sort={{ sort }}" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
