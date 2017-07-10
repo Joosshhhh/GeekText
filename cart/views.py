@@ -35,7 +35,7 @@ def view_cart(request):
 
     total, book_list = create_list(cart_items)
 
-    if (total > 0):
+    if total > 0:
         comparison = True
     else:
         comparison = False

@@ -59,7 +59,7 @@
             <div class="row" style="margin-top: 50px;">
                 {% for books in object_list %}
                     <div class="col-sm-4 col-md-3">
-                        <a class="text-muted" href="{% url 'books:book_detail'  pk=books.id  %}?q={{ books.author. }}">
+                        <a class="text-muted" href="{% url 'books:book_detail'  pk=books.id %}">
                             {% if books.image %}
                                 <img src="{{ books.image.url }}" style="height: 250px; width: 200px;">
                             {% else %}
@@ -67,9 +67,9 @@
                             {% endif %}
                             <p style="min-height: 40px; margin-top: 20px;">{{ books.title }}</p>
                         </a>
-                        <p style="min-height: 25px;">by {% for author in books.author %}
-                            {% if forloop.last %}<a href="?q={{ author }}">{{ author }}
-                            </a>{% else %}<a href="?q={{ author }}">{{ author }}</a>,
+                        <p style="min-height: 25px;">by {% for auth in books.author %}
+                            {% if forloop.last %}<a href="?q={{ auth }}">{{ auth }}
+                            </a>{% else %}<a href="?q={{ auth }}">{{ auth }}</a>,
                             {% endif %}
                         {% endfor %}
                         </p>

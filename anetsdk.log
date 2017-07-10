@@ -17351,3 +17351,58 @@ pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CT
 2017-06-24 14:35:57,899 "POST /xml/v1/request.api HTTP/1.1" 200 507
 2017-06-24 14:35:57,922 Multiple accepting paths for <class 'authorizenet.apicontractsv1.CTD_ANON_38'>
 2017-06-24 14:35:57,928 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<createCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Ok</resultCode>\n\t\t<message>\n\t\t\t<code>I00001</code>\n\t\t\t<text>Successful.</text>\n\t\t</message>\n\t</messages>\n\t<customerProfileId>1501410139</customerProfileId>\n\t<customerPaymentProfileIdList/>\n\t<customerShippingAddressIdList/>\n\t<validationDirectResponseList/>\n</createCustomerProfileResponse>\n'
+2017-07-08 14:28:03,751 performing custom validation..
+2017-07-08 14:28:03,752 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-08 14:28:03,752 building request..
+2017-07-08 14:28:03,956 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-08 14:28:04,673 "POST /xml/v1/request.api HTTP/1.1" 200 507
+2017-07-08 14:28:04,753 Multiple accepting paths for <class 'authorizenet.apicontractsv1.CTD_ANON_38'>
+2017-07-08 14:28:04,780 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<createCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Ok</resultCode>\n\t\t<message>\n\t\t\t<code>I00001</code>\n\t\t\t<text>Successful.</text>\n\t\t</message>\n\t</messages>\n\t<customerProfileId>1501461151</customerProfileId>\n\t<customerPaymentProfileIdList/>\n\t<customerShippingAddressIdList/>\n\t<validationDirectResponseList/>\n</createCustomerProfileResponse>\n'
+2017-07-08 14:35:29,130 performing custom validation..
+2017-07-08 14:35:29,130 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-08 14:35:29,130 building request..
+2017-07-08 14:35:29,132 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-08 14:35:29,631 "POST /xml/v1/request.api HTTP/1.1" 200 533
+2017-07-08 14:35:29,637 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerProfileMaskedType object at 0x007C0CD0>,)
+2017-07-08 14:35:31,596 performing custom validation..
+2017-07-08 14:35:31,596 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-08 14:35:31,596 building request..
+2017-07-08 14:35:31,598 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-08 14:35:31,914 "POST /xml/v1/request.api HTTP/1.1" 200 533
+2017-07-08 14:35:31,920 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerProfileMaskedType object at 0x007C00B0>,)
+2017-07-08 14:36:26,862 performing custom validation..
+2017-07-08 14:36:26,862 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-08 14:36:26,862 building request..
+2017-07-08 14:36:26,864 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-08 14:36:27,311 "POST /xml/v1/request.api HTTP/1.1" 200 533
+2017-07-08 14:36:27,317 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerProfileMaskedType object at 0x007D6730>,)
+2017-07-08 14:36:28,556 performing custom validation..
+2017-07-08 14:36:28,556 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-08 14:36:28,556 building request..
+2017-07-08 14:36:28,558 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-08 14:36:28,939 "POST /xml/v1/request.api HTTP/1.1" 200 533
+2017-07-08 14:36:28,944 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerProfileMaskedType object at 0x007E0870>,)
+2017-07-08 14:38:19,254 performing custom validation..
+2017-07-08 14:38:19,254 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-08 14:38:19,254 building request..
+2017-07-08 14:38:19,256 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-08 14:38:19,693 "POST /xml/v1/request.api HTTP/1.1" 200 533
+2017-07-08 14:38:19,698 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerProfileMaskedType object at 0x007EC110>,)
+2017-07-08 14:38:21,038 performing custom validation..
+2017-07-08 14:38:21,038 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-08 14:38:21,038 building request..
+2017-07-08 14:38:21,040 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-08 14:38:21,368 "POST /xml/v1/request.api HTTP/1.1" 200 533
+2017-07-08 14:38:21,373 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerProfileMaskedType object at 0x007C6890>,)
+2017-07-08 14:38:59,194 performing custom validation..
+2017-07-08 14:38:59,195 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-08 14:38:59,195 building request..
+2017-07-08 14:38:59,197 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-08 14:38:59,763 "POST /xml/v1/request.api HTTP/1.1" 200 533
+2017-07-08 14:38:59,769 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerProfileMaskedType object at 0x007B46B0>,)
+2017-07-08 14:39:02,552 performing custom validation..
+2017-07-08 14:39:02,552 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-08 14:39:02,552 building request..
+2017-07-08 14:39:02,554 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-08 14:39:03,119 "POST /xml/v1/request.api HTTP/1.1" 200 533
+2017-07-08 14:39:03,124 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerProfileMaskedType object at 0x00B4DCD0>,)

@@ -31,6 +31,8 @@ class BookListView(generic.ListView):
         queryset_list = self.get_queryset()
         order = self.request.GET.get("sort")
         display_sort = self.request.GET.get("display")
+        number = cart_count(self.request)
+        context['number'] = number
 
         if self.request.GET.get("q"):
             context['q'] = self.request.GET.get("q")
@@ -85,12 +87,14 @@ class BookDetailView(generic.DetailView):
     template_name = 'book_detail.html'
     model = Book
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(BookDetailView, self).get_context_data(**kwargs)
-    #     books = Book.objects.get(id=self.request.GET.get("pk"))
-    #     context['author_books'] = books.au
-    #
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super(BookDetailView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+        author = Author.objects.filter(book=self.kwargs.get("pk")).distinct()
+        context['author_books'] = Book.objects.filter(authors__book__authors__in=author).distinct().exclude(
+            pk=self.kwargs.get("pk"))
+        return context
 
 
 def list_books(request):

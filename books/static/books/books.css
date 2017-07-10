@@ -20,10 +20,18 @@
     border-color: #e39309;
 }
 
-
 .star-ratings-rating-stars-container{
     padding-top: 5px;
     margin-right: 15px;
+}
+
+.detail-content {
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 20px;
+}
+
+.book-review-container {
+    height: 95px;
 }
 
 

@@ -9,11 +9,24 @@ body {
     padding: 0;
 }
 
+body, p {
+    font: 400 14px/1.618 Lato, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
 a:focus,
 a:hover,
 a:active,
 a p {
     text-decoration: none;
+}
+
+hr {
+
 }
 
 *:focus {
@@ -25,20 +38,6 @@ a p {
     align-items: center;
     justify-content: center;
     text-align: center;
-}
-
-.btn-orange {
-    width: 100%;
-    background-color: #e39309;
-    border-color: #cc8408;
-    color: #ffffff;
-    margin-bottom: 10px;
-}
-
-.btn-orange:hover,
-.btn-orange:focus {
-    color: #ffffff;
-    background-color: #cc8408;
 }
 
 .form-border {
@@ -55,6 +54,7 @@ a p {
 .navbar-header {
     width: 100%;
 }
+
 .navbar-brand {
     font-size: 35px;
 }
@@ -121,10 +121,6 @@ a p {
     color: #e39309;
 }
 
-.input-group-btn .btn {
-    background: #e39309;
-    color: #3e474f;
-}
 
 .orange-border-right {
     border-right-color: #e39309;
