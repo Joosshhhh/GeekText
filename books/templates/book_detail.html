@@ -20,10 +20,10 @@
                     {% endif %}
                 {% endfor %}
                 </p>
-                {% ratings book %}
+                {% include 'book_rating.html' %}
                 <a href="#book-reviews"><p class="detail-content" style="padding-bottom: 20px;">
-                    {% if book.ratings.count > 0 %}{{ book.ratings.count }} review
-                        {{ book.ratings.count|pluralize }}{% else %}Be the first to review{% endif %}</p></a>
+                    {% if book.rating_avg %}{{ book.rating_count }} review{{ book.rating_count|pluralize }}{% else %}Be
+                        the first to write a review{% endif %}</p></a>
                 <p style="margin-top: 20px;">{{ book.description|linebreaksbr|truncatewords:50 }}</p>
                 <a href="#full-desc">More details below</a>
             </div>
@@ -44,6 +44,7 @@
                             <a href="{% url 'books:book_detail' pk=books.id %}">
                                 <img src="{{ books.image.url }}" style="width:100px; height:150px; ">
                                 <h5>{{ books.title }}</h5>
+                                {% include 'book_rating.html' %}
                             </a>
                         </div>
                     {% endfor %}
@@ -52,7 +53,7 @@
                         <div class="col-xs-4 text-center" style="padding-top: 20px;">
                             <img src="{{ books.image.url }}" style="width:100px; height:150px; ">
                             <h5>{{ books.title }}</h5>
-                            <p></p>
+                            {% include 'book_rating.html' %}
                         </div>
                     {% endfor %}
                 {% endif %}
@@ -66,10 +67,10 @@
         </div>
         <div id="prod-details" class="row detail-content">
             <h3>Product Details</h3>
-            <p><strong>ISBN-13:</strong></p>
+            {# <p><strong>ISBN-13:</strong></p> #}
             <p><strong>Genre:</strong> {{ book.genre|capfirst }}</p>
             <p><strong>Publisher:</strong> {{ book.publisher }}</p>
-            <p><strong>Publication Date:</strong> {{ book.publication_date|date }}</p>
+            <p><strong>Publication Date:</strong> {{ book.publication_date }}</p>
             <p><strong>Pages:</strong> {{ book.pages }}</p>
         </div>
         <div id="author-bio" class="row detail-content">
@@ -99,14 +100,16 @@
         <div id="book-reviews" class="row detail-content">
             <h3 style="margin-bottom: 35px;">Customer Reviews</h3>
             <div class="col-xs-4 text-center book-review-container" style="border-right: 1px solid #cccccc;">
-                <h4>Average Review: N/A</h4>
-                <p>*****</p>
+                <h4>Average Review: {% if book.rating_avg %}{{ book.rating_avg }}{% else %}N/A{% endif %}</h4>
+                {% include 'book_rating.html' %}
             </div>
             <div class="col-xs-4 center-in-div book-review-container" style="border-right: 1px solid #cccccc;">
                 <button class="btn btn-warning">Write a Review</button>
             </div>
             <div class="col-xs-4 center-in-div book-review-container">
-                <h4>Be the first to write a review</h4>
+                {% if book.rating_avg %}
+                    <h4>{{ book.rating_count }} review{{ book.rating_count|pluralize }}</h4>{% else %}
+                    <h4>Be the first to write a review</h4>{% endif %}
             </div>
         </div>
     </div>

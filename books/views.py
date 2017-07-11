@@ -14,7 +14,10 @@ class BookListView(generic.ListView):
     def get_queryset(self):
         order = self.request.GET.get("sort")
         if order:
-            queryset_list = Book.objects.all().order_by(order)
+            if order == 'rating':
+                queryset_list = Book.objects.all().order_by(order).distinct()
+            else:
+                queryset_list = Book.objects.all().order_by(order)
         else:
             queryset_list = Book.objects.all().order_by("title")
 
@@ -43,7 +46,7 @@ class BookListView(generic.ListView):
                 context['sorting'] = "Title - A to Z"
             elif order == '-title':
                 context['sorting'] = "Title - Z to A"
-            elif order == 'ratings':
+            elif order == '-avg_rating':
                 context['sorting'] = "Top Rated"
             elif order == 'publication_date':
                 context['sorting'] = "Older"
@@ -62,9 +65,7 @@ class BookListView(generic.ListView):
             context['sorting'] = "Title - A to Z"
 
         if display_sort:
-            print(display_sort)
             if queryset_list.count() > int(display_sort):
-
                 context['display_sort_num'] = display_sort
             else:
                 context['display_sort_num'] = display_sort
@@ -79,7 +80,6 @@ class BookListView(generic.ListView):
     def get_paginate_by(self, queryset):
         display_sort = self.request.GET.get("display")
         if display_sort:
-            print(display_sort)
             if queryset.count() > int(display_sort):
                 paginate_by = display_sort
             else:

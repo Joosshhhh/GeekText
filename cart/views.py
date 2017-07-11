@@ -3,11 +3,11 @@ from django.contrib import messages
 from books.models import Book
 from datetime import *
 
+
 # Create your views here.
 
 
 def add_cart(request, id):
-
     book = get_object_or_404(Book, id=id)
 
     cart = request.session.get('cart', {})
@@ -24,11 +24,12 @@ def add_cart(request, id):
     }
 
     return render(request, "cart_home.html", context)
+
+
 # -----------------------------------------------------------------------------------------
 
 
-def view_cart(request):
-
+def view_cart(request, context):
     cart_items = request.session.get('cart', {}).values()  # fetches the values stored in the session
 
     number = cart_count(request)
@@ -48,13 +49,12 @@ def view_cart(request):
     }
     return render(request, "cart_view.html", context)
 
+
 # -----------------------------------------------------------------------------------------
 
 
 def remove_item(request, id):
-
     cart = request.session.get('cart', {})
-
     del cart[id]
     request.session.modified = True  # this lets the session save correctly
 
@@ -76,11 +76,12 @@ def remove_item(request, id):
         "comparison": comparison
     }
     return render(request, "cart_view.html", context)
+
+
 # -----------------------------------------------------------------------------------------
 
 
 def checkout(request):
-
     cart_items = request.session.get('cart', {}).values()
     shipping_tokens = request.POST.get('shipng').split()
     number = cart_count(request)
@@ -90,7 +91,7 @@ def checkout(request):
     total = round(float(total), 2)
     shipping = round(float(shipping_tokens[0]), 2)
     subtotal = round(shipping + total, 2)
-    tax = round((subtotal * 7)/100, 2)
+    tax = round((subtotal * 7) / 100, 2)
     grand_total = round(subtotal + tax, 2)
 
     code, dates = decode_shipping(shipping_tokens[1])
@@ -108,6 +109,7 @@ def checkout(request):
 
     return render(request, "cart_checkout.html", context)
 
+
 # -----------------------------------------------------------------------------------------
 
 #  ---helper function---
@@ -115,36 +117,41 @@ def checkout(request):
 #  also add up the total of the books in the list
 
 
-def create_list(cart_items):
-
+def create_list(cart_items, id=None, quantity=1):
     total = 0
     book_list = []  # holds the list of the books in the cart
     all_books = Book.objects.all()
 
     for book in cart_items:
         bk = all_books.get(title=book)
+        if id:
+            if id == book.id:
+                total = total + bk.price * quantity
+
+        total = total + bk.price * quantity
         book_list.append(bk)
-        total = total + bk.price
 
     return total, book_list
+
+
 # -----------------------------------------------------------------------------------------
 
 
 def cart_count(request):
-
     cart = request.session.get('cart', {})
     cart_items = cart.values()  # fetches the values stored in the session
 
     number = len(cart_items)  # this is used to display the number of items in the cart
 
     return number
+
+
 # -----------------------------------------------------------------------------------------
 # ---Helper function below, reads in input from a radio option where it decodes and calculates the
 # estimated delivery date along with the Shipping option
 
 
 def decode_shipping(code):
-
     dates = datetime.today()
 
     output = ''
@@ -160,4 +167,6 @@ def decode_shipping(code):
         dates = dates + timedelta(days=1)
 
     return output, dates
+
 # -----------------------------------------------------------------------------------------
+

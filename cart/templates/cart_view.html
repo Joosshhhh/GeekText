@@ -28,7 +28,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <form method="POST" action="">
+                    <form method="POST" action="{% url 'change_quantity' %}">
                         {% for book in cart %}
                             <tr>
                                 <td><a href="{% url 'books:book_detail' pk=book.pk %}">{{ book.title }}</a></td>
@@ -37,6 +37,8 @@
                                         {% csrf_token %}
                                         <label><input type="number" class="form-control" id="quantity" name="quantity"
                                                       value="1"></label>
+                                        <input type="hidden" name="id" value="{{ book.id }}">
+                                        <button type="submit" class="btn btn-primary">Update</button>
                                     </div>
                                 </td>
                                 <td>${{ book.price }}</td>

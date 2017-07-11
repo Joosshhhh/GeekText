@@ -8,13 +8,14 @@
     <div class="container-fluid">
         {% if messages %}
             <div class="row">
-                <div class="col-sm-6 col-sm-offset-3">
-            {% for message in messages %}
-            <p{% if message.tags == "success" %} class="alert alert-success" style="text-align: center" {% endif %}>{{ message }}</p>
-            {% endfor %}
-                </div>
-        {% endif %}
+            <div class="col-sm-6 col-sm-offset-3">
+                {% for message in messages %}
+                    <p{% if message.tags == "success" %}
+                        class="alert alert-success text-center"{% endif %}>{{ message }}</p>
+                {% endfor %}
             </div>
+        {% endif %}
+        </div>
 
 
         <div class="container"><br>
@@ -26,34 +27,32 @@
                             <img src="{{ book.image.url }}" class="img-responsive"/>
                         </div>
                     {% endif %}
+                </div>
 
                     <h4>
                         <strong>Price:</strong> ${{ book.price }}<br/>
                         <strong>Title:</strong> {{ book.title }}<br/>
-                        <strong>Author:</strong> {{ book.author }}<br/>
+                        <strong>Author:</strong> {% for author in book.author %}
+                        {% if forloop.last %}<a href="/books/?q={{ author }}">{{ author }}
+                        </a>{% else %}<a href="/books/?q={{ author }}">{{ author }}</a>,
+                        {% endif %}
+                    {% endfor %}<br/>
                         <strong>Genre:</strong> {{ book.genre }}<br/>
-                        <strong>Publication Date:</strong> {{ book.publication_date }}<br/>
+                        <strong>Publication Date:</strong> {{ book.publication_date|date }}<br/>
                         <strong>Publisher:</strong> {{ book.publisher }}<br/><br/>
-                        <strong>Description:</strong> {{ book.description }}
+
                     </h4>
-                    <p>
-
-                </div>
-                <br/>
-
-                <div class="col-sm-6">
-
-                    <a href="/book/" role="button" class="btn btn-orange" >Continue Shopping</a>
-                </div>
-                <div class="col-sm-6">
-                    <a href="/cart/view_cart/" role="button" class="btn btn-orange" >Procede to Checkout</a>
-                </div>
 
 
-                </p>
+                <a href="{% url 'books:book_list' %}" role="button" class="btn btn-warning float-left">Continue
+                    Shopping</a>
+
+
+                <a href="{% url 'view_cart' %}" role="button" class="btn btn-success float-right">Proceed to
+                    Checkout</a>
 
             </div>
         </div>
     </div>
 
-{% endblock%}
+{% endblock %}

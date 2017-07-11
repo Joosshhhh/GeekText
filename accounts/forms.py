@@ -157,7 +157,7 @@ class AccountUpdatePassword(PasswordChangeForm):
 
 
 class DeactivateForm(forms.ModelForm):
-    deactivate = forms.BooleanField(widget=forms.CheckboxInput, label='Deactivate Account MUTHAFUCKA')
+    deactivate = forms.BooleanField(widget=forms.CheckboxInput, label='Deactivate Account')
 
     class Meta:
         model = User

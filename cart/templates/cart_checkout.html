@@ -35,7 +35,7 @@
 
                             <div class="btn-group btn-group-justified">
                                 <div class="btn-group">
-                                    <a href="/cart/view_cart/" class="btn btn-warning">Change Order</a>
+                                    <a href="{% url 'view_cart' %}" class="btn btn-warning">Change Order</a>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="panel-body">
-                        <h4>{{ shipng }}</h4>
+                        <h4>{{ user. }}</h4>
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@
                         <h4>Expected Date: {{ dates }}</h4><br/>
                         <div class="btn-group btn-group-justified">
                             <div class="btn-group">
-                                <a href="/cart/view_cart/" class="btn btn-warning">Change Shipping Option</a>
+                                <a href="{% url 'view_cart' %}" class="btn btn-warning">Change Shipping Option</a>
                             </div>
                         </div>
                     </div>

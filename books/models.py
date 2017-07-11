@@ -1,7 +1,9 @@
 from django.db import models
+from django.db.models import Avg
 from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.fields import GenericRelation
-from star_ratings.models import Rating
+
+
 # Create your models here.
 
 
@@ -46,11 +48,11 @@ class Book(models.Model):
     authors = models.ManyToManyField(Author)
     price = models.DecimalField(decimal_places=2, max_digits=5, default=0)
     publisher = models.ForeignKey(Publisher)
-    publication_date = models.DateField(null=True, blank=True)
+    publication_date = models.DateField(null=True, blank=True, auto_now_add=True)
     genre = models.CharField(max_length=50, blank=True, null=True)
-    ratings = GenericRelation(Rating, related_query_name='books')
     description = models.TextField(max_length=600, null=True, blank=True)
     pages = models.IntegerField(default=0)
+    avg_rating = models.DecimalField(decimal_places=1, max_digits=2, default=0)
 
     def __str__(self):
         return self.title
@@ -61,8 +63,23 @@ class Book(models.Model):
     def author(self):
         return Author.objects.filter(book__authors__book=self.id).distinct()
 
+    def rating_avg(self):
+        book = Book.objects.get(id=self.id)
+        return list(book.rating_set.aggregate(Avg('rating')).values())[0]
+
+    def rating_count(self):
+        return Rating.objects.all().filter(book=self).count()
+
     class Meta:
         ordering = ['title']
+
+
+class Rating(models.Model):
+    book = models.ForeignKey(Book)
+    rating = models.DecimalField(decimal_places=1, max_digits=2, default=0)
+
+    class Meta:
+        ordering = ['-rating']
 
 
 class Comment(models.Model):
@@ -77,7 +94,6 @@ class Comment(models.Model):
         self.save()
 
     def __str__(self):
-
         return self.book.title
 
     class Meta:

@@ -39,7 +39,7 @@
                         <li role="separator" class="divider"></li>
                         <li><a href="?q={{ q }}&sort=-title&display={{ display_sort_num }}">Title - Z to A</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="?q={{ q }}&sort=ratings&display={{ display_sort_num }}">Top Rated</a></li>
+                        <li><a href="?q={{ q }}&sort=-avg_rating&display={{ display_sort_num }}">Top Rated</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="?q={{ q }}&sort=-publication_date&display={{ display_sort_num }}">Newest</a></li>
                         <li role="separator" class="divider"></li>
@@ -73,7 +73,7 @@
                             {% endif %}
                         {% endfor %}
                         </p>
-                        <p>{% ratings books %}</p>
+                        {% include 'book_rating.html' %}
                         <p style="margin-bottom: 35px">${{ books.price }}</p>
                     </div>
                 {% endfor %}
