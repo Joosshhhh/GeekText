@@ -1,7 +1,9 @@
 from django.db import models
+from django.db.models import Avg
 from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.fields import GenericRelation
-from star_ratings.models import Rating
+
+
 # Create your models here.
 
 
@@ -22,16 +24,19 @@ class Publisher(models.Model):
 
 class Author(models.Model):
     full_name = models.CharField(max_length=30)
-    email = models.EmailField()
+    email = models.EmailField(null=True)
+    description = models.TextField(max_length=600, null=True, blank=True)
+    dob = models.DateField(null=True, blank=True)
+    birthplace = models.CharField(max_length=75, null=True, blank=True)
+    education = models.CharField(max_length=100, null=True, blank=True)
+    website = models.URLField(null=True)
+    image = models.FileField(null=True, blank=True)
 
     def __str__(self):
         return u'%s' % self.full_name
 
     def get_absolute_url(self):
         return "/book/author/%s/" % self.id
-
-    def get_titles(self):
-        return ",\n".join([book.title for book in self.book_set.all()])
 
     class Meta:
         ordering = ['full_name']
@@ -43,10 +48,11 @@ class Book(models.Model):
     authors = models.ManyToManyField(Author)
     price = models.DecimalField(decimal_places=2, max_digits=5, default=0)
     publisher = models.ForeignKey(Publisher)
-    publication_date = models.DateField()
+    publication_date = models.DateField(null=True, blank=True, auto_now_add=True)
     genre = models.CharField(max_length=50, blank=True, null=True)
-    ratings = GenericRelation(Rating, related_query_name='books')
     description = models.TextField(max_length=600, null=True, blank=True)
+    pages = models.IntegerField(default=0)
+    avg_rating = models.DecimalField(decimal_places=1, max_digits=2, default=0)
 
     def __str__(self):
         return self.title
@@ -55,19 +61,25 @@ class Book(models.Model):
         return "/book/%s/" % self.id
 
     def author(self):
-        # this function creates a list of all the authors to later convert them into Author objects
-        author_string = ",".join([a.full_name for a in self.authors.all()])
-        author_list = []
+        return Author.objects.filter(book__authors__book=self.id).distinct()
 
-        tokens = author_string.split(",")
+    def rating_avg(self):
+        book = Book.objects.get(id=self.id)
+        return list(book.rating_set.aggregate(Avg('rating')).values())[0]
 
-        for token in tokens:
-            author_list.append(get_object_or_404(Author, full_name=token))
-
-        return author_list
+    def rating_count(self):
+        return Rating.objects.all().filter(book=self).count()
 
     class Meta:
         ordering = ['title']
+
+
+class Rating(models.Model):
+    book = models.ForeignKey(Book)
+    rating = models.DecimalField(decimal_places=1, max_digits=2, default=0)
+
+    class Meta:
+        ordering = ['-rating']
 
 
 class Comment(models.Model):
@@ -82,7 +94,6 @@ class Comment(models.Model):
         self.save()
 
     def __str__(self):
-
         return self.book.title
 
     class Meta:

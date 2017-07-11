@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView
 from django.core.urlresolvers import reverse_lazy
 from django.views import generic
+from cart.views import cart_count
 
 from . import forms, models
 
@@ -42,10 +43,17 @@ class RegisterView(generic.CreateView):
     success_url = reverse_lazy("accounts:login")
     template_name = "accounts/register.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(RegisterView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+        return context
+
 
 class LoginView(generic.FormView):
     form_class = forms.Login
     success_url = reverse_lazy("home")
+    template_name = "registration/login.html"
 
     def get_form(self, form_class=None):
         if form_class is None:
@@ -55,6 +63,12 @@ class LoginView(generic.FormView):
     def form_valid(self, form):
         login(self.request, form.get_user())
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(LoginView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+        return context
 
 
 class LogoutView(generic.RedirectView):
@@ -87,9 +101,23 @@ class ReactivateAccountView(LoginRequiredMixin, generic.RedirectView):
 class DeactivatedAccountView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'accounts/deactivated.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(DeactivatedAccountView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+
+        return context
+
 
 class ManageAccountView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'accounts/manage.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ManageAccountView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+
+        return context
 
 
 class AccountUpdateFirstNameView(LoginRequiredMixin, generic.UpdateView):
@@ -100,6 +128,12 @@ class AccountUpdateFirstNameView(LoginRequiredMixin, generic.UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
+    def get_context_data(self, **kwargs):
+        context = super(AccountUpdateFirstNameView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+        return context
+
 
 class AccountUpdateLastNameView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.AccountUpdateLastName
@@ -108,6 +142,12 @@ class AccountUpdateLastNameView(LoginRequiredMixin, generic.UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super(AccountUpdateLastNameView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+        return context
 
 
 class AccountUpdateEmailView(LoginRequiredMixin, generic.UpdateView):
@@ -118,6 +158,12 @@ class AccountUpdateEmailView(LoginRequiredMixin, generic.UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
+    def get_context_data(self, **kwargs):
+        context = super(AccountUpdateEmailView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+        return context
+
 
 class AccountUpdateUsernameView(LoginRequiredMixin, generic.UpdateView):
     form_class = forms.AccountUpdateUsername
@@ -127,15 +173,34 @@ class AccountUpdateUsernameView(LoginRequiredMixin, generic.UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
+    def get_context_data(self, **kwargs):
+        context = super(AccountUpdateUsernameView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+        return context
+
 
 class AccountUpdatePasswordView(LoginRequiredMixin, PasswordChangeView):
     form_class = forms.AccountUpdatePassword
     success_url = reverse_lazy("accounts:manage_profile")
     template_name = 'accounts/profile/manage_password.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(AccountUpdatePasswordView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+        return context
+
 
 class ManageProfileView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'accounts/manage_profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ManageProfileView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+
+        return context
 
 
 class AddressAddView(LoginRequiredMixin, generic.FormView):
@@ -151,6 +216,13 @@ class AddressAddView(LoginRequiredMixin, generic.FormView):
         initial = super(AddressAddView, self).get_initial()
         initial['country'] = "US"
         return initial
+
+    def get_context_data(self, **kwargs):
+        context = super(AddressAddView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+
+        return context
 
 
 class AddressUpdateView(LoginRequiredMixin, generic.FormView):
@@ -203,6 +275,13 @@ class AddressUpdateView(LoginRequiredMixin, generic.FormView):
     def form_valid(self, form):
         form.update_shipping_address(self.request.user.authorize_net_profile_id, self.kwargs.get('pk'))
         return super(AddressUpdateView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(AddressUpdateView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+
+        return context
 
 
 class AddressDeleteView(LoginRequiredMixin, generic.RedirectView):
@@ -289,6 +368,8 @@ class ManageAddressView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ManageAddressView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
         context['default'] = self.default_list
         return context
 
@@ -400,6 +481,13 @@ class PaymentAddView(LoginRequiredMixin, generic.FormView):
 
         return super(PaymentAddView, self).form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super(PaymentAddView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+
+        return context
+
 
 class PaymentUpdateView(LoginRequiredMixin, generic.FormView):
     form_class = forms.UserPaymentForm
@@ -473,6 +561,13 @@ class PaymentUpdateView(LoginRequiredMixin, generic.FormView):
             payment.save()
         return super(PaymentUpdateView, self).form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super(PaymentUpdateView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+
+        return context
+
 
 class PaymentDeleteView(LoginRequiredMixin, generic.RedirectView):
     url = reverse_lazy('accounts:manage_payment')
@@ -518,6 +613,13 @@ class AddPaymentBillingView(LoginRequiredMixin, generic.FormView):
     def form_valid(self, form):
         form.add_billing(self.request.user.authorize_net_profile_id, self.kwargs.get('pk'))
         return super(AddPaymentBillingView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(AddPaymentBillingView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+
+        return context
 
 
 class ManagePaymentView(LoginRequiredMixin, generic.ListView):
@@ -583,6 +685,8 @@ class ManagePaymentView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ManagePaymentView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
         context['default'] = self.default_list
         context['cards'] = self.payment_list
         context['user_payments'] = models.UserPayments.objects.filter(user=self.request.user).all()

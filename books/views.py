@@ -10,12 +10,14 @@ from .forms import CommentForm
 class BookListView(generic.ListView):
     template_name = 'book_list.html'
     model = Book
-    paginate_by = 10
 
     def get_queryset(self):
         order = self.request.GET.get("sort")
         if order:
-            queryset_list = Book.objects.all().order_by(order)
+            if order == 'rating':
+                queryset_list = Book.objects.all().order_by(order).distinct()
+            else:
+                queryset_list = Book.objects.all().order_by(order)
         else:
             queryset_list = Book.objects.all().order_by("title")
 
@@ -29,8 +31,11 @@ class BookListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(BookListView, self).get_context_data(**kwargs)
         queryset_list = self.get_queryset()
-        order = self.request.GET.get("sort")
         display_sort = self.request.GET.get("display")
+        order = self.request.GET.get("sort")
+        number = cart_count(self.request)
+        context['number'] = number
+        context['total'] = self.get_queryset().count()
 
         if self.request.GET.get("q"):
             context['q'] = self.request.GET.get("q")
@@ -41,7 +46,7 @@ class BookListView(generic.ListView):
                 context['sorting'] = "Title - A to Z"
             elif order == '-title':
                 context['sorting'] = "Title - Z to A"
-            elif order == 'ratings':
+            elif order == '-avg_rating':
                 context['sorting'] = "Top Rated"
             elif order == 'publication_date':
                 context['sorting'] = "Older"
@@ -61,36 +66,45 @@ class BookListView(generic.ListView):
 
         if display_sort:
             if queryset_list.count() > int(display_sort):
-                self.paginate_by = display_sort
-                context['display_num'] = display_sort
                 context['display_sort_num'] = display_sort
             else:
-                self.paginate_by = queryset_list.count()
-                context['display_num'] = queryset_list.count()
                 context['display_sort_num'] = display_sort
         else:
             if queryset_list.count() > 10:
-                self.paginate_by = 10
-                context['display_num'] = 10
                 context['display_sort_num'] = 10
             else:
-                self.paginate_by = queryset_list.count()
-                context['display_num'] = queryset_list.count()
                 context['display_sort_num'] = 10
 
         return context
+
+    def get_paginate_by(self, queryset):
+        display_sort = self.request.GET.get("display")
+        if display_sort:
+            if queryset.count() > int(display_sort):
+                paginate_by = display_sort
+            else:
+                paginate_by = queryset.count()
+        else:
+            if queryset.count() > 10:
+                paginate_by = 10
+            else:
+                paginate_by = queryset.count()
+
+        return paginate_by
 
 
 class BookDetailView(generic.DetailView):
     template_name = 'book_detail.html'
     model = Book
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(BookDetailView, self).get_context_data(**kwargs)
-    #     books = Book.objects.get(id=self.request.GET.get("pk"))
-    #     context['author_books'] = books.au
-    #
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super(BookDetailView, self).get_context_data(**kwargs)
+        number = cart_count(self.request)
+        context['number'] = number
+        author = Author.objects.filter(book=self.kwargs.get("pk")).distinct()
+        context['author_books'] = Book.objects.filter(authors__book__authors__in=author).distinct().exclude(
+            pk=self.kwargs.get("pk"))
+        return context
 
 
 def list_books(request):
@@ -240,3 +254,19 @@ def approve_comment(request, pk):
     id = str(comment.book.id)
     comment.approve()
     return redirect('/book/' + id + '/')
+
+
+def paginate(paginate_num, page, queryset):
+    paginator = Paginator(queryset, paginate_num)  # Show 25 contacts per page
+
+    page = page
+    try:
+        books = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        books = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        books = paginator.page(paginator.num_pages)
+
+    return books

@@ -1,0 +1,187 @@
+{% load static from staticfiles %}
+
+{% if books %}
+
+    {% if books.rating_avg is None or books.rating_avg == 0 %}
+        <p>
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif books.rating_avg > 0 and books.rating_avg < 1 %}
+        <p>
+            <img src="{% static 'imgs/half-filled-rating-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif books.rating_avg >= 1 and books.rating_avg < 1.5 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif books.rating_avg >= 1.5 and books.rating_avg < 2 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/half-filled-rating-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif books.rating_avg >= 2 and books.rating_avg < 2.5 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif books.rating_avg >= 2.5 and books.rating_avg < 3 %}
+        <p>two half stars</p>
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/half-filled-rating-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif books.rating_avg >= 3 and books.rating_avg < 3.5 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif books.rating_avg >= 3.5 and books.rating_avg < 4 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/half-filled-rating-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif books.rating_avg >= 4 and books.rating_avg < 4.5 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif books.rating_avg >= 4.5 and books.rating_avg < 4.75 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/half-filled-rating-star.svg' %}" class="rating-star">
+        </p>
+    {% elif books.rating_avg >= 4.75 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+        </p>
+    {% endif %}
+{% else %}
+
+    {% if book.rating_avg is None or book.rating_avg == 0 %}
+        <p>
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif book.rating_avg > 0 and book.rating_avg < 1 %}
+        <p>
+            <img src="{% static 'imgs/half-filled-rating-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif book.rating_avg >= 1 and book.rating_avg < 1.5 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif book.rating_avg >= 1.5 and book.rating_avg < 2 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/half-filled-rating-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif book.rating_avg >= 2 and book.rating_avg < 2.5 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif book.rating_avg >= 2.5 and book.rating_avg < 3 %}
+        <p>two half stars</p>
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/half-filled-rating-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif book.rating_avg >= 3 and book.rating_avg < 3.5 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif book.rating_avg >= 3.5 and book.rating_avg < 4 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/half-filled-rating-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif book.rating_avg >= 4 and book.rating_avg < 4.5 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/empty-star.svg' %}" class="rating-star">
+        </p>
+    {% elif book.rating_avg >= 4.5 and book.rating_avg < 4.75 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/half-filled-rating-star.svg' %}" class="rating-star">
+        </p>
+    {% elif book.rating_avg >= 4.75 %}
+        <p>
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+            <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+        </p>
+    {% endif %}
+{% endif %}
