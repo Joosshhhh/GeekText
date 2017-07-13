@@ -31,6 +31,7 @@ def add_cart(request, id):
 def change_quantity(request):
     book_id = request.POST['book_id']
     quantity = request.POST.get("quantity")
+    #-- this are debugging print statements --
     print("this is book id ", book_id)
     print("this is q ", quantity)
 
@@ -49,7 +50,7 @@ def change_quantity(request):
         "cart": book_list,
         "total": total,
         "number": number,
-        "comparison": comparison
+        "comparison": comparison,
     }
     return render(request, "cart_view.html", context)
 
@@ -164,7 +165,7 @@ def create_list(cart_items, book_id, quantity):
 
         book_list.append(bk)
 
-    return total, book_list
+    return round(total, 2), book_list
 
 
 # -----------------------------------------------------------------------------------------
