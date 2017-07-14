@@ -95,6 +95,7 @@ class BookListView(generic.ListView):
         queryset_list = self.get_queryset()
         display_sort = self.request.GET.get("display")
         order = self.request.GET.get("sort")
+        order2 = self.request.GET.get("order")
         number = cart_count(self.request)
         context['number'] = number
         context['total'] = self.get_queryset().count()
@@ -146,6 +147,9 @@ class BookListView(generic.ListView):
                 context['display_sort_num'] = 10
             else:
                 context['display_sort_num'] = 10
+
+        if order2:
+            context['order'] = order2
 
         return context
 

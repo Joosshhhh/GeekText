@@ -20,11 +20,14 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownDisplay">
-                        <li><a href="?q={{ q }}&sort={{ sort }}&display=10">10</a></li>
+                        <li><a href="?q={{ q }}&sort={{ sort }}{% if order %}&order={{ order }}{% endif %}&display=10">10</a>
+                        </li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="?q={{ q }}&sort={{ sort }}&display=20">20</a></li>
+                        <li><a href="?q={{ q }}&sort={{ sort }}{% if order %}&order={{ order }}{% endif %}&display=20">20</a>
+                        </li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="?q={{ q }}&sort={{ sort }}&display=40">40</a></li>
+                        <li><a href="?q={{ q }}&sort={{ sort }}{% if order %}&order={{ order }}{% endif %}&display=40">40</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="dropdown pull-right" style="margin-right: 25px;">
@@ -35,24 +38,42 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownSort">
-                        <li><a href="?q={{ q }}&sort=title&display={{ display_sort_num }}">Title - A to Z</a></li>
+                        <li>
+                            <a href="?q={{ q }}&sort=title{% if order %}&order={{ order }}{% endif %}&display={{ display_sort_num }}">Title
+                                - A to Z</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="?q={{ q }}&sort=-title&display={{ display_sort_num }}">Title - Z to A</a></li>
+                        <li>
+                            <a href="?q={{ q }}&sort=-title{% if order %}&order={{ order }}{% endif %}&display={{ display_sort_num }}">Title
+                                - Z to A</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="?q={{ q }}&sort=-avg_rating&display={{ display_sort_num }}">Top Rated</a></li>
+                        <li>
+                            <a href="?q={{ q }}&sort=-avg_rating{% if order %}&order={{ order }}{% endif %}&display={{ display_sort_num }}">Top
+                                Rated</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="?q={{ q }}&sort=-publication_date&display={{ display_sort_num }}">Newest</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="?q={{ q }}&sort=publication_date&display={{ display_sort_num }}">Oldest</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="?q={{ q }}&sort=authors&display={{ display_sort_num }}">Author(s) - A to Z</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="?q={{ q }}&sort=-authors&display={{ display_sort_num }}">Author(s) - Z to A</a>
+                        <li>
+                            <a href="?q={{ q }}&sort=-publication_date{% if order %}&order={{ order }}{% endif %}&display={{ display_sort_num }}">Newest</a>
                         </li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="?q={{ q }}&sort=price&display={{ display_sort_num }}">Price - Low to High</a></li>
+                        <li>
+                            <a href="?q={{ q }}&sort=publication_date{% if order %}&order={{ order }}{% endif %}&display={{ display_sort_num }}">Oldest</a>
+                        </li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="?q={{ q }}&sort=-price&display={{ display_sort_num }}">Price - High to Low</a></li>
+                        <li>
+                            <a href="?q={{ q }}&sort=authors{% if order %}&order={{ order }}{% endif %}&display={{ display_sort_num }}">Author(s)
+                                - A to Z</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="?q={{ q }}&sort=-authors{% if order %}&order={{ order }}{% endif %}&display={{ display_sort_num }}">Author(s)
+                                - Z to A</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="?q={{ q }}&sort=price{% if order %}&order={{ order }}{% endif %}&display={{ display_sort_num }}">Price
+                                - Low to High</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="?q={{ q }}&sort=-price{% if order %}&order={{ order }}{% endif %}&display={{ display_sort_num }}">Price
+                                - High to Low</a></li>
                     </ul>
                 </div>
             </div>
@@ -88,7 +109,8 @@
                         <ul class="pagination">
                             {% if page_obj.has_previous %}
                                 <li>
-                                    <a href="?q={{ q }}&page={{ page_obj.previous_page_number }}&sort={{ sort }}"
+                                    <a href="?q={{ q }}&page={{ page_obj.previous_page_number }}&sort=
+                                            {{ sort }}{% if order %}&order={{ order }}{% endif %}"
                                        aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
@@ -101,12 +123,14 @@
                                     <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
                                     </li>
                                 {% else %}
-                                    <li><a href="?q={{ q }}&page={{ i }}&sort={{ sort }}">{{ i }}</a></li>
+                                    <li><a href="?q={{ q }}&page={{ i }}&sort=
+                                            {{ sort }}{% if order %}&order={{ order }}{% endif %}">{{ i }}</a></li>
                                 {% endif %}
                             {% endfor %}
                             {% if page_obj.has_next %}
                                 <li>
-                                    <a href="?q={{ q }}&page={{ page_obj.next_page_number }}&sort={{ sort }}"
+                                    <a href="?q={{ q }}&page={{ page_obj.next_page_number }}&sort=
+                                            {{ sort }}{% if order %}&order={{ order }}{% endif %}"
                                        aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
