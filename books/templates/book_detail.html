@@ -2,6 +2,7 @@
 {% block title %}{{ book.title }} | {{ block.super }}{% endblock %}
 {% load static from staticfiles %}
 {% load avatar_tags %}
+{% load book_extras %}
 {% load ratings %}
 
 {% block content %}
@@ -81,7 +82,7 @@
                     href="/books/?q={{ book.genre|capfirst }}&sort=-tech_valley_best&order=-avg_rating">{{ book.genre|capfirst }}</a>
             </p>
             <p><strong>Publisher:</strong> {{ book.publisher }}</p>
-            <p><strong>Publication Date:</strong> {{ book.publication_date }}</p>
+            <p><strong>Publication Date:</strong> {{ book.publication_date|convert_to_date|date:"m/d/Y" }}</p>
             <p><strong>Pages:</strong> {% if book.pages == 0 %}TBA{% else %}{{ book.pages }}{% endif %}</p>
             <p><strong>Sales Rank:</strong> {{ book.sales_rank }}</p>
         </div>
