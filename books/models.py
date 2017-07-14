@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models import Avg
-from django.shortcuts import get_object_or_404
-from django.contrib.contenttypes.fields import GenericRelation
+from django.utils.timezone import now
 
 
 # Create your models here.
@@ -26,7 +25,7 @@ class Author(models.Model):
     full_name = models.CharField(max_length=30)
     email = models.EmailField(null=True)
     description = models.TextField(max_length=600, null=True, blank=True)
-    dob = models.DateField(null=True, blank=True)
+    dob = models.CharField(max_length=12, null=True, blank=True)
     birthplace = models.CharField(max_length=75, null=True, blank=True)
     education = models.CharField(max_length=100, null=True, blank=True)
     website = models.URLField(null=True)
@@ -48,11 +47,13 @@ class Book(models.Model):
     authors = models.ManyToManyField(Author)
     price = models.DecimalField(decimal_places=2, max_digits=5, default=0)
     publisher = models.ForeignKey(Publisher)
-    publication_date = models.DateField(null=True, blank=True, auto_now_add=True)
+    publication_date = models.CharField(max_length=12, null=True, blank=True)
     genre = models.CharField(max_length=50, blank=True, null=True)
     description = models.TextField(max_length=600, null=True, blank=True)
     pages = models.IntegerField(default=0)
     avg_rating = models.DecimalField(decimal_places=1, max_digits=2, default=0)
+    sales_rank = models.IntegerField(default=0)
+    tech_valley_best = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -86,7 +87,7 @@ class Comment(models.Model):
     book = models.ForeignKey(Book)
     author = models.CharField(max_length=200)
     text = models.TextField()
-    date = models.DateField()
+    date = models.CharField(max_length=12, null=True, blank=True)
     approved = models.BooleanField(default=False)
 
     def approve(self):

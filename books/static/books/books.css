@@ -34,6 +34,17 @@
     height: 95px;
 }
 
+.authors-content h3 {
+    color: #e39309;
+}
+
+.authors-content ul {
+    list-style-image: url("/media/pencil.png");
+}
+
+.authors-content li {
+    margin-bottom: 15px;
+}
 .rating-star {
     height: 20px;
     width: 20px;

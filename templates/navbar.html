@@ -21,6 +21,7 @@
                         <input type="text" class="form-control orange-border-right" role="search"
                                placeholder="Search by Author, Title, or Genre" name="q"
                                autocomplete="on">
+                        <input type="hidden" name="order" value="-avg_rating">
                         <span class="input-group-btn" style="width: 1%;"><button type="submit"
                                                                                  class="btn btn-warning"><span
                                 class="glyphicon glyphicon-search"></span></button></span>
@@ -31,11 +32,11 @@
             <!-- code for the shopping cart button -->
             <button type="button" class="btn btn-link pull-left"><a href="{% url 'view_cart' %}"><span
                     class="glyphicon glyphicon-shopping-cart"><span
-                    class="badge">{% if number == 0 %}0{% else %}{{ number }}{% endif %}</span></span></a>
+                    class="badge">{{ number }}</span></span></a>
             </button>
 
             <button type="button" class="btn btn-link pull-right"><span class="glyphicon glyphicon-heart-empty"><span
-                    class="badge orange"></span></span>
+                    class="badge">{% if wish and wish > 0 %}{{ wish }}{% else %}0{% endif %}</span></span>
             </button>
 
             {% if user.is_authenticated %}
@@ -177,70 +178,85 @@
         </div>
         <!----------begins the code for the nav pills------------>
 
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="browsing-nav">
+    <div class="container" style=" display: flex;
+    justify-content: space-between;">
         <div class="btn-group">
-            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+            <button type="button" class="btn btn-link dropdown-toggle white" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                 Books <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="/book/">Click Here for a list of all our (5) Books!</a></li>
+                <li><a href="/books/?sort=sales_rank">Top Sellers</a></li>
+                <li><a href="/books/?q=Tech Valley Times Best Sellers&sort=-avg_rating">Tech Valley Times Best
+                    Sellers</a></li>
+                <li><a href="/books/?sort=-avg_rating">Top Rated</a></li>
+                <li><a href="/books/?q=Coming Soon">Coming Soon</a></li>
+                <li><a href="/books/">View All Books</a></li>
             </ul>
         </div>
 
         <div class="btn-group">
-            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+            <button type="button" class="btn btn-link dropdown-toggle white" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                 Authors <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="/book/author/1/">J.K. Rowling</a></li>
-                <li><a href="/book/author/2/">Sherlock Holmes</a></li>
-                <li><a href="/book/author/3/">John Smith</a></li>
-                <li><a href="/book/author/4/">SteamBoat Willie</a></li>
+                <li><a href="/books/?q=Gayle Laakmann McDowell">Gayle Laakmann McDowell</a></li>
+                <li><a href="/books/?q=George R.R. Martin">George R.R. Martin</a></li>
+                <li><a href="/books/?q=J.K. Rowling">J.K. Rowling</a></li>
+                <li><a href="{% url 'books:books_authors' %}">View All Authors</a></li>
+
             </ul>
         </div>
 
         <div class="btn-group">
-            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+            <button type="button" class="btn btn-link dropdown-toggle white" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                 Genre <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="/book/?q=fantasy">Fantasy</a></li>
-                <li><a href="/book/?q=technology">Technology</a></li>
+                <li><a href="/books/?q=Fantasy&sort=-tech_valley_best&order=-avg_rating">Fantasy</a></li>
+                <li><a href="/books/?q=Technology&sort=-tech_valley_best&order=-avg_rating">Technology</a></li>
             </ul>
         </div>
 
         <div class="btn-group">
-            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+            <button type="button" class="btn btn-link dropdown-toggle white" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                 Rating <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="#"><span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span></a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
+                <li><a href="/books/?q=Five Stars&sort=-avg_rating"><img src="{% static 'imgs/filled-star.svg' %}"
+                                                                         class="rating-star">
+                    <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+                    <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+                    <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+                    <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star"></a></li>
+                <li><a href="/books/?q=Four Stars&sort=-avg_rating"><img src="{% static 'imgs/filled-star.svg' %}"
+                                                                         class="rating-star">
+                    <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+                    <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+                    <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
                 </a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
+                <li><a href="/books/?q=Three Stars&sort=-avg_rating"><img src="{% static 'imgs/filled-star.svg' %}"
+                                                                          class="rating-star">
+                    <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
+                    <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
                 </a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
+                <li><a href="/books/?q=Two Stars&sort=-avg_rating"><img src="{% static 'imgs/filled-star.svg' %}"
+                                                                        class="rating-star">
+                    <img src="{% static 'imgs/filled-star.svg' %}" class="rating-star">
                 </a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-star"></span>
+                <li><a href="/books/?q=One Star&sort=-avg_rating"><img src="{% static 'imgs/filled-star.svg' %}"
+                                                                       class="rating-star">
                 </a></li>
-                <!li role="separator" class="divider"><!/li>
             </ul>
         </div>
-    </div><!-- /.container-fluid -->
-</nav>
+    </div>
+</div>
 
 
 
