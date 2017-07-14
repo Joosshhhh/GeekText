@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Book Results | {{ block.super }}{% endblock %}
+{% block title %}{{ q }} | {{ block.super }}{% endblock %}
 {% load static from staticfiles %}
 {% load avatar_tags %}
 {% load ratings %}
@@ -73,7 +73,11 @@
                             {% endif %}
                         {% endfor %}
                         </p>
-                        {% include 'book_rating.html' %}
+                        {% if books.pages > 0 and books.sales_rank > 0 %}
+                            {% include 'book_rating.html' %}
+                        {% else %}
+                            <p style="color: red">Coming Soon</p>
+                        {% endif %}
                         <p style="margin-bottom: 35px">${{ books.price }}</p>
                     </div>
                 {% endfor %}
@@ -84,7 +88,7 @@
                         <ul class="pagination">
                             {% if page_obj.has_previous %}
                                 <li>
-                                    <a href="?page={{ page_obj.previous_page_number }}&sort={{ sort }}"
+                                    <a href="?q={{ q }}&page={{ page_obj.previous_page_number }}&sort={{ sort }}"
                                        aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
@@ -97,12 +101,13 @@
                                     <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
                                     </li>
                                 {% else %}
-                                    <li><a href="?page={{ i }}&sort={{ sort }}">{{ i }}</a></li>
+                                    <li><a href="?q={{ q }}&page={{ i }}&sort={{ sort }}">{{ i }}</a></li>
                                 {% endif %}
                             {% endfor %}
                             {% if page_obj.has_next %}
                                 <li>
-                                    <a href="?page={{ page_obj.next_page_number }}&sort={{ sort }}" aria-label="Next">
+                                    <a href="?q={{ q }}&page={{ page_obj.next_page_number }}&sort={{ sort }}"
+                                       aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
@@ -114,6 +119,17 @@
                 </div>
             {% endif %}
         {% else %}
+            <div class="jumbotron" style="background: #ffffff; padding-left: 10px;">
+                <div class="container">
+                    <div class="row">
+                        <div class="page-header" style="border: none;">
+                            <h1>No Matching Results :(</h1>
+                            <p>We found <strong>0 results</strong> for <strong>{{ q }}</strong>. Please try another
+                                search or use one of our browsing options above.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% endif %}
     </div>
 

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Account Settings | {{ block.super }}{% endblock %}
+{% block title %}{{ book.title }} | {{ block.super }}{% endblock %}
 {% load static from staticfiles %}
 {% load avatar_tags %}
 {% load ratings %}
@@ -20,19 +20,26 @@
                     {% endif %}
                 {% endfor %}
                 </p>
-                {% include 'book_rating.html' %}
-                <a href="#book-reviews"><p class="detail-content" style="padding-bottom: 20px;">
-                    {% if book.rating_avg %}{{ book.rating_count }} review{{ book.rating_count|pluralize }}{% else %}Be
-                        the first to write a review{% endif %}</p></a>
+                {% if book.pages > 0 and book.sales_rank > 0 %}
+                    {% include 'book_rating.html' %}
+                    <a href="#book-reviews"><p class="detail-content" style="padding-bottom: 20px;">
+                        {% if book.rating_avg %}{{ book.rating_count }} review{{ book.rating_count|pluralize }}
+                        {% else %}Be the first to write a review{% endif %}</p>
+                    </a>
+                {% else %}
+                    <p style="color: red">Coming Soon</p>
+                {% endif %}
                 <p style="margin-top: 20px;">{{ book.description|linebreaksbr|truncatewords:50 }}</p>
                 <a href="#full-desc">More details below</a>
             </div>
             <div class="col-sm-3">
                 <h3 class="detail-content" style="padding-bottom: 25px;">Paperback</h3>
                 <h3>${{ book.price }}</h3>
-                <a href="{% url 'add_cart' id=book.pk %}">
-                    <button class="btn btn-success">Add To Cart</button>
-                </a>
+                {% if book.pages > 0 and book.sales_rank > 0 %}
+                    <a href="{% url 'add_cart' id=book.pk %}">
+                        <button class="btn btn-success">Add To Cart</button>
+                    </a>
+                {% endif %}
             </div>
         </div>
         {% if author_books.count > 2 %}
@@ -43,7 +50,7 @@
                         <div class="col-xs-4 text-center" style="padding-top: 20px;">
                             <a href="{% url 'books:book_detail' pk=books.id %}">
                                 <img src="{{ books.image.url }}" style="width:100px; height:150px; ">
-                                <h5>{{ books.title }}</h5>
+                                <h5 class="text-muted">{{ books.title }}</h5>
                                 {% include 'book_rating.html' %}
                             </a>
                         </div>
@@ -51,9 +58,11 @@
                 {% else %}
                     {% for books in author_books|slice:"3" %}
                         <div class="col-xs-4 text-center" style="padding-top: 20px;">
-                            <img src="{{ books.image.url }}" style="width:100px; height:150px; ">
-                            <h5>{{ books.title }}</h5>
-                            {% include 'book_rating.html' %}
+                            <a href="{% url 'books:book_detail' pk=books.id %}">
+                                <img src="{{ books.image.url }}" style="width:100px; height:150px; ">
+                                <h5 class="text-muted">{{ books.title }}</h5>
+                                {% include 'book_rating.html' %}
+                            </a>
                         </div>
                     {% endfor %}
                 {% endif %}
@@ -68,10 +77,13 @@
         <div id="prod-details" class="row detail-content">
             <h3>Product Details</h3>
             {# <p><strong>ISBN-13:</strong></p> #}
-            <p><strong>Genre:</strong> {{ book.genre|capfirst }}</p>
+            <p><strong>Genre:</strong> <a
+                    href="/books/?q={{ book.genre|capfirst }}&sort=-tech_valley_best&order=-avg_rating">{{ book.genre|capfirst }}</a>
+            </p>
             <p><strong>Publisher:</strong> {{ book.publisher }}</p>
             <p><strong>Publication Date:</strong> {{ book.publication_date }}</p>
-            <p><strong>Pages:</strong> {{ book.pages }}</p>
+            <p><strong>Pages:</strong> {% if book.pages == 0 %}TBA{% else %}{{ book.pages }}{% endif %}</p>
+            <p><strong>Sales Rank:</strong> {{ book.sales_rank }}</p>
         </div>
         <div id="author-bio" class="row detail-content">
             <h3>About the Author</h3>
@@ -96,21 +108,22 @@
                 </div>
             </div>
         </div>
-
-        <div id="book-reviews" class="row detail-content">
-            <h3 style="margin-bottom: 35px;">Customer Reviews</h3>
-            <div class="col-xs-4 text-center book-review-container" style="border-right: 1px solid #cccccc;">
-                <h4>Average Review: {% if book.rating_avg %}{{ book.rating_avg }}{% else %}N/A{% endif %}</h4>
-                {% include 'book_rating.html' %}
+        {% if book.pages > 0 and book.sales_rank > 0 %}
+            <div id="book-reviews" class="row detail-content">
+                <h3 style="margin-bottom: 35px;">Customer Reviews</h3>
+                <div class="col-xs-4 text-center book-review-container" style="border-right: 1px solid #cccccc;">
+                    <h4>Average Review: {% if book.rating_avg %}{{ book.rating_avg }}{% else %}N/A{% endif %}</h4>
+                    {% include 'book_rating.html' %}
+                </div>
+                <div class="col-xs-4 center-in-div book-review-container" style="border-right: 1px solid #cccccc;">
+                    <button class="btn btn-warning">Write a Review</button>
+                </div>
+                <div class="col-xs-4 center-in-div book-review-container">
+                    {% if book.rating_avg %}
+                        <h4>{{ book.rating_count }} review{{ book.rating_count|pluralize }}</h4>{% else %}
+                        <h4>Be the first to write a review</h4>{% endif %}
+                </div>
             </div>
-            <div class="col-xs-4 center-in-div book-review-container" style="border-right: 1px solid #cccccc;">
-                <button class="btn btn-warning">Write a Review</button>
-            </div>
-            <div class="col-xs-4 center-in-div book-review-container">
-                {% if book.rating_avg %}
-                    <h4>{{ book.rating_count }} review{{ book.rating_count|pluralize }}</h4>{% else %}
-                    <h4>Be the first to write a review</h4>{% endif %}
-            </div>
-        </div>
+        {% endif %}
     </div>
 {% endblock %}

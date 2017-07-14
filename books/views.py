@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
@@ -7,25 +8,86 @@ from cart.views import cart_count
 from .forms import CommentForm
 
 
+class AllAuthorsView(generic.TemplateView):
+    template_name = 'book_author.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AllAuthorsView, self).get_context_data(**kwargs)
+        context['a'] = Author.objects.filter(full_name__startswith="A")
+        context['b'] = Author.objects.filter(full_name__startswith="B")
+        context['c'] = Author.objects.filter(full_name__startswith="C")
+        context['d'] = Author.objects.filter(full_name__startswith="D")
+        context['e'] = Author.objects.filter(full_name__startswith="E")
+        context['f'] = Author.objects.filter(full_name__startswith="F")
+        context['g'] = Author.objects.filter(full_name__startswith="G")
+        context['h'] = Author.objects.filter(full_name__startswith="H")
+        context['i'] = Author.objects.filter(full_name__startswith="I")
+        context['j'] = Author.objects.filter(full_name__startswith="J")
+        context['k'] = Author.objects.filter(full_name__startswith="K")
+        context['l'] = Author.objects.filter(full_name__startswith="L")
+        context['m'] = Author.objects.filter(full_name__startswith="M")
+        context['n'] = Author.objects.filter(full_name__startswith="N")
+        context['o'] = Author.objects.filter(full_name__startswith="O")
+        context['p'] = Author.objects.filter(full_name__startswith="P")
+        context['q'] = Author.objects.filter(full_name__startswith="Q")
+        context['r'] = Author.objects.filter(full_name__startswith="R")
+        context['s'] = Author.objects.filter(full_name__startswith="S")
+        context['t'] = Author.objects.filter(full_name__startswith="T")
+        context['u'] = Author.objects.filter(full_name__startswith="U")
+        context['v'] = Author.objects.filter(full_name__startswith="V")
+        context['w'] = Author.objects.filter(full_name__startswith="W")
+        context['x'] = Author.objects.filter(full_name__startswith="X")
+        context['y'] = Author.objects.filter(full_name__startswith="Y")
+        context['z'] = Author.objects.filter(full_name__startswith="Z")
+        return context
+
+
 class BookListView(generic.ListView):
     template_name = 'book_list.html'
     model = Book
 
     def get_queryset(self):
         order = self.request.GET.get("sort")
-        if order:
-            if order == 'rating':
-                queryset_list = Book.objects.all().order_by(order).distinct()
-            else:
-                queryset_list = Book.objects.all().order_by(order)
-        else:
-            queryset_list = Book.objects.all().order_by("title")
+        order2 = self.request.GET.get("order")
+        queryset_list = Book.objects.all()
 
         query = self.request.GET.get("q")  # this gets the contents from the search bar 'q'
         if query:
-            queryset_list = queryset_list.filter(title__icontains=query).distinct() | \
-                            queryset_list.filter(authors__full_name__icontains=query).distinct() | \
-                            queryset_list.filter(genre__icontains=query).distinct()
+            if query in 'Tech Valley Times Best Sellers':
+                queryset_list = queryset_list.filter(tech_valley_best=1)
+            elif query in 'Coming Soon':
+                queryset_list = queryset_list.filter(publication_date__gt=datetime.date.today())
+            elif 'Star' in query:
+                if 'One' in query:
+                    queryset_list = queryset_list.filter(avg_rating__range=(1, 1.9))
+                elif 'Two' in query:
+                    queryset_list = queryset_list.filter(avg_rating__range=(2, 2.9))
+                elif 'Three' in query:
+                    queryset_list = queryset_list.filter(avg_rating__range=(3, 3.9))
+                elif 'Four' in query:
+                    queryset_list = queryset_list.filter(avg_rating__range=(4, 4.5))
+                elif 'Five' in query:
+                    queryset_list = queryset_list.filter(avg_rating__range=(4.6, 5))
+
+            else:
+                queryset_list = queryset_list.filter(title__icontains=query).distinct() | \
+                                queryset_list.filter(authors__full_name__icontains=query).distinct() | \
+                                queryset_list.filter(genre__icontains=query).distinct()
+
+        if order:
+            if query and order2 and queryset_list.filter(genre__icontains=query):
+                queryset_list = queryset_list.order_by(order, order2)
+            else:
+                if order == 'sales_rank':
+                    queryset_list = queryset_list.order_by(order).exclude(sales_rank=0)
+                else:
+                    queryset_list = queryset_list.order_by(order)
+        else:
+            if query and order2 and queryset_list.filter(genre__icontains=query):
+                queryset_list = queryset_list.order_by("-tech_valley_best", order2)
+            else:
+                queryset_list = queryset_list.order_by("title")
+
         return queryset_list
 
     def get_context_data(self, **kwargs):
@@ -36,9 +98,10 @@ class BookListView(generic.ListView):
         number = cart_count(self.request)
         context['number'] = number
         context['total'] = self.get_queryset().count()
+        query = self.request.GET.get("q")
 
-        if self.request.GET.get("q"):
-            context['q'] = self.request.GET.get("q")
+        if query:
+            context['q'] = query
 
         if order:
             context['sort'] = order
@@ -60,9 +123,18 @@ class BookListView(generic.ListView):
                 context['sorting'] = "Price - Low to High"
             elif order == '-price':
                 context['sorting'] = "Price - High to Low"
+            elif order == 'sales_rank':
+                context['sorting'] = "Top Sellers"
+            elif order == '-tech_valley_best':
+                context['sorting'] = "Tech Valley Best Sellers"
         else:
-            context['sort'] = "title"
-            context['sorting'] = "Title - A to Z"
+            if query and Book.objects.filter(genre__icontains=query):
+                context['sort'] = "-tech_valley_best"
+                context['order'] = "-rating"
+                context['sorting'] = "Tech Valley Best Sellers"
+            else:
+                context['sort'] = "title"
+                context['sorting'] = "Title - A to Z"
 
         if display_sort:
             if queryset_list.count() > int(display_sort):

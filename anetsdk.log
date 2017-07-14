@@ -17406,3 +17406,287 @@ pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CT
 2017-07-08 14:39:02,554 Starting new HTTPS connection (1): apitest.authorize.net
 2017-07-08 14:39:03,119 "POST /xml/v1/request.api HTTP/1.1" 200 533
 2017-07-08 14:39:03,124 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerProfileMaskedType object at 0x00B4DCD0>,)
+2017-07-13 15:51:18,601 performing custom validation..
+2017-07-13 15:51:18,613 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:51:18,613 building request..
+2017-07-13 15:51:19,027 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:51:19,432 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-07-13 15:51:19,475 Response error
+2017-07-13 15:51:19,476 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-07-13 15:51:24,359 performing custom validation..
+2017-07-13 15:51:24,360 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:51:24,360 building request..
+2017-07-13 15:51:24,365 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:51:24,756 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-07-13 15:51:24,763 Response error
+2017-07-13 15:51:24,764 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-07-13 15:51:26,403 performing custom validation..
+2017-07-13 15:51:26,403 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:51:26,403 building request..
+2017-07-13 15:51:26,406 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:51:26,743 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-07-13 15:51:26,750 Response error
+2017-07-13 15:51:26,750 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-07-13 15:51:49,978 performing custom validation..
+2017-07-13 15:51:49,979 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:51:49,979 building request..
+2017-07-13 15:51:49,979 building request..
+2017-07-13 15:51:49,980 Internal Server Error: /accounts/manage/new-address
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/site-packages/authorizenet/apicontrollersbase.py", line 129, in execute
+    xmlRequest = self.buildrequest()
+  File "/usr/local/lib/python3.6/site-packages/authorizenet/apicontrollersbase.py", line 100, in buildrequest
+    xmlRequest = self._request.toxml(encoding=constants.xml_encoding, element_name=self.getrequesttype())
+  File "/usr/local/lib/python3.6/site-packages/pyxb/binding/basis.py", line 555, in toxml
+    dom = self.toDOM(bds, element_name=element_name)
+  File "/usr/local/lib/python3.6/site-packages/pyxb/binding/basis.py", line 527, in toDOM
+    self._toDOM_csc(bds, element)
+  File "/usr/local/lib/python3.6/site-packages/pyxb/binding/basis.py", line 2661, in _toDOM_csc
+    order = self._validatedChildren()
+  File "/usr/local/lib/python3.6/site-packages/pyxb/binding/basis.py", line 2188, in _validatedChildren
+    return self.__automatonConfiguration.sequencedChildren()
+  File "/usr/local/lib/python3.6/site-packages/pyxb/binding/content.py", line 638, in sequencedChildren
+    cfg = self._diagnoseIncompleteContent(symbols, symbol_set)
+  File "/usr/local/lib/python3.6/site-packages/pyxb/binding/content.py", line 493, in _diagnoseIncompleteContent
+    raise pyxb.IncompleteElementContentError(self.__instance, cfg, symbols, symbol_set)
+pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CTD_ANON_41 object at 0x112f2db38>, <pyxb.utils.fac.Configuration object at 0x112f2d6d8>, [<pyxb.binding.basis.ElementContent object at 0x112f2d160>, <pyxb.binding.basis.ElementContent object at 0x112f2de10>], {<pyxb.binding.content.ElementDeclaration object at 0x1116a1828>: [<authorizenet.apicontractsv1.customerAddressType object at 0x112f2dd68>], <pyxb.binding.content.ElementDeclaration object at 0x1116a1898>: [1]})
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.6/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.6/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.6/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.6/site-packages/django/contrib/auth/mixins.py", line 56, in dispatch
+    return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.6/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.6/site-packages/django/views/generic/edit.py", line 183, in post
+    return self.form_valid(form)
+  File "/Users/Joosshhhh/PycharmProjects/GeekText/accounts/views.py", line 212, in form_valid
+    form.add_shipping_address(self.request.user.authorize_net_profile_id)
+  File "/Users/Joosshhhh/PycharmProjects/GeekText/accounts/forms.py", line 225, in add_shipping_address
+    controller.execute()
+  File "/usr/local/lib/python3.6/site-packages/authorizenet/apicontrollersbase.py", line 132, in execute
+    logging.error( 'Error retrieving http response from: %s for request: %s', self.endpoint, self.getprettyxmlrequest())
+  File "/usr/local/lib/python3.6/site-packages/authorizenet/apicontrollersbase.py", line 108, in getprettyxmlrequest
+    xmlRequest = self.buildrequest()
+  File "/usr/local/lib/python3.6/site-packages/authorizenet/apicontrollersbase.py", line 100, in buildrequest
+    xmlRequest = self._request.toxml(encoding=constants.xml_encoding, element_name=self.getrequesttype())
+  File "/usr/local/lib/python3.6/site-packages/pyxb/binding/basis.py", line 555, in toxml
+    dom = self.toDOM(bds, element_name=element_name)
+  File "/usr/local/lib/python3.6/site-packages/pyxb/binding/basis.py", line 527, in toDOM
+    self._toDOM_csc(bds, element)
+  File "/usr/local/lib/python3.6/site-packages/pyxb/binding/basis.py", line 2661, in _toDOM_csc
+    order = self._validatedChildren()
+  File "/usr/local/lib/python3.6/site-packages/pyxb/binding/basis.py", line 2188, in _validatedChildren
+    return self.__automatonConfiguration.sequencedChildren()
+  File "/usr/local/lib/python3.6/site-packages/pyxb/binding/content.py", line 638, in sequencedChildren
+    cfg = self._diagnoseIncompleteContent(symbols, symbol_set)
+  File "/usr/local/lib/python3.6/site-packages/pyxb/binding/content.py", line 493, in _diagnoseIncompleteContent
+    raise pyxb.IncompleteElementContentError(self.__instance, cfg, symbols, symbol_set)
+pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CTD_ANON_41 object at 0x112f2db38>, <pyxb.utils.fac.Configuration object at 0x112f2d438>, [<pyxb.binding.basis.ElementContent object at 0x112f2d518>, <pyxb.binding.basis.ElementContent object at 0x112f2dcc0>], {<pyxb.binding.content.ElementDeclaration object at 0x1116a1828>: [<authorizenet.apicontractsv1.customerAddressType object at 0x112f2dd68>], <pyxb.binding.content.ElementDeclaration object at 0x1116a1898>: [1]})
+2017-07-13 15:54:58,611 performing custom validation..
+2017-07-13 15:54:58,611 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:54:58,611 building request..
+2017-07-13 15:54:58,636 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:54:59,208 "POST /xml/v1/request.api HTTP/1.1" 200 533
+2017-07-13 15:54:59,220 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerProfileMaskedType object at 0x113120390>,)
+2017-07-13 15:55:21,783 performing custom validation..
+2017-07-13 15:55:21,784 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:55:21,784 building request..
+2017-07-13 15:55:21,799 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:55:22,169 "POST /xml/v1/request.api HTTP/1.1" 200 475
+2017-07-13 15:55:22,175 Multiple accepting paths for <class 'authorizenet.apicontractsv1.CTD_ANON_42'>
+2017-07-13 15:55:22,177 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<createCustomerShippingAddressResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Ok</resultCode>\n\t\t<message>\n\t\t\t<code>I00001</code>\n\t\t\t<text>Successful.</text>\n\t\t</message>\n\t</messages>\n\t<customerProfileId>1501461151</customerProfileId>\n\t<customerAddressId>1501048224</customerAddressId>\n</createCustomerShippingAddressResponse>\n'
+2017-07-13 15:55:22,186 performing custom validation..
+2017-07-13 15:55:22,186 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:55:22,186 building request..
+2017-07-13 15:55:22,190 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:55:22,586 "POST /xml/v1/request.api HTTP/1.1" 200 814
+2017-07-13 15:55:22,598 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressExType object at 0x112fa7048>,)
+2017-07-13 15:55:22,604 performing custom validation..
+2017-07-13 15:55:22,604 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:55:22,604 building request..
+2017-07-13 15:55:22,608 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:55:23,003 "POST /xml/v1/request.api HTTP/1.1" 200 699
+2017-07-13 15:55:23,016 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressExType object at 0x112f7bb38>,)
+2017-07-13 15:55:31,804 performing custom validation..
+2017-07-13 15:55:31,804 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:55:31,804 building request..
+2017-07-13 15:55:31,808 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:55:32,204 "POST /xml/v1/request.api HTTP/1.1" 200 699
+2017-07-13 15:55:32,216 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressExType object at 0x112e4cac8>,)
+2017-07-13 15:55:38,650 performing custom validation..
+2017-07-13 15:55:38,650 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:55:38,650 building request..
+2017-07-13 15:55:38,658 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:55:39,090 "POST /xml/v1/request.api HTTP/1.1" 200 699
+2017-07-13 15:55:39,103 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressExType object at 0x1130a2080>,)
+2017-07-13 15:55:39,107 performing custom validation..
+2017-07-13 15:55:39,107 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:55:39,108 building request..
+2017-07-13 15:55:39,113 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:55:39,442 "POST /xml/v1/request.api HTTP/1.1" 200 377
+2017-07-13 15:55:39,449 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<updateCustomerShippingAddressResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Ok</resultCode>\n\t\t<message>\n\t\t\t<code>I00001</code>\n\t\t\t<text>Successful.</text>\n\t\t</message>\n\t</messages>\n</updateCustomerShippingAddressResponse>\n'
+2017-07-13 15:55:39,457 performing custom validation..
+2017-07-13 15:55:39,457 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:55:39,457 building request..
+2017-07-13 15:55:39,461 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:55:40,030 "POST /xml/v1/request.api HTTP/1.1" 200 814
+2017-07-13 15:55:40,044 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressExType object at 0x112ff8358>,)
+2017-07-13 15:55:40,046 performing custom validation..
+2017-07-13 15:55:40,046 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:55:40,046 building request..
+2017-07-13 15:55:40,049 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:55:40,374 "POST /xml/v1/request.api HTTP/1.1" 200 699
+2017-07-13 15:55:40,389 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressExType object at 0x112dccac8>,)
+2017-07-13 15:56:28,343 performing custom validation..
+2017-07-13 15:56:28,344 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:56:28,344 building request..
+2017-07-13 15:56:28,392 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:56:28,716 "POST /xml/v1/request.api HTTP/1.1" 200 814
+2017-07-13 15:56:28,729 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressExType object at 0x10fe16c50>,)
+2017-07-13 15:56:50,816 performing custom validation..
+2017-07-13 15:56:50,816 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:56:50,816 building request..
+2017-07-13 15:56:50,827 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:56:51,263 "POST /xml/v1/request.api HTTP/1.1" 200 814
+2017-07-13 15:56:51,278 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressExType object at 0x11319c7b8>,)
+2017-07-13 15:56:51,278 performing custom validation..
+2017-07-13 15:56:51,279 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:56:51,279 building request..
+2017-07-13 15:56:51,282 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:56:51,680 "POST /xml/v1/request.api HTTP/1.1" 200 699
+2017-07-13 15:56:51,692 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressExType object at 0x11319c2b0>,)
+2017-07-13 15:56:51,694 performing custom validation..
+2017-07-13 15:56:51,694 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:56:51,694 building request..
+2017-07-13 15:56:51,701 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:56:52,204 "POST /xml/v1/request.api HTTP/1.1" 200 881
+2017-07-13 15:56:52,214 Multiple accepting paths for <class 'authorizenet.apicontractsv1.CTD_ANON_40'>
+2017-07-13 15:56:52,217 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<createCustomerPaymentProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Ok</resultCode>\n\t\t<message>\n\t\t\t<code>I00001</code>\n\t\t\t<text>Successful.</text>\n\t\t</message>\n\t</messages>\n\t<customerProfileId>1501461151</customerProfileId>\n\t<customerPaymentProfileId>1501023021</customerPaymentProfileId>\n\t<validationDirectResponse>1,1,1,(TESTMODE) This transaction has been approved.,000000,P,0,none,Test transaction for ValidateCustomerPaymentProfile.,1.00,CC,auth_only,none,Joshua,McLendon,,8945 SW 18th Ter,Miami,FL,33165-7853,US,7864269006,,email@example.com,,,,,,,,,0.00,0.00,0.00,FALSE,none,AF76498DDF116E762DEFCC2881BE33E0,,,,,,,,,,,,,XXXX1111,Visa,,,,,,,,,,,,,,,,,</validationDirectResponse>\n</createCustomerPaymentProfileResponse>\n'
+2017-07-13 15:56:52,227 performing custom validation..
+2017-07-13 15:56:52,227 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:56:52,227 building request..
+2017-07-13 15:56:52,231 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:56:52,726 "POST /xml/v1/request.api HTTP/1.1" 200 1314
+2017-07-13 15:56:52,738 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressType object at 0x11318dd30>,)
+2017-07-13 15:56:52,739 performing custom validation..
+2017-07-13 15:56:52,739 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:56:52,739 building request..
+2017-07-13 15:56:52,742 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:56:53,146 "POST /xml/v1/request.api HTTP/1.1" 200 970
+2017-07-13 15:56:53,158 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressType object at 0x112f88358>,)
+2017-07-13 15:56:58,037 performing custom validation..
+2017-07-13 15:56:58,037 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:56:58,038 building request..
+2017-07-13 15:56:58,041 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:56:58,370 "POST /xml/v1/request.api HTTP/1.1" 200 970
+2017-07-13 15:56:58,383 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressType object at 0x113109128>,)
+2017-07-13 15:57:02,401 performing custom validation..
+2017-07-13 15:57:02,402 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:57:02,403 building request..
+2017-07-13 15:57:02,407 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:57:03,080 "POST /xml/v1/request.api HTTP/1.1" 200 1314
+2017-07-13 15:57:03,092 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressType object at 0x1131da080>,)
+2017-07-13 15:57:03,093 performing custom validation..
+2017-07-13 15:57:03,094 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:57:03,094 building request..
+2017-07-13 15:57:03,097 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:57:03,489 "POST /xml/v1/request.api HTTP/1.1" 200 970
+2017-07-13 15:57:03,501 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressType object at 0x1131955f8>,)
+2017-07-13 15:57:11,690 performing custom validation..
+2017-07-13 15:57:11,690 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:57:11,690 building request..
+2017-07-13 15:57:11,706 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:57:12,152 "POST /xml/v1/request.api HTTP/1.1" 200 1314
+2017-07-13 15:57:12,166 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressType object at 0x113071940>,)
+2017-07-13 15:57:12,166 performing custom validation..
+2017-07-13 15:57:12,167 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:57:12,167 building request..
+2017-07-13 15:57:12,171 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:57:12,674 "POST /xml/v1/request.api HTTP/1.1" 200 699
+2017-07-13 15:57:12,689 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressExType object at 0x113198940>,)
+2017-07-13 15:57:15,090 performing custom validation..
+2017-07-13 15:57:15,090 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:57:15,091 building request..
+2017-07-13 15:57:15,094 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:57:15,422 "POST /xml/v1/request.api HTTP/1.1" 200 699
+2017-07-13 15:57:15,436 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressExType object at 0x1131cdeb8>,)
+2017-07-13 15:57:20,810 performing custom validation..
+2017-07-13 15:57:20,811 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:57:20,811 building request..
+2017-07-13 15:57:20,814 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:57:21,239 "POST /xml/v1/request.api HTTP/1.1" 200 699
+2017-07-13 15:57:21,250 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressExType object at 0x113f0b860>,)
+2017-07-13 15:57:21,253 performing custom validation..
+2017-07-13 15:57:21,253 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:57:21,254 building request..
+2017-07-13 15:57:21,260 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:57:21,664 "POST /xml/v1/request.api HTTP/1.1" 200 377
+2017-07-13 15:57:21,672 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<updateCustomerShippingAddressResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Ok</resultCode>\n\t\t<message>\n\t\t\t<code>I00001</code>\n\t\t\t<text>Successful.</text>\n\t\t</message>\n\t</messages>\n</updateCustomerShippingAddressResponse>\n'
+2017-07-13 15:57:21,681 performing custom validation..
+2017-07-13 15:57:21,681 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:57:21,681 building request..
+2017-07-13 15:57:21,685 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:57:22,183 "POST /xml/v1/request.api HTTP/1.1" 200 1320
+2017-07-13 15:57:22,196 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressType object at 0x11307d160>,)
+2017-07-13 15:57:22,197 performing custom validation..
+2017-07-13 15:57:22,197 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 15:57:22,197 building request..
+2017-07-13 15:57:22,201 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 15:57:22,606 "POST /xml/v1/request.api HTTP/1.1" 200 705
+2017-07-13 15:57:22,618 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressExType object at 0x112ff8320>,)
+2017-07-13 15:57:42,957 Internal Server Error: /books/author/2/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.6/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.6/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+TypeError: author_books() got an unexpected keyword argument 'pk'
+2017-07-13 16:00:18,376 Internal Server Error: /cart/view_cart/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.6/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.6/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+TypeError: view_cart() missing 1 required positional argument: 'context'
+2017-07-13 16:01:45,368 Multiple accepting paths for {AnetApi/xml/v1/schema/AnetApiSchema.xsd}customerProfileType
+2017-07-13 16:01:45,370 performing custom validation..
+2017-07-13 16:01:45,370 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 16:01:45,370 building request..
+2017-07-13 16:01:45,389 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 16:01:46,124 "POST /xml/v1/request.api HTTP/1.1" 200 507
+2017-07-13 16:01:46,133 Multiple accepting paths for <class 'authorizenet.apicontractsv1.CTD_ANON_38'>
+2017-07-13 16:01:46,135 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<createCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Ok</resultCode>\n\t\t<message>\n\t\t\t<code>I00001</code>\n\t\t\t<text>Successful.</text>\n\t\t</message>\n\t</messages>\n\t<customerProfileId>1501492446</customerProfileId>\n\t<customerPaymentProfileIdList/>\n\t<customerShippingAddressIdList/>\n\t<validationDirectResponseList/>\n</createCustomerProfileResponse>\n'
+2017-07-13 17:05:54,472 performing custom validation..
+2017-07-13 17:05:54,480 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 17:05:54,480 building request..
+2017-07-13 17:05:54,559 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 17:05:55,070 "POST /xml/v1/request.api HTTP/1.1" 200 534
+2017-07-13 17:05:55,086 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerProfileMaskedType object at 0x1131963c8>,)
+2017-07-13 17:05:59,581 performing custom validation..
+2017-07-13 17:05:59,581 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-13 17:05:59,581 building request..
+2017-07-13 17:05:59,585 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-13 17:06:00,076 "POST /xml/v1/request.api HTTP/1.1" 200 534
+2017-07-13 17:06:00,087 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerProfileMaskedType object at 0x113173a90>,)
+2017-07-13 17:06:17,723 Internal Server Error: /cart/view_cart/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/site-packages/django/core/handlers/exception.py", line 41, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.6/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.6/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+TypeError: view_cart() missing 1 required positional argument: 'context'

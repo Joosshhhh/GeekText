@@ -49,6 +49,7 @@ hr {
 
 .navbar {
     background: #3e474f;
+    margin-bottom: 0;
 }
 
 .navbar-header {
@@ -121,6 +122,9 @@ hr {
     color: #e39309;
 }
 
+.white {
+    color: #3e474f;
+}
 
 .orange-border-right {
     border-right-color: #e39309;
@@ -237,6 +241,30 @@ hr {
     float: left;
     margin-left: 15px;
     margin-top: 5px;
+}
+
+.browsing-nav {
+    background-color: #f0ad4e;
+    margin-bottom: 20px;
+    padding: 5px 0;
+}
+
+.browsing-nav .btn-group {
+    border-left: 1px solid #ffffff;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.browsing-nav .btn-group .btn {
+    float: none;
+}
+
+.browsing-nav .btn-group:last-child {
+    border-right: solid 1px #ffffff;
+}
+
+.browsing-nav .btn-group:hover {
+    background-color: #ec971f;
 }
 
 .footer {

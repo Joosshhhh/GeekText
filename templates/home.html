@@ -4,13 +4,11 @@
 {% block content %}
     <div class="container">
 
-            <h2>Welcome to GeekText!</h2>
+        <h2>Welcome to GeekText!</h2>
 
         {% if user.is_authenticated %}
             <h4>Hello, {{ user }}.</h4>
             <h4> How are you today?</h4>
         {% endif %}
-
-
     </div>
 {% endblock %}

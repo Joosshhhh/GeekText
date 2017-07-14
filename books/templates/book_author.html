@@ -1,47 +1,255 @@
 {% extends "layout.html" %}
-{% block title %}Book Detail | {{ block.super }}{% endblock %}
+{% block title %}Authors | {{ block.super }}{% endblock %}
 {% load static from staticfiles %}
 {% load avatar_tags %}
 
 {% block content %}
-    <div class="container" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
-        <h2> {{ author }} Books</h2>
-        <h4><strong>Email Address:</strong> {{ author.email}}</h4>
-        <br/><br/>
-
-        {% for book in books %}
-         <div class="col-md-8">
-                    <div class="thumbnail">
-                        <div class="caption" text-align="center">
-                            <h3><a href="{{ book.get_absolute_url }}">{{ book.title }}</a><br/></h3>
-                            <p>
-                            {% if book.image %}
-                                <div class="col-md-3">
-                                <img src="{{ book.image.url }}" class="img-responsive"/>
-                                </div>
-                            {% endif %}
-                            <strong>Author:</strong>
-                            {% for auth in book.author %}
-                                <a href="/book/author/{{ auth.id }}">  {{ auth }} </a>
-                            {% endfor %}
-                            <br/>
-                            <strong>Publisher:</strong> {{ book.publisher }}<br/>
-                            <strong>Publication Date:</strong> {{ book.publication_date }}<br/>
-                            <strong>Genre:</strong> <a href="" ></a>{{ book.genre }}<br/>
-                            <strong>Description:</strong> {{ book.description }}<br/>
-                            </p>
-
-                        </div>
-                        <div><p><a href="{{ book.get_absolute_url }}" class="btn btn-orange"
-                                  role="button" style="width: 30%;" >View</a></p>
-                        </div><hr/>
-                    </div>
-
-         </div>
-
-
-        {% endfor %}
-
-
+    <div class="container">
+        <div class="row" style="margin-bottom: 35px;">
+            <div class="col-md-8 col-md-offset-2 col-sm-offset-1">
+                <ul class="list-inline">
+                    <li><a href="#A">A</a></li>
+                    <li><a href="#B">B</a></li>
+                    <li><a href="#C">C</a></li>
+                    <li><a href="#D">D</a></li>
+                    <li><a href="#E">E</a></li>
+                    <li><a href="#F">F</a></li>
+                    <li><a href="#G">G</a></li>
+                    <li><a href="#H">H</a></li>
+                    <li><a href="#I">I</a></li>
+                    <li><a href="#J">J</a></li>
+                    <li><a href="#K">K</a></li>
+                    <li><a href="#L">L</a></li>
+                    <li><a href="#M">M</a></li>
+                    <li><a href="#N">N</a></li>
+                    <li><a href="#O">O</a></li>
+                    <li><a href="#P">P</a></li>
+                    <li><a href="#Q">Q</a></li>
+                    <li><a href="#R">R</a></li>
+                    <li><a href="#S">S</a></li>
+                    <li><a href="#T">T</a></li>
+                    <li><a href="#U">U</a></li>
+                    <li><a href="#V">V</a></li>
+                    <li><a href="#W">W</a></li>
+                    <li><a href="#X">X</a></li>
+                    <li><a href="#Y">Y</a></li>
+                    <li><a href="#Z">Z</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row authors-content">
+            <div class="col-xs-6 col-sm-4 col-sm-offset-2">
+                <div id="A">
+                    <h3>A</h3>
+                    <ul>
+                        {% for auth in a %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="B">
+                    <h3>B</h3>
+                    <ul>
+                        {% for auth in b %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="C">
+                    <h3>C</h3>
+                    <ul>
+                        {% for auth in c %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="D">
+                    <h3>D</h3>
+                    <ul>
+                        {% for auth in d %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="E">
+                    <h3>E</h3>
+                    <ul>
+                        {% for auth in e %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="F">
+                    <h3>F</h3>
+                    <ul>
+                        {% for auth in f %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="G">
+                    <h3>G</h3>
+                    <ul>
+                        {% for auth in g %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="H">
+                    <h3>H</h3>
+                    <ul>
+                        {% for auth in h %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="I">
+                    <h3>I</h3>
+                    <ul>
+                        {% for auth in i %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="J">
+                    <h3>J</h3>
+                    <ul>
+                        {% for auth in j %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="K">
+                    <h3>K</h3>
+                    <ul>
+                        {% for auth in k %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="L">
+                    <h3>L</h3>
+                    <ul>
+                        {% for auth in l %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-sm-offset-2">
+                <div id="M">
+                    <h3>M</h3>
+                    <ul>
+                        {% for auth in m %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="N">
+                    <h3>N</h3>
+                    <ul>
+                        {% for auth in n %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="O">
+                    <h3>O</h3>
+                    <ul>
+                        {% for auth in o %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="P">
+                    <h3>P</h3>
+                    <ul>
+                        {% for auth in p %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="Q">
+                    <h3>Q</h3>
+                    <ul>
+                        {% for auth in q %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="R">
+                    <h3>R</h3>
+                    <ul>
+                        {% for auth in r %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="S">
+                    <h3>S</h3>
+                    <ul>
+                        {% for auth in s %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="T">
+                    <h3>T</h3>
+                    <ul>
+                        {% for auth in t %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="U">
+                    <h3>U</h3>
+                    <ul>
+                        {% for auth in u %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="V">
+                    <h3>V</h3>
+                    <ul>
+                        {% for auth in v %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="W">
+                    <h3>W</h3>
+                    <ul>
+                        {% for auth in w %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="X">
+                    <h3>X</h3>
+                    <ul>
+                        {% for auth in x %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="Y">
+                    <h3>Y</h3>
+                    <ul>
+                        {% for auth in y %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id="Z">
+                    <h3>Z</h3>
+                    <ul>
+                        {% for auth in z %}
+                            <li><a href="/books/?q={{ auth.full_name }}">{{ auth.full_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
