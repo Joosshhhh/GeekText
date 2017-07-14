@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}{{ q }} | {{ block.super }}{% endblock %}
+{% block title %}{% if q %}{{ q }}{% else %}All Books{% endif %} | {{ block.super }}{% endblock %}
 {% load static from staticfiles %}
 {% load avatar_tags %}
 {% load ratings %}
