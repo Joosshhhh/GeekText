@@ -20,3 +20,8 @@ def swap(value):
     char = list(value)
     char[5] = char[0]
     return ''.join(value)
+
+
+@register.filter
+def gettitle(book):
+    return book

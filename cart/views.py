@@ -4,11 +4,10 @@ from books.models import Book
 from datetime import *
 
 
-# Create your views here.
-
-
 def add_cart(request, id):
     book = get_object_or_404(Book, id=id)
+
+    request.session[id] = 1
 
     cart = request.session.get('cart', {})
     cart[id] = book.title
@@ -21,6 +20,7 @@ def add_cart(request, id):
     context = {
         "book": book,
         "number": number,
+        "request": request
     }
 
     return render(request, "cart_home.html", context)
@@ -29,17 +29,14 @@ def add_cart(request, id):
 # -----------------------------------------------------------------------------------------
 
 def change_quantity(request):
-    book_id = request.POST['book_id']
+    book_id = request.POST.get("book_id")
     quantity = request.POST.get("quantity")
-    #-- this are debugging print statements --
-    print("this is book id ", book_id)
-    print("this is q ", quantity)
 
     cart_items = request.session.get('cart', {}).values()  # fetches the values stored in the session
-
     number = cart_count(request)
 
-    total, book_list = create_list(cart_items, book_id, quantity)
+    total, book_list = create_list(cart_items, book_id, quantity, request)
+    request.session['total'] = total
 
     if total > 0:
         comparison = True
@@ -51,8 +48,11 @@ def change_quantity(request):
         "total": total,
         "number": number,
         "comparison": comparison,
+        "request": request
     }
     return render(request, "cart_view.html", context)
+
+# -----------------------------------------------------------------------------------------
 
 
 def view_cart(request):
@@ -60,7 +60,9 @@ def view_cart(request):
 
     number = cart_count(request)
 
-    total, book_list = create_list(cart_items, None, None)
+    total, book_list = create_list(cart_items, None, 1, request)
+
+    request.session['total'] = total
 
     if total > 0:
         comparison = True
@@ -71,7 +73,8 @@ def view_cart(request):
         "cart": book_list,
         "total": total,
         "number": number,
-        "comparison": comparison
+        "comparison": comparison,
+        "request": request,
     }
     return render(request, "cart_view.html", context)
 
@@ -80,7 +83,9 @@ def view_cart(request):
 
 
 def remove_item(request, id):
+
     cart = request.session.get('cart', {})
+
     del cart[id]
     request.session.modified = True  # this lets the session save correctly
 
@@ -88,7 +93,9 @@ def remove_item(request, id):
 
     number = len(cart_items)
 
-    total, book_list = create_list(cart_items, None, 1)
+    total, book_list = create_list(cart_items, None, 1, request)
+
+    request.session['total'] = total
 
     if total > 0:
         comparison = True
@@ -99,7 +106,8 @@ def remove_item(request, id):
         "cart": book_list,
         "total": total,
         "number": number,
-        "comparison": comparison
+        "comparison": comparison,
+        "request": request,
     }
     return render(request, "cart_view.html", context)
 
@@ -108,11 +116,11 @@ def remove_item(request, id):
 
 
 def checkout(request):
-    cart_items = request.session.get('cart', {}).values()
+
     shipping_tokens = request.POST.get('shipng').split()
     number = cart_count(request)
 
-    total, book_list = create_list(cart_items)
+    total = request.session.get('total')  # retrieves the total saved in the session
 
     total = round(float(total), 2)
     shipping = round(float(shipping_tokens[0]), 2)
@@ -139,12 +147,12 @@ def checkout(request):
 # -----------------------------------------------------------------------------------------
 
 #  ---helper function---
-#  takes in a dictionary and creates a list of Book objects into a list
+#  takes in a dictionary and creates a list of Book objects
 #  also add up the total of the books in the list
 
 
-def create_list(cart_items, book_id, quantity):
-
+def create_list(cart_items, book_id, quantity, request):
+    # print(request.session.get(book_id))
     total = 0
     book_list = []  # holds the list of the books in the cart
     all_books = Book.objects.all()
@@ -155,14 +163,25 @@ def create_list(cart_items, book_id, quantity):
 
         if book_id:
             if int(book_id) == int(bk.id):
-                total = total + book_price * float(quantity)
+
+                subtotal = round(book_price * float(quantity), 2)
+                total = total + subtotal
+                request.session[bk.title] = subtotal
+                # print(request.session.get(int(bk.id)))
+                request.session[bk.id] = quantity
+                request.session.modified = True
 
             else:
+                # print(str(bk.id) + " this is else")
                 total = total + book_price
+                request.session[bk.id] = 1
 
         else:
             total = total + book_price
+            request.session[bk.title] = book_price
+            request.session[bk.id] = 1
 
+        request.session.modified = True
         book_list.append(bk)
 
     return round(total, 2), book_list

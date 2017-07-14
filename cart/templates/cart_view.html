@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}Shopping Cart | {{ block.super }}{% endblock %}
-{% load static from staticfiles %}
-{% load avatar_tags %}
+{% load cart_tags %}  <!-- This is loaded in order to access the functions in this template>  <-->
 
 {% block content %}
 
@@ -14,7 +13,7 @@
                 </div>
 
                 <!--div class="panel-body">
-                    < add stuff to the body if you want yo>
+                    < add stuff to the body if you want to>
                 </div-->
 
                 <table class="table table-hover">
@@ -37,14 +36,16 @@
                                         <div class="form-group">
                                             {% csrf_token %}
                                             <label><input type="number" class="form-control" id="quantity" name="quantity"
-                                                   placeholder="1"></label>
+                                                   placeholder="{{ request.session|update_quantity:book.id }}"></label>
                                             <input type="hidden" name="book_id" value="{{ book.id }}">
-                                            <button type="submit" class="btn btn-primary">Update {{ book.id }}</button>
+                                            <button type="submit" class="btn btn-primary">Update</button>
                                         </div>
                                     </form>
                                 </td>
                                 <td>${{ book.price }}</td>
-                                <td>${{ book.price }}</td>
+                                <td>{% if book.title in request.session %}
+                                            $ {{ request.session|get_subtotal:book.title }}
+                                    {% endif %}</td>
                                 <td><a href="{% url 'remove_from_cart' id=book.id %}">
                                     <button type="button" class="btn btn-warning">Remove</button>
                                 </a></td>
