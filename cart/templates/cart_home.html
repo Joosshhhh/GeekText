@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Book Results | {{ block.super }}{% endblock %}
 {% load static from staticfiles %}
-{% load avatar_tags %}
+{% load book_extras %}
 
 {% block content %}
 
@@ -20,37 +20,44 @@
 
         <div class="container"><br>
             <div class="col-sm-6 col-sm-offset-3">
-                <div class="thumbnail">
+                <div class="row">
+
 
                     {% if book.image %}
-                        <div class="col-sm-3 ">
+                        <div class="col-sm-4 ">
                             <img src="{{ book.image.url }}" class="img-responsive"/>
                         </div>
                     {% endif %}
+
+                    <div class="col-sm-8">
+                        <p><strong>Price:</strong> ${{ book.price }}</p><br/>
+                        <p><strong>Title:</strong> {{ book.title }}</p><br/>
+                        <p><strong>Author:</strong> {% for author in book.author %}
+                            {% if forloop.last %}<a href="/books/?q={{ author }}">{{ author }}
+                            </a>{% else %}<a href="/books/?q={{ author }}">{{ author }}</a>,
+                            {% endif %}
+                        {% endfor %}</p><br/>
+                        <p><strong>Genre:</strong> {{ book.genre|capfirst }}</p><br/>
+                        <p><strong>Publication Date:</strong> {{ book.publication_date|convert_to_date|date:"m/d/Y" }}
+                        </p><br/>
+                        <p><strong>Publisher:</strong> {{ book.publisher }}</p><br/><br/>
+
+                    </div>
+
                 </div>
+                <div class="row clearfix">
+                    <a href="{% url 'books:book_list' %}">
+                        <button class="btn btn-warning">Continue
+                            Shopping
+                        </button>
+                    </a>
 
-                    <h4>
-                        <strong>Price:</strong> ${{ book.price }}<br/>
-                        <strong>Title:</strong> {{ book.title }}<br/>
-                        <strong>Author:</strong> {% for author in book.author %}
-                        {% if forloop.last %}<a href="/books/?q={{ author }}">{{ author }}
-                        </a>{% else %}<a href="/books/?q={{ author }}">{{ author }}</a>,
-                        {% endif %}
-                    {% endfor %}<br/>
-                        <strong>Genre:</strong> {{ book.genre }}<br/>
-                        <strong>Publication Date:</strong> {{ book.publication_date|date }}<br/>
-                        <strong>Publisher:</strong> {{ book.publisher }}<br/><br/>
-
-                    </h4>
-
-
-                <a href="{% url 'books:book_list' %}" role="button" class="btn btn-warning float-left">Continue
-                    Shopping</a>
-
-
-                <a href="{% url 'view_cart' %}" role="button" class="btn btn-success float-right">Proceed to
-                    Checkout</a>
-
+                    <a href="{% url 'view_cart' %}">
+                        <button class="btn btn-success pull-right">Proceed to
+                            Checkout
+                        </button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

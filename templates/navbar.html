@@ -32,7 +32,7 @@
             <!-- code for the shopping cart button -->
             <button type="button" class="btn btn-link pull-left"><a href="{% url 'view_cart' %}"><span
                     class="glyphicon glyphicon-shopping-cart"><span
-                    class="badge">{% if number == 0 %}0{% else %}{{ number }}{% endif %}</span></span></a>
+                    class="badge">{{ number }}</span></span></a>
             </button>
 
             <button type="button" class="btn btn-link pull-right"><span class="glyphicon glyphicon-heart-empty"><span
