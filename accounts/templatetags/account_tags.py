@@ -21,7 +21,3 @@ def swap(value):
     char[5] = char[0]
     return ''.join(value)
 
-
-@register.filter
-def gettitle(book):
-    return book
