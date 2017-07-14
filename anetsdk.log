@@ -17365,3 +17365,10 @@ pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CT
 2017-07-13 16:23:10,465 "POST /xml/v1/request.api HTTP/1.1" 200 507
 2017-07-13 16:23:10,508 Multiple accepting paths for <class 'authorizenet.apicontractsv1.CTD_ANON_38'>
 2017-07-13 16:23:10,524 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<createCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Ok</resultCode>\n\t\t<message>\n\t\t\t<code>I00001</code>\n\t\t\t<text>Successful.</text>\n\t\t</message>\n\t</messages>\n\t<customerProfileId>1501492648</customerProfileId>\n\t<customerPaymentProfileIdList/>\n\t<customerShippingAddressIdList/>\n\t<validationDirectResponseList/>\n</createCustomerProfileResponse>\n'
+2017-07-14 16:22:14,355 performing custom validation..
+2017-07-14 16:22:14,358 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-14 16:22:14,358 building request..
+2017-07-14 16:22:14,404 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-14 16:22:16,284 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-07-14 16:22:16,334 Response error
+2017-07-14 16:22:16,425 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
