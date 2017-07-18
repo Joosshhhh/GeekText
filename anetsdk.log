@@ -17690,3 +17690,123 @@ Traceback (most recent call last):
   File "/usr/local/lib/python3.6/site-packages/django/core/handlers/base.py", line 185, in _get_response
     response = wrapped_callback(request, *callback_args, **callback_kwargs)
 TypeError: view_cart() missing 1 required positional argument: 'context'
+2017-07-14 16:15:44,709 performing custom validation..
+2017-07-14 16:15:44,710 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-14 16:15:44,711 building request..
+2017-07-14 16:15:44,776 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-14 16:15:54,344 performing custom validation..
+2017-07-14 16:15:54,345 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-14 16:15:54,346 building request..
+2017-07-14 16:15:54,358 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-14 16:16:05,392 performing custom validation..
+2017-07-14 16:16:05,394 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-14 16:16:05,395 building request..
+2017-07-14 16:16:05,402 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-14 16:16:09,771 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-07-14 16:16:10,120 Response error
+2017-07-14 16:16:10,122 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-07-14 16:16:17,245 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-07-14 16:16:17,260 Response error
+2017-07-14 16:16:17,261 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-07-14 16:16:31,550 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-07-14 16:16:31,563 Response error
+2017-07-14 16:16:31,564 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-07-14 16:27:49,646 performing custom validation..
+2017-07-14 16:27:49,647 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-14 16:27:49,649 building request..
+2017-07-14 16:27:49,670 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-14 16:28:14,164 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-07-14 16:28:14,527 Response error
+2017-07-14 16:28:14,529 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-07-18 10:48:18,404 performing custom validation..
+2017-07-18 10:48:18,405 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-18 10:48:18,407 building request..
+2017-07-18 10:48:18,436 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-18 10:48:37,964 performing custom validation..
+2017-07-18 10:48:37,965 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-18 10:48:37,966 building request..
+2017-07-18 10:48:37,978 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-18 10:48:39,225 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-07-18 10:48:39,509 Response error
+2017-07-18 10:48:39,511 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-07-18 10:48:39,534 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-07-18 10:48:39,551 Response error
+2017-07-18 10:48:39,552 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-07-18 10:49:04,091 performing custom validation..
+2017-07-18 10:49:04,091 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-18 10:49:04,092 building request..
+2017-07-18 10:49:04,101 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-18 10:49:06,364 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-07-18 10:49:06,378 Response error
+2017-07-18 10:49:06,380 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-07-18 10:51:30,203 performing custom validation..
+2017-07-18 10:51:30,203 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-18 10:51:30,204 building request..
+2017-07-18 10:51:30,214 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-18 10:51:31,139 "POST /xml/v1/request.api HTTP/1.1" 200 441
+2017-07-18 10:51:31,158 Response error
+2017-07-18 10:51:31,160 Received response: b'<?xml version="1.0" encoding="utf-8"?>\n<getCustomerProfileResponse xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n\t<messages>\n\t\t<resultCode>Error</resultCode>\n\t\t<message>\n\t\t\t<code>E00041</code>\n\t\t\t<text>One or more fields in Customer Profile ID, Merchant Customer ID or Email must contain a value.</text>\n\t\t</message>\n\t</messages>\n</getCustomerProfileResponse>\n'
+2017-07-18 10:52:38,497 performing custom validation..
+2017-07-18 10:52:38,497 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-18 10:52:38,499 building request..
+2017-07-18 10:52:38,504 building request..
+2017-07-18 10:52:38,506 Internal Server Error: /accounts/manage/new-address
+Traceback (most recent call last):
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 129, in execute
+    xmlRequest = self.buildrequest()
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 100, in buildrequest
+    xmlRequest = self._request.toxml(encoding=constants.xml_encoding, element_name=self.getrequesttype())
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 555, in toxml
+    dom = self.toDOM(bds, element_name=element_name)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 527, in toDOM
+    self._toDOM_csc(bds, element)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2661, in _toDOM_csc
+    order = self._validatedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2188, in _validatedChildren
+    return self.__automatonConfiguration.sequencedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 638, in sequencedChildren
+    cfg = self._diagnoseIncompleteContent(symbols, symbol_set)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 493, in _diagnoseIncompleteContent
+    raise pyxb.IncompleteElementContentError(self.__instance, cfg, symbols, symbol_set)
+pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CTD_ANON_41 object at 0x051B52B0>, <pyxb.utils.fac.Configuration object at 0x051B54F0>, [<pyxb.binding.basis.ElementContent object at 0x051B5250>, <pyxb.binding.basis.ElementContent object at 0x051B5DB0>], {<pyxb.binding.content.ElementDeclaration object at 0x03E3C9F0>: [<authorizenet.apicontractsv1.customerAddressType object at 0x051C75F0>], <pyxb.binding.content.ElementDeclaration object at 0x03E3CA30>: [1]})
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\mitola\Python\lib\site-packages\django\core\handlers\exception.py", line 41, in inner
+    response = get_response(request)
+  File "C:\Users\mitola\Python\lib\site-packages\django\core\handlers\base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "C:\Users\mitola\Python\lib\site-packages\django\core\handlers\base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\views\generic\base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\contrib\auth\mixins.py", line 56, in dispatch
+    return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\views\generic\base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\mitola\Python\lib\site-packages\django\views\generic\edit.py", line 183, in post
+    return self.form_valid(form)
+  File "C:\Users\mitola\Documents\GitHub\GeekText\accounts\views.py", line 212, in form_valid
+    form.add_shipping_address(self.request.user.authorize_net_profile_id)
+  File "C:\Users\mitola\Documents\GitHub\GeekText\accounts\forms.py", line 225, in add_shipping_address
+    controller.execute()
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 132, in execute
+    logging.error( 'Error retrieving http response from: %s for request: %s', self.endpoint, self.getprettyxmlrequest())
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 108, in getprettyxmlrequest
+    xmlRequest = self.buildrequest()
+  File "C:\Users\mitola\Python\lib\site-packages\authorizenet\apicontrollersbase.py", line 100, in buildrequest
+    xmlRequest = self._request.toxml(encoding=constants.xml_encoding, element_name=self.getrequesttype())
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 555, in toxml
+    dom = self.toDOM(bds, element_name=element_name)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 527, in toDOM
+    self._toDOM_csc(bds, element)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2661, in _toDOM_csc
+    order = self._validatedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\basis.py", line 2188, in _validatedChildren
+    return self.__automatonConfiguration.sequencedChildren()
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 638, in sequencedChildren
+    cfg = self._diagnoseIncompleteContent(symbols, symbol_set)
+  File "C:\Users\mitola\Python\lib\site-packages\pyxb\binding\content.py", line 493, in _diagnoseIncompleteContent
+    raise pyxb.IncompleteElementContentError(self.__instance, cfg, symbols, symbol_set)
+pyxb.exceptions_.IncompleteElementContentError: (<authorizenet.apicontractsv1.CTD_ANON_41 object at 0x051B52B0>, <pyxb.utils.fac.Configuration object at 0x051B5AB0>, [<pyxb.binding.basis.ElementContent object at 0x051B5650>, <pyxb.binding.basis.ElementContent object at 0x051B5030>], {<pyxb.binding.content.ElementDeclaration object at 0x03E3C9F0>: [<authorizenet.apicontractsv1.customerAddressType object at 0x051C75F0>], <pyxb.binding.content.ElementDeclaration object at 0x03E3CA30>: [1]})

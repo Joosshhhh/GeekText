@@ -35,7 +35,7 @@
                                     <form method="POST" action="{% url 'change_quantity' %}">
                                         <div class="form-group">
                                             {% csrf_token %}
-                                            <label><input type="number" class="form-control" id="quantity"
+                                            <label><input type="text" class="form-control" id="quantity"
                                                           name="quantity"
                                                           placeholder="{{ request.session|update_quantity:book.id }}"></label>
                                             <input type="hidden" name="book_id" value="{{ book.id }}">

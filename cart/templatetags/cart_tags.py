@@ -18,7 +18,8 @@ def get_subtotal(book, title):
 
 @register.filter
 def update_quantity(book, id):
-    quantity = book.get(id)
-    # print(book)
-    # print("this is id = " + str(id) + " q = " +str(quantity))
+
+    holder = book.get('quantity', {})
+    quantity = str(holder["book " + str(id)])
+
     return quantity
