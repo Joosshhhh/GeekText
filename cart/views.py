@@ -7,6 +7,7 @@ from datetime import *
 
 __not_modified = True   # used to determine if the cart as been modified
 __grand_total = 0       # used to hold the current grand total of the cart
+__shiping_code = '-T-'
 
 # ----- Constants -----------------------------------------------------
 
@@ -63,6 +64,7 @@ def change_quantity(request):
         "total": total,
         "number": number,
         "comparison": comparison,
+        "option": __shiping_code,
         "request": request
     }
     return render(request, "cart_view.html", context)
@@ -88,6 +90,7 @@ def view_cart(request):
         "total": total,
         "number": number,
         "comparison": comparison,
+        "option": __shiping_code,
         "request": request,
     }
     return render(request, "cart_view.html", context)
@@ -121,6 +124,7 @@ def remove_item(request, id):
         "total": total,
         "number": number,
         "comparison": comparison,
+        "option": __shiping_code,
         "request": request,
     }
     return render(request, "cart_view.html", context)
@@ -244,8 +248,11 @@ def cart_count(request):
 
 
 def decode_shipping(code):
+
+    global __shiping_code
     dates = datetime.today()
 
+    __shiping_code = code
     output = ''
 
     if code == '-T-':

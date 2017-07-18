@@ -77,15 +77,18 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <div class="radio">
-                                    <label><input type="radio" name="shipng" value="13.99 -N-">
+                                    <label><input type="radio" name="shipng" value="13.99 -N-" {% if option == '-N-' %}
+                                                  checked="checked"{% endif %}>
                                         Next Day (1 Business day - $13.99)</label>
                                 </div>
                                 <div class="radio">
-                                    <label><input type="radio" name="shipng" value="10.99 -T-" checked="checked">
+                                    <label><input type="radio" name="shipng" value="10.99 -T-" {% if option == '-T-' %}
+                                                  checked="checked"{% endif %}>
                                         Two Day (2 Business days - $10.99)</label>
                                 </div>
                                 <div class="radio">
-                                    <label><input type="radio" name="shipng" value="4.99 -R-">
+                                    <label><input type="radio" name="shipng" value="4.99 -R-" {% if option == '-R-' %}
+                                                  checked="checked"{% endif %}>
                                         Regular (3-5 Business days - $4.99)</label>
                                 </div>
                             </div>
