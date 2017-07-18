@@ -75,6 +75,7 @@ class BookListView(generic.ListView):
                                 queryset_list.filter(genre__icontains=query).distinct()
 
         if order:
+            order = order.strip()
             if query and order2 and queryset_list.filter(genre__icontains=query):
                 queryset_list = queryset_list.order_by(order, order2)
             else:
