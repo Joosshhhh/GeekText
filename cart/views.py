@@ -7,11 +7,10 @@ from datetime import *
 
 __not_modified = True   # used to determine if the cart as been modified and use the default values or the user input
 __grand_total = 0       # used to hold the current grand total of the cart
-__shiping_code = '-T-'  # default value for the shipping method
+__shipping_code = '-T-' # default value for the shipping method (options: -T- , -N- , -R-)
 
 # ----- Constants -----------------------------------------------------
 
-REMOVE = -1             # identifier for removing an item
 DEFAULT = 1             # default quantity of a book
 MIN_QUANTITY = 0        # minimun limit for quantity when updating the cart
 MAX_QUANTITY = 16       # maximun limit for quantity when updating the cart
@@ -87,7 +86,7 @@ def change_quantity(request):
         "total": total,
         "number": number,
         "comparison": comparison,
-        "option": __shiping_code,
+        "option": __shipping_code,
         "request": request
     }
     return render(request, "cart_view.html", context)
@@ -113,7 +112,7 @@ def view_cart(request):
         "total": total,
         "number": number,
         "comparison": comparison,
-        "option": __shiping_code,
+        "option": __shipping_code,
         "request": request,
     }
     return render(request, "cart_view.html", context)
@@ -146,7 +145,7 @@ def remove_item(request, id):
     if number == 0:
         __not_modified = True
 
-    total, book_list = create_list(cart_items, None, REMOVE, request)
+    total, book_list = create_list(cart_items, None, DEFAULT, request)
 
     request.session['total'] = total
 
@@ -157,7 +156,7 @@ def remove_item(request, id):
         "total": total,
         "number": number,
         "comparison": comparison,
-        "option": __shiping_code,
+        "option": __shipping_code,
         "request": request,
     }
     return render(request, "cart_view.html", context)
@@ -230,13 +229,7 @@ def create_list(cart_items, book_id, quantity, request):
 
             else:
 
-                if quantity == REMOVE:
-
-                    total = total + (book_price * float(holder["book " + str(bk.id)]))
-
-                else:
-
-                    total = total + (book_price * float(holder["book " + str(bk.id)]))
+                total = total + (book_price * float(holder["book " + str(bk.id)]))
 
         book_list.append(bk)
 
@@ -291,10 +284,11 @@ def cart_count(request):
 
 def decode_shipping(code):
 
-    global __shiping_code
+    global __shipping_code
     dates = datetime.today()
 
-    __shiping_code = code
+    __shipping_code = code
+
     output = ''
 
     if code == '-T-':
