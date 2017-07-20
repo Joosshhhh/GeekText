@@ -15,7 +15,9 @@ REMOVE = -1             # identifier for removing an item
 DEFAULT = 1             # default quantity of a book
 MIN_QUANTITY = 0        # minimun limit for quantity when updating the cart
 MAX_QUANTITY = 16       # maximun limit for quantity when updating the cart
+DEFAULT_MSG = 0         # msg indicator code to display the default msg
 OVERLIMIT = 1           # msg indicator code to display 'contact wholesaler' msg
+EMPTY = 2               # msg indicator code to indicate no msg to be sent
 
 # ----- Function Views ------------------------------------------------
 
@@ -66,16 +68,18 @@ def change_quantity(request):
         messages.success(request, "Your cart has been updated.")
 
     else:
-        total, book_list = create_list(cart_items, None, DEFAULT, request)
+        total, book_list = create_list(cart_items, None, DEFAULT, request)  # this will just display the cart
 
-        if msg_indicator == 1:
-            messages.error(request, " Please contact our wholesaler for amounts greater than 15. Thank you!")
-        else:
-            messages.error(request, " Quantity has to be an integer value between 1-15. Please try again, thank you.")
+        if msg_indicator != EMPTY:
+
+            if msg_indicator == OVERLIMIT:
+                messages.info(request, " Please contact our wholesaler for amounts greater than 15. Thank you!")
+            else:
+                messages.error(request, " Quantity has to be an integer value between 1-15. "
+                                        "Please try again, thank you.")
 
     request.session['total'] = total
 
-    # bottom code determines which button to display to the user. wont let checkout if total = 0
     comparison = get_comparison(total)
 
     context = {
@@ -256,7 +260,7 @@ def update_quantity(request, book_id, bk, holder, book_price, quantity, total):
         request.session[bk.title] = subtotal  # this saves the 'title' along with the new subtotal in the
         # session in the dictionary
 
-        holder["book " + str(book_id)] = quantity
+        holder["book " + str(book_id)] = int(quantity)
 
         request.session.modified = True
 
@@ -327,6 +331,10 @@ def get_comparison(total):
 def validate_quantity(quantity):
 
     msg_indicator = 0
+    print("quant " + str(quantity))
+    if quantity == "":
+        msg_indicator = EMPTY
+        return False, msg_indicator
 
     try:
         quantity = int(quantity)
