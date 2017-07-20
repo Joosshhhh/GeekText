@@ -184,6 +184,10 @@ class BookDetailView(generic.DetailView):
         return context
 
 
+# --- Functions below this are not being used, these are used as a learning tool to compare the difference
+# --- between class and function based views when rendering a page.
+# --- (Class based views by Josh M. and function based views by Chris H.)
+
 def list_books(request):
     queryset_list = Book.objects.all().order_by("title")
 

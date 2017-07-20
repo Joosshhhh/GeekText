@@ -5,19 +5,24 @@ from datetime import *
 
 # ----- Global Variables ---------------------------------------------
 
-__not_modified = True   # used to determine if the cart as been modified
+__not_modified = True   # used to determine if the cart as been modified and use the default values or the user input
 __grand_total = 0       # used to hold the current grand total of the cart
-__shiping_code = '-T-'
+__shiping_code = '-T-'  # default value for the shipping method
 
 # ----- Constants -----------------------------------------------------
 
-REMOVE = -1  # identified for removing an item
-DEFAULT = 1  # default quantity of a book
+REMOVE = -1             # identifier for removing an item
+DEFAULT = 1             # default quantity of a book
+MIN_QUANTITY = 0        # minimun limit for quantity when updating the cart
+MAX_QUANTITY = 16       # maximun limit for quantity when updating the cart
+OVERLIMIT = 1           # msg indicator code to display 'contact wholesaler' msg
 
 # ----- Function Views ------------------------------------------------
 
 
 def add_cart(request, id):
+
+    global __not_modified
 
     book = get_object_or_404(Book, id=id)
 
@@ -30,6 +35,7 @@ def add_cart(request, id):
     request.session[book.title] = float(book.price)  # sets the 'subtotal' of the item to its price (default)
 
     request.session['cart'] = cart
+    request.session['quantity'] = quantity_holder
 
     number = cart_count(request)
 
@@ -53,7 +59,20 @@ def change_quantity(request):
     cart_items = request.session.get('cart', {}).values()  # fetches the values stored in the session (Book titles)
     number = cart_count(request)
 
-    total, book_list = create_list(cart_items, book_id, quantity, request)
+    validation, msg_indicator = validate_quantity(quantity)
+
+    if validation:
+        total, book_list = create_list(cart_items, book_id, quantity, request)
+        messages.success(request, "Your cart has been updated.")
+
+    else:
+        total, book_list = create_list(cart_items, None, DEFAULT, request)
+
+        if msg_indicator == 1:
+            messages.error(request, " Please contact our wholesaler for amounts greater than 15. Thank you!")
+        else:
+            messages.error(request, " Quantity has to be an integer value between 1-15. Please try again, thank you.")
+
     request.session['total'] = total
 
     # bottom code determines which button to display to the user. wont let checkout if total = 0
@@ -101,17 +120,27 @@ def view_cart(request):
 
 def remove_item(request, id):
 
+    global __not_modified
+
     cart = request.session.get('cart', {})
     quantity = request.session.get('quantity', {})
+
+    book = get_object_or_404(Book, id=id)
 
     del cart[id]
     del quantity["book " + id]
 
+    messages.success(request, "'" + book.title + "' has been removed from your cart.")
+
     request.session['cart'] = cart
+    request.session['quantity'] = quantity
 
     cart_items = cart.values()
 
     number = len(cart_items)
+
+    if number == 0:
+        __not_modified = True
 
     total, book_list = create_list(cart_items, None, REMOVE, request)
 
@@ -164,7 +193,7 @@ def checkout(request):
 
 # -----------------------------------------------------------------------------------------
 
-#  ---helper function---
+#  ---Helper Functions---
 #  takes in a dictionary and creates a list of Book objects
 #  also add up the total of the books in the list
 
@@ -180,25 +209,13 @@ def create_list(cart_items, book_id, quantity, request):
     holder = request.session.get('quantity', {})
 
     for book in cart_items:
+
         bk = all_books.get(title=book)
         book_price = float(bk.price)
 
         if book_id:
 
-            __not_modified = False
-
-            if int(book_id) == int(bk.id):
-
-                subtotal = round(book_price * float(quantity), 2)
-                total = total + subtotal
-                request.session[bk.title] = subtotal  # this saves the 'title' along with the new subtotal in the session
-                # in the dictionary
-
-                holder["book " + str(book_id)] = quantity
-
-                request.session.modified = True
-            else:
-                total = total + (book_price * float(holder["book " + str(bk.id)]))
+            total = update_quantity(request, book_id, bk, holder, book_price, quantity, total)
 
         else:
 
@@ -210,16 +227,12 @@ def create_list(cart_items, book_id, quantity, request):
             else:
 
                 if quantity == REMOVE:
-                    total = 0
-                    for books in cart_items:
 
-                        bk = all_books.get(title=books)
-                        book_price = float(bk.price)
-
-                        total = total + (book_price * float(holder["book " + str(bk.id)]))
+                    total = total + (book_price * float(holder["book " + str(bk.id)]))
 
                 else:
-                    total = __grand_total
+
+                    total = total + (book_price * float(holder["book " + str(bk.id)]))
 
         book_list.append(bk)
 
@@ -228,12 +241,37 @@ def create_list(cart_items, book_id, quantity, request):
 
     return round(total, 2), book_list
 
+# -----------------------------------------------------------------------------------------
+
+
+def update_quantity(request, book_id, bk, holder, book_price, quantity, total):
+
+    global __not_modified
+    __not_modified = False
+
+    if int(book_id) == int(bk.id):
+
+        subtotal = round(book_price * float(quantity), 2)
+        total = total + subtotal
+        request.session[bk.title] = subtotal  # this saves the 'title' along with the new subtotal in the
+        # session in the dictionary
+
+        holder["book " + str(book_id)] = quantity
+
+        request.session.modified = True
+
+    else:
+        total = total + (book_price * float(holder["book " + str(bk.id)]))
+
+    return total
 
 # -----------------------------------------------------------------------------------------
 # --- Function bellow count the number of items in the dict 'cart'. this is used to display the number
-# of items in the shopping cart all throughout the web application
+# --- of items in the shopping cart all throughout the web application
+
 
 def cart_count(request):
+
     cart = request.session.get('cart', {})
     cart_items = cart.values()  # fetches the values stored in the session
 
@@ -243,8 +281,8 @@ def cart_count(request):
 
 
 # -----------------------------------------------------------------------------------------
-# ---Helper function below, reads in input from a radio option where it decodes and calculates the
-# estimated delivery date along with the Shipping option
+# --- Helper function below, reads in input from a radio option where it decodes and calculates the
+# --- estimated delivery date along with the Shipping option
 
 
 def decode_shipping(code):
@@ -269,7 +307,7 @@ def decode_shipping(code):
 
 # -----------------------------------------------------------------------------------------
 # --- Helper function below accepts a var 'total'. This will help determine which button to display
-# the user. If comparison is false, then the user wont be able to checkout
+# --- the user. If comparison is false, then the user wont be able to checkout
 
 
 def get_comparison(total):
@@ -282,3 +320,23 @@ def get_comparison(total):
     return comparison
 
 # -----------------------------------------------------------------------------------------
+# --- Helper function below takes is a parameter and validates that is within the desired integer range
+# --- and also, depending of the validation it determines which indicator to display
+
+
+def validate_quantity(quantity):
+
+    msg_indicator = 0
+
+    try:
+        quantity = int(quantity)
+        in_range = (quantity > MIN_QUANTITY) and (quantity < MAX_QUANTITY)
+
+        if quantity >= MAX_QUANTITY:
+
+            msg_indicator = OVERLIMIT
+
+        return in_range, msg_indicator
+
+    except:
+        return False, msg_indicator
