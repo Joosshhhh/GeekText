@@ -94,17 +94,17 @@
                                 <div class="radio">
                                     <label><input type="radio" name="shipng" value="13.99 -N-" {% if option == '-N-' %}
                                                   checked="checked"{% endif %}>
-                                        Next Day (1 Business day - $13.99)</label>
+                                        Next Day (1 Business Day - $13.99)</label>
                                 </div>
                                 <div class="radio">
                                     <label><input type="radio" name="shipng" value="10.99 -T-" {% if option == '-T-' %}
                                                   checked="checked"{% endif %}>
-                                        Two Day (2 Business days - $10.99)</label>
+                                        Two Day (2 Business Days - $10.99)</label>
                                 </div>
                                 <div class="radio">
                                     <label><input type="radio" name="shipng" value="4.99 -R-" {% if option == '-R-' %}
                                                   checked="checked"{% endif %}>
-                                        Regular (3-5 Business days - $4.99)</label>
+                                        Regular (3-5 Business Days - $4.99)</label>
                                 </div>
                             </div>
                         </div>
@@ -117,11 +117,11 @@
                     <a href="{% url 'books:book_list' %}" class="btn btn-warning" action="button"
                        style="width: 4cm;">Continue Shopping</a>
                     {% if comparison %}
-                        <input value="Continue Checkout" class="btn btn-success"
+                        <input value="Proceed to Checkout" class="btn btn-success"
                                style="width: 4cm;" type="submit">
                     {% else %}
-                        <div class="btn btn-success" style="width: 4cm;">
-                            Add items to cart...
+                        <div class="btn btn-success disabled" style="width: 4cm;">
+                            Proceed to Checkout
                         </div>
                     {% endif %}
                 </div>

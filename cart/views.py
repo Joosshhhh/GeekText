@@ -14,7 +14,6 @@ __shipping_code = '-T-' # default value for the shipping method (options: -T- , 
 DEFAULT = 1             # default quantity of a book
 MIN_QUANTITY = 0        # minimun limit for quantity when updating the cart
 MAX_QUANTITY = 16       # maximun limit for quantity when updating the cart
-DEFAULT_MSG = 0         # msg indicator code to display the default msg
 OVERLIMIT = 1           # msg indicator code to display 'contact wholesaler' msg
 EMPTY = 2               # msg indicator code to indicate no msg to be sent
 
@@ -130,8 +129,9 @@ def remove_item(request, id):
 
     book = get_object_or_404(Book, id=id)
 
-    del cart[id]
-    del quantity["book " + id]
+    if id and id in cart:
+        del cart[id]
+        del quantity["book " + id]
 
     messages.success(request, "'" + book.title + "' has been removed from your cart.")
 
