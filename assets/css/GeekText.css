@@ -258,6 +258,7 @@ hr {
 
 .browsing-nav .btn-group .btn {
     float: none;
+    width: 100%;
 }
 
 .browsing-nav .btn-group:last-child {
