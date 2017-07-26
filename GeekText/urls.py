@@ -36,7 +36,6 @@ urlpatterns = [
         name='password_reset_confirm'),
     url(r"^password-reset/complete/$", auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     url(r"^cart/", include("cart.urls")),
-    url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings'))
 ]
 
 urlpatterns += staticfiles_urlpatterns()

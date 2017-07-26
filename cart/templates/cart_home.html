@@ -8,24 +8,26 @@
     <div class="container-fluid">
         {% if messages %}
             <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
-                {% for message in messages %}
-                    <p{% if message.tags == "success" %}
-                        class="alert alert-success text-center"{% endif %}>{{ message }}</p>
-                {% endfor %}
+                <div class="col-sm-6 col-sm-offset-3">
+                    {% for message in messages %}
+                        <p{% if message.tags == "success" %}
+                            class="alert alert-success text-center"{% endif %}>{{ message }}</p>
+                    {% endfor %}
+                </div>
             </div>
         {% endif %}
-        </div>
 
 
-        <div class="container"><br>
+
+        <div class="container" style="margin-bottom: 55px;">
             <div class="col-sm-6 col-sm-offset-3">
                 <div class="row">
 
 
                     {% if book.image %}
                         <div class="col-sm-4 ">
-                            <img src="{{ book.image.url }}" class="img-responsive"/>
+                            <a href="{% url 'books:book_detail' pk=book.id %}"><img src="{{ book.image.url }}"
+                                                                                    class="img-responsive"/></a>
                         </div>
                     {% endif %}
 
@@ -51,10 +53,8 @@
                             Shopping
                         </button>
                     </a>
-
                     <a href="{% url 'view_cart' %}">
-                        <button class="btn btn-success pull-right">Proceed to
-                            Checkout
+                        <button class="btn btn-success pull-right">View Cart
                         </button>
                     </a>
                 </div>

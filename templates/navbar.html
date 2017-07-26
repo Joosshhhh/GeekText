@@ -30,19 +30,15 @@
             </form>
 
             <!-- code for the shopping cart button -->
-            <button type="button" class="btn btn-link pull-left"><a href="{% url 'view_cart' %}"><span
+            <button type="button" class="btn btn-link pull-right"><a href="{% url 'view_cart' %}"><span
                     class="glyphicon glyphicon-shopping-cart"><span
                     class="badge">{{ number }}</span></span></a>
-            </button>
-
-            <button type="button" class="btn btn-link pull-right"><span class="glyphicon glyphicon-heart-empty"><span
-                    class="badge">{% if wish and wish > 0 %}{{ wish }}{% else %}0{% endif %}</span></span>
             </button>
 
             {% if user.is_authenticated %}
 
                 {% if request.user|has_avatar %}
-                    {% avatar user class="img-circle img-responsive hidden-xs avatar avatar-nav" %}
+                    {% avatar user class="img-circle img-responsive pull-right hidden-xs avatar avatar-nav" %}
                 {% else %}
                     <img src="{% static 'imgs/user.svg' %}" class="avatar avatar-nav pull-right hidden-xs">
                 {% endif %}
@@ -101,13 +97,14 @@
             {% endif %}
         </div>
         <div id="mobile-nav-form">
-            <form class="navbar-form">
+            <form class="navbar-form" action="{% url 'books:book_list' %}">
                 <div class="form-group" style="display:inline;">
                     <div class="input-group" style="display: table;">
                         <input type="text" class="form-control orange-border-right" role="search"
-                               placeholder="Search by Author, Title, or Genre"
-                               autocomplete="on">
-                        <span class="input-group-btn" style="width: 1%;"><button type="submit" class="btn"><span
+                               placeholder="Search by Author, Title, or Genre" name="q" autocomplete="on">
+                        <input type="hidden" name="order" value="-avg_rating">
+                        <span class="input-group-btn" style="width: 1%;"><button type="submit"
+                                                                                 class="btn btn-warning"><span
                                 class="glyphicon glyphicon-search"></span></button></span>
                     </div>
                 </div>
@@ -190,7 +187,7 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a href="/books/?sort=sales_rank">Top Sellers</a></li>
-                <li><a href="/books/?q=Tech Valley Times Best Sellers&sort=-avg_rating">GeekText Best
+                <li><a href="/books/?q=Tech Valley Times Best Sellers&sort=-avg_rating">Tech Valley Best
                     Sellers</a></li>
                 <li><a href="/books/?sort=-avg_rating">Top Rated</a></li>
                 <li><a href="/books/?q=Coming Soon">Coming Soon</a></li>

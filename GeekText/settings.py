@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'authorizenet',
     'avatar',
     'cart',
-    'star_ratings'
+
 ]
 
 MIDDLEWARE = [

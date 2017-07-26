@@ -3,7 +3,7 @@
 {% load static from staticfiles %}
 {% load avatar_tags %}
 {% load book_extras %}
-{% load ratings %}
+
 
 {% block content %}
     <div class="container">
@@ -11,7 +11,7 @@
             <div class="col-sm-4 col-md-3">{% if book.image %}
                 <img src="{{ book.image.url }}" style="height: 250px; width: 200px;">
             {% else %}
-                <img src="/media/coming-soon.jpg" style="height: 250px; width: 200px;">
+                <img id="book-image" src="/media/coming-soon.jpg" style="height: 250px; width: 200px;">
             {% endif %}</div>
             <div class="col-sm-5 col-md-6" style="padding: 0 15px 150px 0; border-right: 1px solid #cccccc;">
                 <h2>{{ book.title }}</h2>

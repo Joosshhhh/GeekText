@@ -18011,3 +18011,15 @@ KeyError: 'book 13'
 2017-07-20 09:38:59,758 STREAM b'tIME' 80 7
 2017-07-20 09:38:59,758 b'tIME' 80 7 (unknown)
 2017-07-20 09:38:59,758 STREAM b'IDAT' 99 8192
+2017-07-26 13:54:22,166 performing custom validation..
+2017-07-26 13:54:22,175 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-26 13:54:22,175 building request..
+2017-07-26 13:54:22,236 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-26 13:54:22,767 "POST /xml/v1/request.api HTTP/1.1" 200 1320
+2017-07-26 13:54:22,795 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressType object at 0x10e2bd470>,)
+2017-07-26 13:54:22,815 performing custom validation..
+2017-07-26 13:54:22,815 Executing http post to url: https://apitest.authorize.net/xml/v1/request.api
+2017-07-26 13:54:22,815 building request..
+2017-07-26 13:54:22,818 Starting new HTTPS connection (1): apitest.authorize.net
+2017-07-26 13:54:23,250 "POST /xml/v1/request.api HTTP/1.1" 200 705
+2017-07-26 13:54:23,262 Create Document Exception: <class 'pyxb.exceptions_.ContentNondeterminismExceededError'>, (<authorizenet.apicontractsv1.customerAddressExType object at 0x10e126160>,)
