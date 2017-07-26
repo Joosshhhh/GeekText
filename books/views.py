@@ -114,7 +114,7 @@ class BookListView(generic.ListView):
             elif order == '-avg_rating':
                 context['sorting'] = "Top Rated"
             elif order == 'publication_date':
-                context['sorting'] = "Older"
+                context['sorting'] = "Oldest"
             elif order == '-publication_date':
                 context['sorting'] = "Newest"
             elif order == 'authors':
