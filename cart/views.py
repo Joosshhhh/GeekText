@@ -13,7 +13,7 @@ __shipping_code = '-T-' # default value for the shipping method (options: -T- , 
 
 DEFAULT = 1             # default quantity of a book
 MIN_QUANTITY = 0        # minimun limit for quantity when updating the cart
-MAX_QUANTITY = 16       # maximun limit for quantity when updating the cart
+MAX_QUANTITY = 1001       # maximun limit for quantity when updating the cart
 OVERLIMIT = 1           # msg indicator code to display 'contact wholesaler' msg
 EMPTY = 2               # msg indicator code to indicate no msg to be sent
 
@@ -71,9 +71,9 @@ def change_quantity(request):
         if msg_indicator != EMPTY:
 
             if msg_indicator == OVERLIMIT:
-                messages.info(request, " Please contact our wholesaler for amounts greater than 15. Thank you!")
+                messages.info(request, " Please contact our wholesaler for amounts greater than 1000. Thank you!")
             else:
-                messages.error(request, " Quantity has to be an integer value between 1-15. "
+                messages.error(request, " Quantity has to be an integer value between 1-1000. "
                                         "Please try again, thank you.")
 
     request.session['total'] = total
