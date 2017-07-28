@@ -1,0 +1,91 @@
+The setup for our site is mainly controlled by an IDE called PyCharm.
+
+These are the steps to get you up and running with the server and be able to run the site locally in your browser.
+
+The main process of getting the site running is installing python and all the neccessary packages our site uses with the python 3.6.1 interpreter.
+
+
+1) Download python 3.6.1: https://www.python.org/downloads/release/python-361/
+	- Once installed to verify the version, run python -V (notice the capital V) or python --version via command line.
+
+2) Download PyCharm (Professional)
+	- This download has a 30 day trial period which should be more than enough for running the site.
+	- MAC: https://download.jetbrains.com/python/pycharm-professional-2017.2.dmg
+	- Windows: https://download.jetbrains.com/python/pycharm-professional-2017.2.exe
+	- Linux: https://download.jetbrains.com/python/pycharm-professional-2017.2.tar.gz
+
+3) Upload Project to PyCharm (via GitHub): https://github.com/Joosshhhh/GeekText.git
+	- What's nice about PyCharm is you can easily import the project via version control like GitHub.
+	- When you open up PyCharm you'll see an option Check out from Version Control, click this and then select GitHub. 
+	- For Git Repository URL uses the link above and then configure your directories however you'd like. We named our project GeekText.
+	- Click yes if it ask Would you like to open the project.
+
+4) Configure python interpreter in PyCharm
+	- Now that the project has been loaded you must configure the project's python interpreter in your PyCharm IDE.
+	- In the top left click File -> Settings -> Project:<The Name of the Project> -> Project Interpreter.
+	- Then at the top you'll see Project Interpreter dropdown, which you should select 3.6.1.
+	- Don't close this window for the next step.
+
+5) Installation of required packages
+	- At the Project Interpreter window you'll see a list of packages with name, installed version, latest version available.
+	- To install a package you'll see a green plus + on the right, which will open another window to search for packages.
+	- Search and install each package from Required Packages below, as they are required to be able to run the site error free.
+	- Note at the bottom there is an option to install a specific version, check this and install the packages with the specific versions below.
+	- Also some packages are dependent on other packages so you may see others installed, they will install automatically when installing the ones below. 
+	- Once you're done installing all the packages for the interpreter, click OK to save the changes.
+
+REQUIRED PACKAGES
+	- Django 			1.11.2
+	- authorizenet 			1.0.14
+	- django-avatar 		4.0.0
+	- django-countries		4.6.1
+	- smartystreets-python-sdk 	3.0.0
+
+6) Configure Django local server to run the website
+	- In the top navigation menu click Run -> Edit Configurations
+	- From here click the green plus + in the top left to add a new server and look for Django server.
+	- Name the server GeekText and make sure the check box Run browser is checked. 
+	- Note you may need to change the port from 8000 to another if you're using 8000.
+	- Finally make sure the python interpreter for this server is the same 3.6.1 for the project and click OK to save the changes
+
+7) Running the website locally
+	- At last the last step!
+	- You can run the project with Run -> Green Play Button in the top navigation
+	- Alternatively you can just click the Green Play Button on the top navigation (on the right side)
+	- To stop the server you can Run -> Red Stop Button or all the way to the right click the Red Stop Button (left of the search icon)
+	- Alternatively a panel might pop up from the button which you can Stop and Run the server by it's buttons on the left (after you've ran the server once).
+
+
+* Special Note when entering a credit card for your user profile
+	- We used an outside API called authorizenet for credit card storage (for security purposes)
+	- We set the credit card functions to test mode instead of live so you have to use certain test credit card numbers
+	- You can find the testing information below
+
+TEST CARD NUMBERS
+
+Use any expiration date after today’s date. 
+If the card code is required, please use any 3-digit combination for Visa, Mastercard, Discover, Diners Club, EnRoute, and JCB; 
+use a 4-digit combination for American Express.
+
+Test Card Brand			Number
+
+American Express 		370000000000002
+
+Discover			6011000000000012
+
+JCB				3088000000000017
+
+Diners Club/ Carte Blanch	38000000000006
+
+Visa				4007000000027
+ 				4012888818888
+ 				4111111111111111
+
+MasterCard			5424000000000015
+ 				2223000010309703
+ 				2223000010309711
+ 
+
+If you have any questions with regards to the installation and running the website 
+feel free to contact me at jmcle019@fiu.edu.
+ 
